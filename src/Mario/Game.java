@@ -1,4 +1,4 @@
-import org.omg.IOP.TAG_JAVA_CODEBASE;
+package Mario;
 
 import javax.swing.*;
 import java.awt.*;

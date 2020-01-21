@@ -1,18 +1,24 @@
-package Mario.entity;
+package GameTile;
+
+import Mario.Handler;
+import Mario.Id;
 
 import java.awt.*;
 
-public class Entity {
+public class Tile {
     private int x,y,width,height,velX,velY;
     private boolean solid;
+    private Id id;
+    private Handler handler;
 
-
-    public Entity(int x, int y, int width, int height,boolean solid) {
+    public Tile(int x, int y, int width, int height,boolean solid,Id id,Handler handler) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
         this.solid=solid;
+        this.id=id;
+        this.handler=handler;
     }
 
     /**
@@ -32,6 +38,15 @@ public class Entity {
     {
         x+=velX;
         y+=velY;
+    }
+
+    public void die()
+    {
+        handler.removeTile(this);
+    }
+
+    public Id getId() {
+        return id;
     }
 
     public boolean getSolid(){
