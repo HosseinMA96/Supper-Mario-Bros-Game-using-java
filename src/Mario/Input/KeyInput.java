@@ -17,14 +17,18 @@ public class KeyInput implements KeyListener {
                 case KeyEvent.VK_W:
 //                    en.setVelY(-5);
                     if(!en.getJumping())
+                    {
                         en.setJumping(true);
+                        en.setGravity(10.0);
+                    }
+
 
                     break;
 
-
-                case KeyEvent.VK_S:
-                    en.setVelY(5);
-                    break;
+//
+//                case KeyEvent.VK_S:
+//                    en.setVelY(5);
+//                    break;
 
 
                 case KeyEvent.VK_D:

@@ -73,6 +73,10 @@ public abstract class Entity {
         this.x = x;
     }
 
+    public void setGravity(double gravity) {
+        this.gravity = gravity;
+    }
+
     public void setY(int y) {
         this.y = y;
     }
