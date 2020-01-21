@@ -50,6 +50,7 @@ public class Player extends Entity{
                 if(getBoundsTop().intersects(t.getBounds())){
                     setVelY(0);
 //                    y=t.getY()+t.getHeight();
+                    //BLANK
                 }
             }
 
