@@ -5,11 +5,15 @@ import Mario.Id;
 
 import java.awt.*;
 
-public class Entity {
-    private int x,y,width,height,velX,velY;
-    private boolean solid;
-    private Id id;
-    private Handler handler;
+public abstract class Entity {
+    protected int x,y,width,height,velX,velY;
+    protected boolean solid;
+    protected Id id;
+    protected Handler handler;
+    protected boolean jumping=false;
+    protected boolean falling=true;
+    protected double gravity=0.0;
+
 
     public Entity(int x, int y, int width, int height,boolean solid,Id id,Handler handler) {
         this.x = x;
@@ -26,19 +30,14 @@ public class Entity {
      * the game will not lag due to many objects displayed in the screen
      * @param g
      */
-    public void render(Graphics g)
-    {
+    public abstract void render(Graphics g);
 
-    }
 
     /**
      * Update this entity
      */
-    public void tick()
-    {
-        x+=velX;
-        y+=velY;
-    }
+    public abstract void tick();
+
 
     public void die()
     {
@@ -94,5 +93,41 @@ public class Entity {
         this.velY = velY;
     }
 
+    public Rectangle getBounds()
+    {
+        return new Rectangle(getX(),getY(),width,height);
+    }
 
+    public Rectangle getBoundsTop()
+    {
+        return new Rectangle(getX()+10,getY(),width-20,5);
+    }
+
+    public Rectangle getBoundsBottom()
+    {
+        return new Rectangle(getX()+10,getY()+height-5,width-20,5);
+    }
+
+    public Rectangle getBoundsLeft()
+    {
+        return new Rectangle(getX(),getY()+10,5,height-20);
+    }
+
+    public Rectangle getBoundsRight()
+    {
+        return new Rectangle(getX()+width-5,getY()+10,5,height-20);
+    }
+
+    public double getGravity() {
+        return gravity;
+    }
+
+    public boolean getJumping()
+    {
+        return jumping;
+    }
+
+    public void setJumping(boolean jumping) {
+        this.jumping = jumping;
+    }
 }

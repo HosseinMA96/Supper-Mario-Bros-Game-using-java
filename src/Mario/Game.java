@@ -1,18 +1,31 @@
 package Mario;
 
+import GameEntity.Player;
+import GameTile.Wall;
+import Mario.Input.KeyInput;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
 
-    private static final int WITDH = 270;
-    private static final int HEIGHT = WITDH / 14 * 10;
-    private static final int SCALE = 4;
-    private static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
+    public static final int WITDH = 270;
+    public static final int HEIGHT = WITDH / 14 * 10;
+    public static final int SCALE = 4;
+    public static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
+    public static Handler handler;
 
     private Thread thread;
     private boolean running = false;
+
+    private void init()
+    {
+        handler=new Handler();
+        addKeyListener(new KeyInput());
+        handler.addEntity(new Player(300,512,64,64,true,Id.player1,handler));
+       // handler.addTile(new Wall(200,200,64,64,true,Id.wall,handler));
+    }
 
     private synchronized void start() {
         if (running)
@@ -40,6 +53,8 @@ public class Game extends Canvas implements Runnable {
 
     @Override
     public void run() {
+        init();
+        requestFocus();
         long lastTime = System.nanoTime();
         long timer = System.currentTimeMillis();
         double delta = 0.0;
@@ -84,12 +99,19 @@ public class Game extends Canvas implements Runnable {
             return;
         }
 
-        Graphics g=bs.getDrawGraphics();
-        g.setColor(Color.BLUE);
-        g.fillRect(0,0,getWidth(),getHeight());
+//        Graphics g=bs.getDrawGraphics();
+//        g.setColor(Color.BLACK);
+//        g.fillRect(0,0,getWidth(),getHeight());
+//
+//        g.setColor(Color.RED);
+//        g.fillRect(200,200,getWidth()-400,getHeight()-400);
+//        g.dispose();
+//        bs.show();
 
-        g.setColor(Color.RED);
-        g.fillRect(200,200,getWidth()-400,getHeight()-400);
+        Graphics g=bs.getDrawGraphics();
+        g.setColor(Color.BLACK);
+        g.fillRect(0,0,getWidth(),getHeight());
+        handler.render(g);
         g.dispose();
         bs.show();
 
@@ -99,7 +121,7 @@ public class Game extends Canvas implements Runnable {
      * To update
      */
     public void tick() {
-
+        handler.tick();
     }
 
     public Game() {
@@ -107,6 +129,10 @@ public class Game extends Canvas implements Runnable {
         setPreferredSize(size);
         setMaximumSize(size);
         setMinimumSize(size);
+    }
+
+    public static Handler getHandler() {
+        return handler;
     }
 
 

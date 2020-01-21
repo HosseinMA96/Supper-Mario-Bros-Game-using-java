@@ -5,11 +5,11 @@ import Mario.Id;
 
 import java.awt.*;
 
-public class Tile {
-    private int x,y,width,height,velX,velY;
-    private boolean solid;
-    private Id id;
-    private Handler handler;
+public abstract class Tile {
+    protected int x,y,width,height,velX,velY;
+    protected boolean solid;
+    protected Id id;
+    protected Handler handler;
 
     public Tile(int x, int y, int width, int height,boolean solid,Id id,Handler handler) {
         this.x = x;
@@ -26,19 +26,13 @@ public class Tile {
      * the game will not lag due to many objects displayed in the screen
      * @param g
      */
-    public void render(Graphics g)
-    {
+    public abstract void render(Graphics g);
 
-    }
 
     /**
      * Update this entity
      */
-    public void tick()
-    {
-        x+=velX;
-        y+=velY;
-    }
+    public abstract void tick();
 
     public void die()
     {
@@ -97,4 +91,10 @@ public class Tile {
     public void setSolid(boolean solid) {
         this.solid = solid;
     }
+
+    public Rectangle getBounds()
+    {
+        return new Rectangle(getX(),getY(),width,height);
+    }
+
 }
