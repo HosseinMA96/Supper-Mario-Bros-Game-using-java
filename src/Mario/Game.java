@@ -7,9 +7,12 @@ import GameGFX.SpriteSheet;
 import GameTile.Wall;
 import Mario.Input.KeyInput;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.awt.image.BufferedImage;
+import java.io.File;
 
 public class Game extends Canvas implements Runnable {
 
@@ -26,6 +29,7 @@ public class Game extends Canvas implements Runnable {
     public static Sprite grass;
     public static Sprite player[]=new Sprite[8];
     public static Camera cam;
+    private BufferedImage image;
 
     //he 10 you 10
 
@@ -46,8 +50,18 @@ public class Game extends Canvas implements Runnable {
             player[i]=new Sprite(sheet,i+1,16);
         }
 
-        handler.addEntity(new Player(300,512,64,64,true,Id.player1,handler));
+       // handler.addEntity(new Player(300,512,64,64,true,Id.player1,handler));
        // handler.addTile(new Wall(200,200,64,64,true,Id.wall,handler));
+
+        try {
+            image = ImageIO.read(new File("C:\\Users\\erfan\\Desktop\\dummy\\res\\level1.png"));
+        }
+        catch (Exception ex)
+        {
+            ex.printStackTrace();
+        }
+
+        handler.createLevel(image);
     }
 
     private synchronized void start() {
