@@ -13,6 +13,7 @@ public abstract class Entity {
     protected boolean jumping=false;
     protected boolean falling=true;
     protected double gravity=0.0;
+    protected int facing=0; // facing left =0 , facing right =1
 
 
     public Entity(int x, int y, int width, int height,boolean solid,Id id,Handler handler) {
@@ -48,6 +49,10 @@ public abstract class Entity {
         return solid;
     }
 
+    public void setFacing(int f)
+    {
+
+    }
 
     public int getX() {
         return x;

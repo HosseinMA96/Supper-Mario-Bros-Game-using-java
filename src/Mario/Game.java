@@ -19,7 +19,9 @@ public class Game extends Canvas implements Runnable {
     public static  SpriteSheet sheet;
     public static Handler handler;
     public static Sprite grass;
-    public static Sprite player;
+    public static Sprite player[]=new Sprite[8];
+
+    //he 10 you 10
 
     private Thread thread;
     private boolean running = false;
@@ -30,8 +32,12 @@ public class Game extends Canvas implements Runnable {
         sheet=new SpriteSheet("C:\\Users\\erfan\\Desktop\\dummy\\res\\spritesheet.png");
         addKeyListener(new KeyInput());
 
-        grass=new Sprite(sheet,2,1);
-        player=new Sprite(sheet,1,1);
+        grass=new Sprite(sheet,1,1);
+     //   player=new Sprite(sheet,1,1);
+
+        for (int i=0;i<player.length;i++){
+            player[i]=new Sprite(sheet,i+1,16);
+        }
 
         handler.addEntity(new Player(300,512,64,64,true,Id.player1,handler));
        // handler.addTile(new Wall(200,200,64,64,true,Id.wall,handler));

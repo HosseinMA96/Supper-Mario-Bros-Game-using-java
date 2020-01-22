@@ -10,6 +10,10 @@ import java.awt.*;
 
 public class Player extends Entity {
 
+    private int frame = 0, frameDelay = 0;
+    private boolean animate = false;
+    //frame delay is the amount of the time the game upddates before it changes the animation
+
     public Player(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
         super(x, y, width, height, solid, id, handler);
 //        velX = 1;
@@ -21,13 +25,18 @@ public class Player extends Entity {
     public void render(Graphics g) {
 //        g.setColor(Color.BLUE);
 //        g.fillRect(x, y, width, height);
-        g.drawImage(Game.player.getBufferedImage(),x,y,width,height,null);
+        //4 left sided Mario
+        if (facing == 0)
+            g.drawImage(Game.player[frame + 4].getBufferedImage(), x, y, width, height, null);
+
+        else if (facing == 1)
+            g.drawImage(Game.player[frame].getBufferedImage(), x, y, width, height, null);
     }
 
     @Override
     public void tick() {
         x += velX;
-        y+=velY;
+        y += velY;
 
         if (x <= 0)
             x = 0;
@@ -41,6 +50,12 @@ public class Player extends Entity {
         if (y + height >= 775)
             y = 775 - height;
 
+        if (velX != 0)
+            animate = true;
+
+        else
+            animate = false;
+
         //Ehtemalan shekaste shodan ro inja bayad begi dawsh
         for (Tile t : handler.getTile()) {
             if (!t.getSolid())
@@ -50,11 +65,10 @@ public class Player extends Entity {
                 if (getBoundsTop().intersects(t.getBounds())) {
                     setVelY(0);
 
-                    if(jumping)
-                    {
-                        jumping=false;
-                        gravity=0.0;
-                        falling=true;
+                    if (jumping) {
+                        jumping = false;
+                        gravity = 0.0;
+                        falling = true;
                     }
 //                    y=t.getY()+t.getHeight();
                     //BLANK
@@ -64,21 +78,14 @@ public class Player extends Entity {
             if (getBoundsBottom().intersects((t.getBounds()))) {
                 setVelY(0);
                 y = t.getY() - t.getHeight();
-                if(falling)
-                    falling=false;
-            }
-
-            else
-            {
-                if(!falling && !jumping)
-                {
-                    gravity=0.0;
-                    falling=true;
+                if (falling)
+                    falling = false;
+            } else {
+                if (!falling && !jumping) {
+                    gravity = 0.0;
+                    falling = true;
                 }
             }
-
-
-
 
 
             if (getBoundsLeft().intersects((t.getBounds()))) {
@@ -108,10 +115,33 @@ public class Player extends Entity {
             }
         }
 
-        if (falling){
-            gravity+=.01;
-            setVelY((int)gravity);
+        if (falling) {
+            gravity += .01;
+            setVelY((int) gravity);
         }
 
+        if (animate) {
+
+            frameDelay++;
+
+            if (frameDelay >= 3) {
+                frame++;
+
+                if (frame >= 4) {
+                    frame = 0;
+                }
+                frameDelay = 0;
+            }
+        } else
+            if(facing==1)
+            frame = 0;
+
+            else
+                frame=3;
+
+    }
+
+    public void setFacing(int f) {
+        facing = f;
     }
 }
