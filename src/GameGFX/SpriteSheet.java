@@ -3,6 +3,7 @@ package GameGFX;
 import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.nio.Buffer;
 
 public class SpriteSheet {
@@ -11,7 +12,9 @@ public class SpriteSheet {
     public SpriteSheet(String path)
     {
         try {
-            sheet = ImageIO.read(getClass().getResource(path));
+          //  sheet = ImageIO.read(getClass().getResource(path));
+            sheet = ImageIO.read(new File("C:\\Users\\erfan\\Desktop\\dummy\\res\\spritesheet.png"));
+
         }
         catch (Exception e)
         {

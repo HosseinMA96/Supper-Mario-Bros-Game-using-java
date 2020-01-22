@@ -1,6 +1,7 @@
 package GameEntity;
 
 import GameTile.Tile;
+import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
 
@@ -18,8 +19,9 @@ public class Player extends Entity {
 
     @Override
     public void render(Graphics g) {
-        g.setColor(Color.BLUE);
-        g.fillRect(x, y, width, height);
+//        g.setColor(Color.BLUE);
+//        g.fillRect(x, y, width, height);
+        g.drawImage(Game.player.getBufferedImage(),x,y,width,height,null);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package Mario;
 
 import GameEntity.Player;
+import GameGFX.Sprite;
+import GameGFX.SpriteSheet;
 import GameTile.Wall;
 import Mario.Input.KeyInput;
 
@@ -14,7 +16,10 @@ public class Game extends Canvas implements Runnable {
     public static final int HEIGHT = WITDH / 14 * 10;
     public static final int SCALE = 4;
     public static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
+    public static  SpriteSheet sheet;
     public static Handler handler;
+    public static Sprite grass;
+    public static Sprite player;
 
     private Thread thread;
     private boolean running = false;
@@ -22,7 +27,12 @@ public class Game extends Canvas implements Runnable {
     private void init()
     {
         handler=new Handler();
+        sheet=new SpriteSheet("C:\\Users\\erfan\\Desktop\\dummy\\res\\spritesheet.png");
         addKeyListener(new KeyInput());
+
+        grass=new Sprite(sheet,2,1);
+        player=new Sprite(sheet,1,1);
+
         handler.addEntity(new Player(300,512,64,64,true,Id.player1,handler));
        // handler.addTile(new Wall(200,200,64,64,true,Id.wall,handler));
     }
