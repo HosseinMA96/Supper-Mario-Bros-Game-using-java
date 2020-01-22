@@ -1,5 +1,6 @@
 package Mario;
 
+import GameEntity.Entity;
 import GameEntity.Player;
 import GameGFX.Sprite;
 import GameGFX.SpriteSheet;
@@ -12,14 +13,19 @@ import java.awt.image.BufferStrategy;
 
 public class Game extends Canvas implements Runnable {
 
+
+   // public static final int WITDH = 240;
     public static final int WITDH = 270;
-    public static final int HEIGHT = WITDH / 14 * 10;
+  //  public static final int HEIGHT = WITDH / 14 * 10;
+    //Height is y
+  public static final int HEIGHT = WITDH / 16 * 10;
     public static final int SCALE = 4;
     public static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
     public static  SpriteSheet sheet;
     public static Handler handler;
     public static Sprite grass;
     public static Sprite player[]=new Sprite[8];
+    public static Camera cam;
 
     //he 10 you 10
 
@@ -30,6 +36,7 @@ public class Game extends Canvas implements Runnable {
     {
         handler=new Handler();
         sheet=new SpriteSheet("C:\\Users\\erfan\\Desktop\\dummy\\res\\spritesheet.png");
+        cam=new Camera();
         addKeyListener(new KeyInput());
 
         grass=new Sprite(sheet,1,1);
@@ -115,6 +122,8 @@ public class Game extends Canvas implements Runnable {
             return;
         }
 
+
+
 //        Graphics g=bs.getDrawGraphics();
 //        g.setColor(Color.BLACK);
 //        g.fillRect(0,0,getWidth(),getHeight());
@@ -127,6 +136,9 @@ public class Game extends Canvas implements Runnable {
         Graphics g=bs.getDrawGraphics();
         g.setColor(Color.BLACK);
         g.fillRect(0,0,getWidth(),getHeight());
+
+        //move camera
+        g.translate(cam.getX(),cam.getY());
         handler.render(g);
         g.dispose();
         bs.show();
@@ -138,6 +150,13 @@ public class Game extends Canvas implements Runnable {
      */
     public void tick() {
         handler.tick();
+
+        for (Entity e:handler.getEntity()){
+            if(e.getId()==Id.player1)
+            {
+                cam.tick(e);
+            }
+        }
     }
 
     public Game() {
@@ -157,10 +176,20 @@ public class Game extends Canvas implements Runnable {
         JFrame frame = new JFrame(TITLE);
         frame.add(game);
         frame.pack();
-        frame.setResizable(false);
+        frame.setResizable(true);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         game.start();
+    }
+
+    public int getFrameWidth()
+    {
+        return WIDTH*SCALE;
+    }
+
+    public int getFrameHeight()
+    {
+        return HEIGHT*SCALE;
     }
 }

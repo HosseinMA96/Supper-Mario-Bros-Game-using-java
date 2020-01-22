@@ -12,6 +12,8 @@ public class KeyInput implements KeyListener {
         int key = e.getKeyCode();
 
         for (Entity en : Game.getHandler().getEntity()) {
+
+
             switch (key) {
 
                 case KeyEvent.VK_W:
@@ -32,6 +34,9 @@ public class KeyInput implements KeyListener {
 
 
                 case KeyEvent.VK_D:
+
+
+
                     en.setVelX(5);
                     en.setFacing(1);
                     break;

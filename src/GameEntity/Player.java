@@ -38,14 +38,14 @@ public class Player extends Entity {
         x += velX;
         y += velY;
 
-        if (x <= 0)
-            x = 0;
+//        if (x <= 0)
+//            x = 0;
 
 //        if(y<=0)
 //            y=0;
 
-        if (x + width >= 1080)
-            x = 1080 - width;
+//        if (x + width >= 1080)
+//            x = 1080 - width;
 
         if (y + height >= 775)
             y = 775 - height;
@@ -67,7 +67,8 @@ public class Player extends Entity {
 
                     if (jumping) {
                         jumping = false;
-                        gravity = 0.0;
+                      //  gravity = 0.8;
+                        gravity = 2;
                         falling = true;
                     }
 //                    y=t.getY()+t.getHeight();
@@ -82,7 +83,8 @@ public class Player extends Entity {
                     falling = false;
             } else {
                 if (!falling && !jumping) {
-                    gravity = 0.0;
+                 //   gravity = 0.8;
+                    gravity = 2;
                     falling = true;
                 }
             }
@@ -132,12 +134,11 @@ public class Player extends Entity {
                 }
                 frameDelay = 0;
             }
-        } else
-            if(facing==1)
+        } else if (facing == 1)
             frame = 0;
 
-            else
-                frame=3;
+        else
+            frame = 3;
 
     }
 
