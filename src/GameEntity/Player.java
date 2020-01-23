@@ -122,9 +122,16 @@ public class Player extends Entity {
             }
 
             if(e.getId()==Id.goomba){
-                if(getBounds().intersects(e.getBounds()))
+
+                if(getBoundsBottom().intersects(e.getBoundsTop()))
                 {
-                    ((Goomba) e).setDying(true);
+                    e.die();
+                }
+
+
+                else if(getBounds().intersects(e.getBounds()))
+                {
+
                     //PLAYER INTERSECT WITH GOOMBA
                     die();
                 }
@@ -135,7 +142,7 @@ public class Player extends Entity {
          * gravity = acceleration
          */
         if (jumping) {
-            gravity -= 0.1;
+            gravity -= .3;
             setVelY((int) -gravity);
             //JOptionPane.showMessageDialog(null,gravity);
 
@@ -146,7 +153,7 @@ public class Player extends Entity {
         }
 
         if (falling) {
-            gravity += .01;
+            gravity += .3;
             setVelY((int) gravity);
         }
 

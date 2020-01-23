@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class Goomba extends Entity {
     private boolean isDying=false,animate=false;
-    private int frame=0,frameDelay=0,helpFrame;
+    private int frame=0,frameDelay=0,helpFrame,diecounter;
 
     public void setDying(boolean dying) {
         isDying = dying;
@@ -27,7 +27,15 @@ public class Goomba extends Entity {
     @Override
     public void render(Graphics g)
     {
+        if(isDying)
+        {
 
+            g.drawImage(Game.goomba[2].getBufferedImage(), x, y, width, height, null);
+
+            die();
+
+            return;
+        }
         g.drawImage(Game.goomba[helpFrame].getBufferedImage(), x, y, width, height, null);
 
 
@@ -54,6 +62,11 @@ public class Goomba extends Entity {
 
 
 
+    }
+
+    public boolean getDying()
+    {
+        return isDying;
     }
 
     public void tick()

@@ -41,6 +41,8 @@ public class Game extends Canvas implements Runnable {
     {
         handler=new Handler();
         sheet=new SpriteSheet("C:\\Users\\erfan\\Desktop\\dummy\\res\\spritesheet.png");
+
+
         cam=new Camera();
         addKeyListener(new KeyInput());
 
@@ -54,8 +56,14 @@ public class Game extends Canvas implements Runnable {
             player[1][i]=new Sprite(sheet,i+1,16);
             player[0][i]=new Sprite(sheet,i+9,16);
             player[2][i]=new Sprite(sheet,i+1,15);
-            goomba[i]=new Sprite(sheet,i+i,14);
+
         }
+
+        goomba[0]=new Sprite(sheet,1,14);
+        goomba[1]=new Sprite(sheet,2,14);
+        goomba[2]=new Sprite(sheet,3,14);
+
+
 
 
 

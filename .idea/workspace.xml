@@ -2,16 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7294ea96-f157-4b7b-bc69-27eb5d07ba1d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/GameEntity/Enemy/Goomba.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Start/GameEntity/Enemy/Goomba.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Start/GameEntity/Enemy/Goomba.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Start/GameEntity/Player.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Start/GameEntity/Player.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Start/Mario/Game.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Start/Mario/Game.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/level1.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/level1.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/res/spritesheet.png" beforeDir="false" afterPath="$PROJECT_DIR$/res/spritesheet.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameEntity/Enemy/Goomba.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameEntity/Enemy/Goomba.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/GameEntity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameEntity/Player.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/GameGFX/SpriteSheet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameGFX/SpriteSheet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Mario/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Mario/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Mario/Handler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Mario/Handler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Mario/Id.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Mario/Id.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Mario/Input/KeyInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Mario/Input/KeyInput.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -34,13 +33,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Mario/Game.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="858">
-              <caret line="66" column="87" selection-start-line="66" selection-start-column="84" selection-end-line="66" selection-end-column="87" />
+            <state relative-caret-position="867">
+              <caret line="63" column="36" selection-start-line="63" selection-start-column="36" selection-end-line="63" selection-end-column="36" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4764#4765#0" expanded="true" />
-                <element signature="e#5203#5204#0" expanded="true" />
-                <element signature="e#5277#5278#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -49,12 +45,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GameEntity/Mushroom.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="585">
-              <caret line="85" lean-forward="true" selection-start-line="36" selection-end-line="85" />
+            <state relative-caret-position="1309">
+              <caret line="85" selection-start-line="36" selection-end-line="85" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#337#338#0" expanded="true" />
-                <element signature="e#421#422#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -63,12 +57,10 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GameEntity/Entity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-561">
-              <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+            <state relative-caret-position="102">
+              <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1448#1449#0" expanded="true" />
-                <element signature="e#1474#1475#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -77,8 +69,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GameGFX/Sprite.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="35" lean-forward="true" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
+            <state relative-caret-position="136">
+              <caret line="10" column="35" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
               <folding>
                 <element signature="e#196#197#0" expanded="true" />
                 <element signature="e#238#239#0" expanded="true" />
@@ -87,15 +79,13 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GameEntity/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="127">
-              <caret line="70" column="35" selection-start-line="70" selection-start-column="34" selection-end-line="70" selection-end-column="35" />
+            <state relative-caret-position="238">
+              <caret line="131" column="21" selection-start-line="131" selection-start-column="21" selection-end-line="131" selection-end-column="21" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#4371#4372#0" expanded="true" />
-                <element signature="e#4397#4398#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -104,7 +94,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GameGFX/SpriteSheet.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
+            <state relative-caret-position="493">
               <caret line="33" column="42" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -116,8 +106,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Mario/Input/KeyInput.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="19" column="13" lean-forward="true" selection-start-line="19" selection-start-column="13" selection-end-line="21" />
+            <state relative-caret-position="238">
+              <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="21" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -125,15 +115,15 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GameEntity/Enemy/Goomba.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="236">
-              <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
+            <state relative-caret-position="34">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#248#249#0" expanded="true" />
-                <element signature="e#279#280#0" expanded="true" />
+                <element signature="e#1445#1446#0" expanded="true" />
+                <element signature="e#1474#1475#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -142,15 +132,21 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Mario/Handler.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="221">
-              <caret line="76" column="19" selection-start-line="76" selection-start-column="19" selection-end-line="76" selection-end-column="19" />
+            <state relative-caret-position="204">
+              <caret line="23" selection-start-line="23" selection-end-line="23" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2679#2680#0" expanded="true" />
                 <element signature="e#2708#2709#0" expanded="true" />
+                <element signature="e#2743#2744#0" expanded="true" />
                 <element signature="e#2770#2771#0" expanded="true" />
+                <element signature="e#2812#2813#0" expanded="true" />
                 <element signature="e#2844#2845#0" expanded="true" />
+                <element signature="e#2882#2883#0" expanded="true" />
                 <element signature="e#2912#2913#0" expanded="true" />
+                <element signature="e#2956#2957#0" expanded="true" />
                 <element signature="e#2985#2986#0" expanded="true" />
+                <element signature="e#3025#3026#0" expanded="true" />
                 <element signature="e#3052#3053#0" expanded="true" />
               </folding>
             </state>
@@ -186,17 +182,17 @@
       <find>status==</find>
       <find>falling</find>
       <find>jump</find>
-      <find>die</find>
       <find>velX</find>
       <find>frameDelay</find>
       <find>.01</find>
       <find>animate</find>
       <find>red</find>
       <find>println</find>
-      <find>render</find>
       <find>10</find>
       <find>velY</find>
       <find>tick</find>
+      <find>die</find>
+      <find>render</find>
       <find>vel</find>
     </findStrings>
   </component>
@@ -219,17 +215,17 @@
         <option value="$PROJECT_DIR$/src/Mario/Input/KeyInput.java" />
         <option value="$PROJECT_DIR$/src/Mario/Id.java" />
         <option value="$PROJECT_DIR$/src/GameGFX/SpriteSheet.java" />
-        <option value="$PROJECT_DIR$/src/Mario/Game.java" />
-        <option value="$PROJECT_DIR$/src/GameEntity/Player.java" />
         <option value="$PROJECT_DIR$/src/Mario/Handler.java" />
+        <option value="$PROJECT_DIR$/src/Mario/Game.java" />
         <option value="$PROJECT_DIR$/src/GameEntity/Enemy/Goomba.java" />
+        <option value="$PROJECT_DIR$/src/GameEntity/Player.java" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds" extendedState="7">
     <option name="x" value="-8" />
     <option name="y" value="-8" />
-    <option name="width" value="559" />
+    <option name="width" value="697" />
     <option name="height" value="735" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -240,6 +236,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -294,8 +292,6 @@
           <select />
         </subPane>
       </pane>
-      <pane id="PackagesPane" />
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -356,25 +352,26 @@
       <workItem from="1579609208160" duration="23929000" />
       <workItem from="1579709516924" duration="1926000" />
       <workItem from="1579712412366" duration="173000" />
-      <workItem from="1579712635759" duration="22470000" />
+      <workItem from="1579712635759" duration="25234000" />
+      <workItem from="1579798763927" duration="736000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="62626000" />
+    <option name="totallyTimeSpent" value="66126000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19591528" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.34065935" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
       <window_info id="Favorites" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.70121026" visible="true" weight="0.1685761" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.70121026" visible="true" weight="0.16530278" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -384,7 +381,7 @@
       <window_info anchor="bottom" id="Terminal" order="9" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.2987897" side_tool="true" weight="0.1685761" />
       <window_info anchor="bottom" id="Version Control" order="11" />
-      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.49583334" weight="0.049099836" />
+      <window_info anchor="bottom" id="Messages" order="12" sideWeight="0.49583334" weight="0.049833886" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -476,10 +473,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mario/Input/KeyInput.java">
+    <entry file="file://$PROJECT_DIR$/src/Mario/Id.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="19" column="13" lean-forward="true" selection-start-line="19" selection-start-column="13" selection-end-line="21" />
+        <state relative-caret-position="119">
+          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Mario/Game.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="867">
+          <caret line="63" column="36" selection-start-line="63" selection-start-column="36" selection-end-line="63" selection-end-column="36" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -488,20 +492,28 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GameEntity/Mushroom.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="585">
-          <caret line="85" lean-forward="true" selection-start-line="36" selection-end-line="85" />
+        <state relative-caret-position="1309">
+          <caret line="85" selection-start-line="36" selection-end-line="85" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#337#338#0" expanded="true" />
-            <element signature="e#421#422#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GameEntity/Entity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="102">
+          <caret line="9" column="28" selection-start-line="9" selection-start-column="28" selection-end-line="9" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GameGFX/Sprite.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="35" lean-forward="true" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
+        <state relative-caret-position="136">
+          <caret line="10" column="35" selection-start-line="10" selection-start-column="35" selection-end-line="10" selection-end-column="35" />
           <folding>
             <element signature="e#196#197#0" expanded="true" />
             <element signature="e#238#239#0" expanded="true" />
@@ -511,7 +523,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GameGFX/SpriteSheet.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
+        <state relative-caret-position="493">
           <caret line="33" column="42" selection-start-line="33" selection-start-column="42" selection-end-line="33" selection-end-column="42" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -519,20 +531,45 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mario/Id.java">
+    <entry file="file://$PROJECT_DIR$/src/Mario/Input/KeyInput.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="11" selection-start-line="7" selection-start-column="11" selection-end-line="7" selection-end-column="11" />
+        <state relative-caret-position="238">
+          <caret line="19" column="13" selection-start-line="19" selection-start-column="13" selection-end-line="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameEntity/Entity.java">
+    <entry file="file://$PROJECT_DIR$/src/Mario/Handler.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-561">
-          <caret line="33" column="25" selection-start-line="33" selection-start-column="25" selection-end-line="33" selection-end-column="25" />
+        <state relative-caret-position="204">
+          <caret line="23" selection-start-line="23" selection-end-line="23" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1448#1449#0" expanded="true" />
+            <element signature="e#2679#2680#0" expanded="true" />
+            <element signature="e#2708#2709#0" expanded="true" />
+            <element signature="e#2743#2744#0" expanded="true" />
+            <element signature="e#2770#2771#0" expanded="true" />
+            <element signature="e#2812#2813#0" expanded="true" />
+            <element signature="e#2844#2845#0" expanded="true" />
+            <element signature="e#2882#2883#0" expanded="true" />
+            <element signature="e#2912#2913#0" expanded="true" />
+            <element signature="e#2956#2957#0" expanded="true" />
+            <element signature="e#2985#2986#0" expanded="true" />
+            <element signature="e#3025#3026#0" expanded="true" />
+            <element signature="e#3052#3053#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GameEntity/Enemy/Goomba.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#1445#1446#0" expanded="true" />
             <element signature="e#1474#1475#0" expanded="true" />
           </folding>
         </state>
@@ -540,53 +577,10 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/GameEntity/Player.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="127">
-          <caret line="70" column="35" selection-start-line="70" selection-start-column="34" selection-end-line="70" selection-end-column="35" />
+        <state relative-caret-position="238">
+          <caret line="131" column="21" selection-start-line="131" selection-start-column="21" selection-end-line="131" selection-end-column="21" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#4371#4372#0" expanded="true" />
-            <element signature="e#4397#4398#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mario/Handler.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="76" column="19" selection-start-line="76" selection-start-column="19" selection-end-line="76" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2708#2709#0" expanded="true" />
-            <element signature="e#2770#2771#0" expanded="true" />
-            <element signature="e#2844#2845#0" expanded="true" />
-            <element signature="e#2912#2913#0" expanded="true" />
-            <element signature="e#2985#2986#0" expanded="true" />
-            <element signature="e#3052#3053#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mario/Game.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="858">
-          <caret line="66" column="87" selection-start-line="66" selection-start-column="84" selection-end-line="66" selection-end-column="87" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#4764#4765#0" expanded="true" />
-            <element signature="e#5203#5204#0" expanded="true" />
-            <element signature="e#5277#5278#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameEntity/Enemy/Goomba.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="236">
-          <caret line="35" column="26" selection-start-line="35" selection-start-column="26" selection-end-line="35" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#248#249#0" expanded="true" />
-            <element signature="e#279#280#0" expanded="true" />
           </folding>
         </state>
       </provider>
