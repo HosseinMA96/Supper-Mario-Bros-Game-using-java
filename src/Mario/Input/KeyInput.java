@@ -2,6 +2,7 @@ package Mario.Input;
 
 import GameEntity.Entity;
 import Mario.Game;
+import Mario.Id;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -13,6 +14,8 @@ public class KeyInput implements KeyListener {
 
         for (Entity en : Game.getHandler().getEntity()) {
 
+            if(en.getId() != Id.player1)
+                continue;
 
             switch (key) {
 

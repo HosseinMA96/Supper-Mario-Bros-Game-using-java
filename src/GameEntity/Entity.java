@@ -54,6 +54,7 @@ public abstract class Entity {
 
     }
 
+
     public int getX() {
         return x;
     }

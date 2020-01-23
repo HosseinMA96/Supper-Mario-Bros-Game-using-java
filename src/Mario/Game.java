@@ -26,7 +26,7 @@ public class Game extends Canvas implements Runnable {
     public static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
     public static  SpriteSheet sheet;
     public static Handler handler;
-    public static Sprite grass;
+    public static Sprite grass,greenMushroom,redMushroom;
     public static Sprite player[]=new Sprite[8];
     public static Camera cam;
     private BufferedImage image;
@@ -44,6 +44,8 @@ public class Game extends Canvas implements Runnable {
         addKeyListener(new KeyInput());
 
         grass=new Sprite(sheet,1,1);
+        redMushroom=new Sprite(sheet,2,1);
+        greenMushroom=new Sprite(sheet,1,1);
      //   player=new Sprite(sheet,1,1);
 
         for (int i=0;i<player.length;i++){

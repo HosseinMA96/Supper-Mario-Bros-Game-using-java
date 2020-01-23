@@ -12,6 +12,7 @@ public class Player extends Entity {
 
     private int frame = 0, frameDelay = 0;
     private boolean animate = false;
+    private int status=1; //status is mario size, 1 for small, 2 for medium and 3 for fire mario
     //frame delay is the amount of the time the game upddates before it changes the animation
 
     public Player(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
@@ -102,6 +103,25 @@ public class Player extends Entity {
 
         }
 
+
+        for(int i=0;i<handler.getEntity().size();i++)
+        {
+            Entity e=handler.getEntity().get(i);
+
+            if(e.getId()==Id.redMushroom){
+                if(getBounds().intersects(e.getBounds()))
+                {
+                    status++;
+
+                    if(status==4)
+                        status=3;
+
+                    e.die();
+                }
+
+
+            }
+        }
         /**
          * Jumping parabola formula must lie here
          * gravity = acceleration

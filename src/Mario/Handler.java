@@ -1,10 +1,12 @@
 package Mario;
 
 import GameEntity.Entity;
+import GameEntity.Mushroom;
 import GameEntity.Player;
 import GameTile.Tile;
 import GameTile.Wall;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -26,11 +28,14 @@ public class Handler {
     }
 
     public void tick() {
-        for (Entity en : entity)
-            en.tick();
+//        for (Entity en : entity)
+//            en.tick();
+//
+//        for (Tile tl : tile)
+//            tl.tick();
 
-        for (Tile tl : tile)
-            tl.tick();
+        for (int i=0;i<entity.size();i++)
+            entity.get(i).tick();
     }
 
     public void createLevel(BufferedImage level) {
@@ -57,8 +62,15 @@ public class Handler {
                 if(red == 0 && green==0 && blue ==0)
                     addTile(new Wall(x*64,y*64,64,64,true,Id.wall,this));
 
-                if(red==0 && green ==0 && blue == 255)
-                    addEntity(new Player(x*64,y*64,64,64,false,Id.player1,this));
+                if(red==0 && green ==0 && blue == 255) {
+                //    JOptionPane.showMessageDialog(null,"player");
+                    addEntity(new Player(x * 64, y * 64, 64, 64, false, Id.player1, this));
+                }
+
+                if(red==255 && green==0 && blue==0) {
+                 //   JOptionPane.showMessageDialog(null,"Mushroom");
+                    addEntity(new Mushroom(x * 64, y * 64, 64, 64, true, Id.redMushroom, this));
+                }
 
 
             }
