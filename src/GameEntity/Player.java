@@ -12,7 +12,7 @@ public class Player extends Entity {
 
     private int frame = 0, frameDelay = 0;
     private boolean animate = false;
-    private int status=1; //status is mario size, 1 for small, 2 for medium and 3 for fire mario
+    private int status=0; //status is mario size, 0 for small, 1 for medium and 2 for fire mario
     //frame delay is the amount of the time the game upddates before it changes the animation
 
     public Player(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
@@ -28,10 +28,10 @@ public class Player extends Entity {
 //        g.fillRect(x, y, width, height);
         //4 left sided Mario
         if (facing == 0)
-            g.drawImage(Game.player[frame + 4].getBufferedImage(), x, y, width, height, null);
+            g.drawImage(Game.player[status][frame + 4].getBufferedImage(), x, y, width, height, null);
 
         else if (facing == 1)
-            g.drawImage(Game.player[frame].getBufferedImage(), x, y, width, height, null);
+            g.drawImage(Game.player[status][frame].getBufferedImage(), x, y, width, height, null);
     }
 
     @Override
@@ -113,8 +113,8 @@ public class Player extends Entity {
                 {
                     status++;
 
-                    if(status==4)
-                        status=3;
+                    if(status==3)
+                        status=2;
 
                     e.die();
                 }

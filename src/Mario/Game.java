@@ -27,7 +27,7 @@ public class Game extends Canvas implements Runnable {
     public static  SpriteSheet sheet;
     public static Handler handler;
     public static Sprite grass,greenMushroom,redMushroom;
-    public static Sprite player[]=new Sprite[8];
+    public static Sprite player[][]=new Sprite[3][8];//first index is status, second is frame
     public static Camera cam;
     private BufferedImage image;
 
@@ -48,8 +48,10 @@ public class Game extends Canvas implements Runnable {
         greenMushroom=new Sprite(sheet,1,1);
      //   player=new Sprite(sheet,1,1);
 
-        for (int i=0;i<player.length;i++){
-            player[i]=new Sprite(sheet,i+1,16);
+        for (int i=0;i<8;i++){
+            player[1][i]=new Sprite(sheet,i+1,16);
+            player[0][i]=new Sprite(sheet,i+9,16);
+            player[2][i]=new Sprite(sheet,i+1,15);
         }
 
        // handler.addEntity(new Player(300,512,64,64,true,Id.player1,handler));
