@@ -12,7 +12,7 @@ import java.awt.*;
 
 public class Player extends Entity {
 
-    private int frame = 0, frameDelay = 0;
+    private int frame = 0, frameDelay = 0,safeClocks;
     private boolean animate = false;
     private int status = 0; //status is mario size, 0 for small, 1 for medium and 2 for fire mario
     //frame delay is the amount of the time the game upddates before it changes the animation
@@ -26,10 +26,10 @@ public class Player extends Entity {
 
     @Override
     public void render(Graphics g) {
-
+        
         if(jumping)
         {
-            
+
         }
 
         if (facing == 0)
@@ -151,7 +151,17 @@ public class Player extends Entity {
                 } else if (getBounds().intersects(e.getBounds())) {
 
                     //PLAYER INTERSECT WITH GOOMBA
-                    die();
+
+                    if(safeClocks==0)
+                    status--;
+
+                    safeClocks++;
+
+                    if(safeClocks==30)
+                        safeClocks=0;
+
+                    if(status==-1)
+                        die();
                 }
             }
         }

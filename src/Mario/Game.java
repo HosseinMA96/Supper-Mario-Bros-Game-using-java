@@ -32,6 +32,7 @@ public class Game extends Canvas implements Runnable {
     public static Camera cam;
     public static Sprite[] goomba=new Sprite[8];
     private BufferedImage image;
+    private int numberOfLives=3;
 
     //he 10 you 10
 
