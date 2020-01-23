@@ -1,6 +1,7 @@
 package GameEntity;
 
 import GameEntity.Enemy.Goomba;
+import GameTile.PowerUpBlock;
 import GameTile.Tile;
 import Mario.Game;
 import Mario.Handler;
@@ -13,11 +14,11 @@ public class Player extends Entity {
 
     private int frame = 0, frameDelay = 0;
     private boolean animate = false;
-    private int status=0; //status is mario size, 0 for small, 1 for medium and 2 for fire mario
+    private int status = 0; //status is mario size, 0 for small, 1 for medium and 2 for fire mario
     //frame delay is the amount of the time the game upddates before it changes the animation
 
     public Player(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
-        super(x, y, width, height, solid, id, handler);
+        super(x, y, width, height, id, handler);
 //        velX = 1;
 //        velY = -1;
     }
@@ -25,6 +26,11 @@ public class Player extends Entity {
 
     @Override
     public void render(Graphics g) {
+
+        if(jumping)
+        {
+            
+        }
 
         if (facing == 0)
             g.drawImage(Game.player[status][frame + 4].getBufferedImage(), x, y, width, height, null);
@@ -67,14 +73,33 @@ public class Player extends Entity {
 
                     if (jumping) {
                         jumping = false;
-                      //  gravity = 0.8;
+                        //  gravity = 0.8;
                         gravity = 2;
                         falling = true;
                     }
+
+
 //                    y=t.getY()+t.getHeight();
                     //BLANK
                 }
             }
+
+            if (t.getId() == Id.powerUp) {
+                if (getBoundsTop().intersects(t.getBounds()) && !((PowerUpBlock) t).isActivated()) {
+                    if (jumping) {
+                        jumping = false;
+                        //  gravity = 0.8;
+                        gravity = 2;
+                        falling = true;
+                    }
+                    //   JOptionPane.showMessageDialog(null,"set actv");
+                    ((PowerUpBlock) t).setActivated(true);
+                    //  JOptionPane.showMessageDialog(null,"hit");
+                }
+
+
+            }
+
 
             if (getBoundsBottom().intersects((t.getBounds()))) {
                 setVelY(0);
@@ -83,7 +108,7 @@ public class Player extends Entity {
                     falling = false;
             } else {
                 if (!falling && !jumping) {
-                 //   gravity = 0.8;
+                    //   gravity = 0.8;
                     gravity = 2;
                     falling = true;
                 }
@@ -103,17 +128,15 @@ public class Player extends Entity {
         }
 
 
-        for(int i=0;i<handler.getEntity().size();i++)
-        {
-            Entity e=handler.getEntity().get(i);
+        for (int i = 0; i < handler.getEntity().size(); i++) {
+            Entity e = handler.getEntity().get(i);
 
-            if(e.getId()==Id.redMushroom){
-                if(getBounds().intersects(e.getBounds()))
-                {
+            if (e.getId() == Id.redMushroom) {
+                if (getBounds().intersects(e.getBounds())) {
                     status++;
 
-                    if(status==3)
-                        status=2;
+                    if (status == 3)
+                        status = 2;
 
                     e.die();
                 }
@@ -121,16 +144,11 @@ public class Player extends Entity {
 
             }
 
-            if(e.getId()==Id.goomba){
+            if (e.getId() == Id.goomba) {
 
-                if(getBoundsBottom().intersects(e.getBoundsTop()))
-                {
+                if (getBoundsBottom().intersects(e.getBoundsTop())) {
                     e.die();
-                }
-
-
-                else if(getBounds().intersects(e.getBounds()))
-                {
+                } else if (getBounds().intersects(e.getBounds())) {
 
                     //PLAYER INTERSECT WITH GOOMBA
                     die();

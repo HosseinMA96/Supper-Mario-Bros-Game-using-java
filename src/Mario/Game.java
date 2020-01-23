@@ -4,6 +4,7 @@ import GameEntity.Entity;
 import GameEntity.Player;
 import GameGFX.Sprite;
 import GameGFX.SpriteSheet;
+import GameTile.Tile;
 import GameTile.Wall;
 import Mario.Input.KeyInput;
 
@@ -26,7 +27,7 @@ public class Game extends Canvas implements Runnable {
     public static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
     public static  SpriteSheet sheet;
     public static Handler handler;
-    public static Sprite grass,greenMushroom,redMushroom;
+    public static Sprite grass,greenMushroom,redMushroom,powerUp,usedPowerUp;
     public static Sprite player[][]=new Sprite[3][8];//first index is status, second is frame
     public static Camera cam;
     public static Sprite[] goomba=new Sprite[8];
@@ -62,6 +63,10 @@ public class Game extends Canvas implements Runnable {
         goomba[0]=new Sprite(sheet,1,14);
         goomba[1]=new Sprite(sheet,2,14);
         goomba[2]=new Sprite(sheet,3,14);
+
+
+        powerUp=new Sprite(sheet,4,14);
+        usedPowerUp=new Sprite(sheet,5,14);
 
 
 
@@ -189,6 +194,7 @@ public class Game extends Canvas implements Runnable {
                 cam.tick(e);
             }
         }
+
     }
 
     public Game() {

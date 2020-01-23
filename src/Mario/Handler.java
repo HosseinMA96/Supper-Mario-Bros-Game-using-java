@@ -4,6 +4,7 @@ import GameEntity.Enemy.Goomba;
 import GameEntity.Entity;
 import GameEntity.Mushroom;
 import GameEntity.Player;
+import GameTile.PowerUpBlock;
 import GameTile.Tile;
 import GameTile.Wall;
 
@@ -37,6 +38,10 @@ public class Handler {
 
         for (int i=0;i<entity.size();i++)
             entity.get(i).tick();
+
+
+        for (int i=0;i<tile.size();i++)
+            tile.get(i).tick();
     }
 
     public void createLevel(BufferedImage level) {
@@ -70,13 +75,18 @@ public class Handler {
 
                 if(red==255 && green==0 && blue==0) {
                  //   JOptionPane.showMessageDialog(null,"Mushroom");
-                    addEntity(new Mushroom(x * 64, y * 64, 64, 64, true, Id.redMushroom, this));
+                    addEntity(new Mushroom(x * 64, y * 64, 64, 64, Id.redMushroom, this));
                 }
 
                 if(red==50 && green==50 && blue==50) {
                  //   JOptionPane.showMessageDialog(null,"Goomba");
                     //   JOptionPane.showMessageDialog(null,"Mushroom");
                     addEntity(new Goomba(x * 64, y * 64, 64, 64, true, Id.goomba, this));
+                }
+
+                if(red==255 && green==255 && blue==0)
+                {
+                    addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.redMushroom));
                 }
 
 

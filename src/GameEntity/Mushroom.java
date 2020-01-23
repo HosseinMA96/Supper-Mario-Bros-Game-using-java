@@ -12,15 +12,15 @@ public class Mushroom extends Entity {
     private Random random=new Random();
     private int dir;
 
-    public Mushroom(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
-        super(x, y, width, height, solid, id, handler);
+    public Mushroom(int x, int y, int width, int height, Id id, Handler handler) {
+        super(x, y, width, height, id, handler);
         dir=random.nextInt(2);
 
         if(dir==0)
-            velX=-2;
+            velX=-1;
 
         else
-            velX=2;
+            velX=1;
     }
 
 
@@ -69,18 +69,18 @@ public class Mushroom extends Entity {
 
 
             if (getBoundsLeft().intersects((t.getBounds()))) {
-                setVelX(2);
+                setVelX(1);
             }
 
             if (getBoundsRight().intersects((t.getBounds()))) {
-                setVelX(-2);
+                setVelX(-1);
 
             }
 
         }
 
         if (falling) {
-            gravity += .01;
+            gravity += .1;
             setVelY((int) gravity);
         }
 

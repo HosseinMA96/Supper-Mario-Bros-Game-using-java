@@ -7,7 +7,7 @@ import java.awt.*;
 
 public abstract class Tile {
     protected int x,y,width,height,velX,velY;
-    protected boolean solid;
+    protected boolean solid,activated=false;
     protected Id id;
     protected Handler handler;
 

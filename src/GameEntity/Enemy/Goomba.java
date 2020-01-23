@@ -20,7 +20,7 @@ public class Goomba extends Entity {
 
 
     public Goomba(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
-        super(x, y, width, height, solid, id, handler);
+        super(x, y, width, height, id, handler);
         velX=1;
     }
 

@@ -7,7 +7,7 @@ import java.awt.*;
 
 public abstract class Entity {
     protected int x,y,width,height,velX,velY;
-    protected boolean solid;
+//    protected boolean solid;
     protected Id id;
     protected Handler handler;
     protected boolean jumping=false;
@@ -16,12 +16,12 @@ public abstract class Entity {
     protected int facing=0; // facing left =0 , facing right =1
 
 
-    public Entity(int x, int y, int width, int height,boolean solid,Id id,Handler handler) {
+    public Entity(int x, int y, int width, int height,Id id,Handler handler) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
-        this.solid=solid;
+//        this.solid=solid;
         this.id=id;
         this.handler=handler;
     }
@@ -45,9 +45,9 @@ public abstract class Entity {
         handler.removeEntity(this);
     }
 
-    public boolean getSolid(){
-        return solid;
-    }
+//    public boolean getSolid(){
+//        return solid;
+//    }
 
     public void setFacing(int f)
     {

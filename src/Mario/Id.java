@@ -6,6 +6,7 @@ public enum Id {
     redMushroom,
     greenMushroom,
     goomba,
+    powerUp,
     wall;
 
 }
