@@ -63,6 +63,7 @@ public class KeyInput implements KeyListener {
 
 
         for (Entity en : Game.getHandler().getEntity()) {
+            if(en.getId()==Id.player1)
             switch (key) {
 
                 case KeyEvent.VK_W:
