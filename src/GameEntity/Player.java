@@ -1,5 +1,6 @@
 package GameEntity;
 
+import GameEntity.Enemy.Goomba;
 import GameTile.Tile;
 import Mario.Game;
 import Mario.Handler;
@@ -24,9 +25,7 @@ public class Player extends Entity {
 
     @Override
     public void render(Graphics g) {
-//        g.setColor(Color.BLUE);
-//        g.fillRect(x, y, width, height);
-        //4 left sided Mario
+
         if (facing == 0)
             g.drawImage(Game.player[status][frame + 4].getBufferedImage(), x, y, width, height, null);
 
@@ -120,6 +119,15 @@ public class Player extends Entity {
                 }
 
 
+            }
+
+            if(e.getId()==Id.goomba){
+                if(getBounds().intersects(e.getBounds()))
+                {
+                    ((Goomba) e).setDying(true);
+                    //PLAYER INTERSECT WITH GOOMBA
+                    die();
+                }
             }
         }
         /**

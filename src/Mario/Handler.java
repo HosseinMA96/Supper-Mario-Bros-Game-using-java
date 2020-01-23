@@ -1,5 +1,6 @@
 package Mario;
 
+import GameEntity.Enemy.Goomba;
 import GameEntity.Entity;
 import GameEntity.Mushroom;
 import GameEntity.Player;
@@ -70,6 +71,12 @@ public class Handler {
                 if(red==255 && green==0 && blue==0) {
                  //   JOptionPane.showMessageDialog(null,"Mushroom");
                     addEntity(new Mushroom(x * 64, y * 64, 64, 64, true, Id.redMushroom, this));
+                }
+
+                if(red==50 && green==50 && blue==50) {
+                 //   JOptionPane.showMessageDialog(null,"Goomba");
+                    //   JOptionPane.showMessageDialog(null,"Mushroom");
+                    addEntity(new Goomba(x * 64, y * 64, 64, 64, true, Id.goomba, this));
                 }
 
 

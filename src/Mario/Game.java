@@ -29,6 +29,7 @@ public class Game extends Canvas implements Runnable {
     public static Sprite grass,greenMushroom,redMushroom;
     public static Sprite player[][]=new Sprite[3][8];//first index is status, second is frame
     public static Camera cam;
+    public static Sprite[] goomba=new Sprite[8];
     private BufferedImage image;
 
     //he 10 you 10
@@ -46,13 +47,18 @@ public class Game extends Canvas implements Runnable {
         grass=new Sprite(sheet,1,1);
         redMushroom=new Sprite(sheet,2,1);
         greenMushroom=new Sprite(sheet,1,1);
+
      //   player=new Sprite(sheet,1,1);
 
         for (int i=0;i<8;i++){
             player[1][i]=new Sprite(sheet,i+1,16);
             player[0][i]=new Sprite(sheet,i+9,16);
             player[2][i]=new Sprite(sheet,i+1,15);
+            goomba[i]=new Sprite(sheet,i+i,14);
         }
+
+
+
 
        // handler.addEntity(new Player(300,512,64,64,true,Id.player1,handler));
        // handler.addTile(new Wall(200,200,64,64,true,Id.wall,handler));
@@ -119,7 +125,7 @@ public class Game extends Canvas implements Runnable {
 
             if (System.currentTimeMillis() - timer > 1000) {
                 timer += 1000;
-                System.out.println(frames + "  Frames Per Second " + ticks + " Updates Per Second");
+            //    System.out.println(frames + "  Frames Per Second " + ticks + " Updates Per Second");
                 frames = 0;
                 ticks = 0;
             }

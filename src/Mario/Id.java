@@ -5,6 +5,7 @@ public enum Id {
     player2,
     redMushroom,
     greenMushroom,
+    goomba,
     wall;
 
 }

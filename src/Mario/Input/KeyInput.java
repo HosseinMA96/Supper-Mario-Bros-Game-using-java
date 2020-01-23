@@ -14,15 +14,17 @@ public class KeyInput implements KeyListener {
 
         for (Entity en : Game.getHandler().getEntity()) {
 
-            if(en.getId() != Id.player1)
+            if (en.getId() != Id.player1)
                 continue;
+
+//            if (en.getJumping())
+//                continue;
 
             switch (key) {
 
                 case KeyEvent.VK_W:
 //                    en.setVelY(-5);
-                    if(!en.getJumping())
-                    {
+                    if (!en.getJumping()) {
                         en.setJumping(true);
                         en.setGravity(10.0);
                     }
@@ -37,7 +39,6 @@ public class KeyInput implements KeyListener {
 
 
                 case KeyEvent.VK_D:
-
 
 
                     en.setVelX(5);
@@ -63,27 +64,32 @@ public class KeyInput implements KeyListener {
 
 
         for (Entity en : Game.getHandler().getEntity()) {
-            if(en.getId()==Id.player1)
-            switch (key) {
+            if (en.getId() == Id.player1) {
+//                if(en.getJumping())
+//                    continue;
 
-                case KeyEvent.VK_W:
-                    en.setVelY(0);
-                    break;
-
-
-                case KeyEvent.VK_S:
-                    en.setVelY(0);
-                    break;
+                switch (key) {
 
 
-                case KeyEvent.VK_D:
-                    en.setVelX(0);
-                    break;
+                    case KeyEvent.VK_W:
+                        en.setVelY(0);
+                        break;
 
-                case KeyEvent.VK_A:
-                    en.setVelX(0);
-                    break;
 
+                    case KeyEvent.VK_S:
+                        en.setVelY(0);
+                        break;
+
+
+                    case KeyEvent.VK_D:
+                        en.setVelX(0);
+                        break;
+
+                    case KeyEvent.VK_A:
+                        en.setVelX(0);
+                        break;
+
+                }
             }
 
 

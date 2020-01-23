@@ -24,6 +24,13 @@ public class SpriteSheet {
 
     public BufferedImage getSprite(int x,int y)
     {
-        return sheet.getSubimage(x*32-32,y*32-32,32,32);
+        int u=x,v=y;
+        if(x==0)
+            u=1;
+
+        if(y==0)
+            v=1;
+
+        return sheet.getSubimage(u*32-32,v*32-32,32,32);
     }
 }
