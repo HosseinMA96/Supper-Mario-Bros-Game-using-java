@@ -2,11 +2,10 @@ package Mario;
 
 import GameEntity.Enemy.Goomba;
 import GameEntity.Entity;
-import GameEntity.Mushroom;
+import GameEntity.RedMushroom;
 import GameEntity.Player;
 import GameTile.*;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -72,19 +71,19 @@ public class Handler {
                 }
 
                 if(red==255 && green==0 && blue==0) {
-                 //   JOptionPane.showMessageDialog(null,"Mushroom");
-                    addEntity(new Mushroom(x * 64, y * 64, 64, 64, Id.redMushroom, this));
+                 //   JOptionPane.showMessageDialog(null,"RedMushroom");
+                    addEntity(new RedMushroom(x * 64, y * 64, 64, 64, Id.redMushroom, this));
                 }
 
                 if(red==50 && green==50 && blue==50) {
                  //   JOptionPane.showMessageDialog(null,"Goomba");
-                    //   JOptionPane.showMessageDialog(null,"Mushroom");
+                    //   JOptionPane.showMessageDialog(null,"RedMushroom");
                     addEntity(new Goomba(x * 64, y * 64, 64, 64, true, Id.goomba, this));
                 }
 
                 if(red==255 && green==255 && blue==0)
                 {
-                    addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.redMushroom));
+                    addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.redMushroom,"RED"));
                 }
 
                 if(red ==0 && (green>123 && green<129) && blue==0)
@@ -96,6 +95,13 @@ public class Handler {
                 {
                     addTile(new Coin(x*64,y*64,64,64,true,Id.coin,this));
                 }
+
+                if(red== 0 && green==100 && blue==0)
+                {
+                    addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.greenMushroom,"GREEN"));
+                }
+
+
 
 
             }

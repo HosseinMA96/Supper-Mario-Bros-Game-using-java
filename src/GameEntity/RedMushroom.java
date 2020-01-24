@@ -8,11 +8,11 @@ import Mario.Id;
 import java.awt.*;
 import java.util.Random;
 
-public class Mushroom extends Entity {
+public class RedMushroom extends Entity {
     private Random random=new Random();
     private int dir;
 
-    public Mushroom(int x, int y, int width, int height, Id id, Handler handler) {
+    public RedMushroom(int x, int y, int width, int height, Id id, Handler handler) {
         super(x, y, width, height, id, handler);
         dir=random.nextInt(2);
 

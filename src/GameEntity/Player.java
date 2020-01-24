@@ -176,6 +176,16 @@ public class Player extends Entity {
 
             }
 
+            if (e.getId() == Id.greenMushroom) {
+                if (getBounds().intersects(e.getBounds())) {
+                    Game.lives++;
+
+                    e.die();
+                }
+
+
+            }
+
             if (e.getId() == Id.goomba) {
 
                 if (getBoundsBottom().intersects(e.getBoundsTop())) {

@@ -1,4 +1,7 @@
 package Mario;
+//27 boss
+//23 , 24 pipes
+//28, Menus and hframe and icons
 
 import GameEntity.Entity;
 import GameEntity.Player;
@@ -53,7 +56,7 @@ public class Game extends Canvas implements Runnable {
 
         grass = new Sprite(sheet, 1, 1);
         redMushroom = new Sprite(sheet, 2, 1);
-        greenMushroom = new Sprite(sheet, 1, 1);
+        greenMushroom = new Sprite(sheet, 3, 1);
 
         //   player=new Sprite(sheet,1,1);
 
@@ -95,6 +98,8 @@ public class Game extends Canvas implements Runnable {
 
         pipeBody = new Sprite(sheet, 2, 13);
         // pipeHead=new Sprite(sheet,1,13);
+
+
 
 
         // handler.addEntity(new Player(300,512,64,64,true,Id.player1,handler));
@@ -210,7 +215,7 @@ public class Game extends Canvas implements Runnable {
             gameOverTicks++;
 
 
-            if(gameOverTicks==500g)
+            if(gameOverTicks==500)
                 exit(0);
 
         }
