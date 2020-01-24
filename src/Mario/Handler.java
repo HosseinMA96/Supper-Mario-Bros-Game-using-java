@@ -125,4 +125,10 @@ public class Handler {
     public ArrayList<Tile> getTile() {
         return tile;
     }
+
+    public void clearLevel()
+    {
+        entity.clear();
+        tile.clear();
+    }
 }

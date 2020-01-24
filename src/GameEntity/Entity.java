@@ -1,5 +1,6 @@
 package GameEntity;
 
+import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
 
@@ -43,6 +44,17 @@ public abstract class Entity {
     public void die()
     {
         handler.removeEntity(this);
+
+        if(id==Id.player1)
+        {
+            Game.lives--;
+            Game.showDeathScreen=true;
+
+
+            if(Game.lives==0)
+                Game.gameOver=true;
+        }
+
     }
 
 //    public boolean getSolid(){
