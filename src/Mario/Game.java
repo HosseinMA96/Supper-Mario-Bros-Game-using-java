@@ -27,12 +27,13 @@ public class Game extends Canvas implements Runnable {
     public static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
     public static  SpriteSheet sheet;
     public static Handler handler;
-    public static Sprite grass,greenMushroom,redMushroom,powerUp,usedPowerUp,pipeBody;
+    public static Sprite grass,greenMushroom,redMushroom,powerUp,usedPowerUp,pipeBody,coin;
     public static Sprite player[][]=new Sprite[3][12];//first index is status, second is frame
     public static Camera cam;
     public static Sprite[] goomba=new Sprite[8];
     private BufferedImage image;
     private int numberOfLives=3;
+    public static int coins;
 
     //he 10 you 10
 
@@ -81,7 +82,7 @@ public class Game extends Canvas implements Runnable {
 
 
 
-
+        coin=new Sprite(sheet,8,14);
 
         goomba[0]=new Sprite(sheet,1,14);
         goomba[1]=new Sprite(sheet,2,14);
@@ -135,6 +136,11 @@ public class Game extends Canvas implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public void addCoint()
+    {
+        coins++;
     }
 
     @Override
@@ -200,6 +206,13 @@ public class Game extends Canvas implements Runnable {
         g.setColor(Color.BLACK);
         g.fillRect(0,0,getWidth(),getHeight());
 
+        //handle Coinds
+        g.drawImage(coin.getBufferedImage(),1200,20,30,30,null);
+        g.setColor(Color.WHITE);
+        g.setFont(new Font("Courier",Font.BOLD,30));
+        g.drawString("x"+coins,1240,45);
+
+
         //move camera
         g.translate(cam.getX(),cam.getY());
         handler.render(g);
@@ -249,6 +262,7 @@ public class Game extends Canvas implements Runnable {
         frame.setVisible(true);
         game.start();
     }
+
 
     public int getFrameWidth()
     {

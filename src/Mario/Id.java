@@ -8,6 +8,7 @@ public enum Id {
     goomba,
     powerUp,
     pipe,
+    coin,
     wall;
 
 }

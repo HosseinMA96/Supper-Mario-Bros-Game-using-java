@@ -14,7 +14,7 @@ public class Player extends Entity {
 
     private int frame = 0, frameDelay = 0, safeClocks, pixelsTraveled = 0;
     private boolean animate = false, sit;
-    private int status = 0; //status is mario size, 0 for small, 1 for medium and 2 for fire mario
+    private int status = 0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
     //frame delay is the amount of the time the game upddates before it changes the animation
     //if face ==0 faced left
 
@@ -35,7 +35,7 @@ public class Player extends Entity {
 
         if(sit && status>0)
         {
-            System.out.println("in sitting wtf");
+          //  System.out.println("in sitting wtf");
             g.drawImage(Game.player[status][9-facing].getBufferedImage(), x, y, width, height, null);
             return;
         }
@@ -46,6 +46,7 @@ public class Player extends Entity {
         else if (facing == 1)
             g.drawImage(Game.player[status][frame].getBufferedImage(), x, y, width, height, null);
     }
+
 
     @Override
     public void tick() {
@@ -75,7 +76,9 @@ public class Player extends Entity {
             animate = false;
 
         //Ehtemalan shekaste shodan ro inja bayad begi dawsh
-        for (Tile t : handler.getTile()) {
+      //  for (Tile t : handler.getTile()) {
+        for(int i=0;i<handler.getTile().size();i++){
+            Tile t=handler.getTile().get(i);
             if (!t.getSolid() || goingDownPipe)
                 continue;
 
@@ -113,7 +116,7 @@ public class Player extends Entity {
             }
 
 
-            if (getBoundsBottom().intersects((t.getBounds()))) {
+            if (getBoundsBottom().intersects((t.getBounds())) && t.getId() != Id.coin) {
 
 
                 setVelY(0);
@@ -136,15 +139,23 @@ public class Player extends Entity {
             }
 
 
-            if (getBoundsLeft().intersects((t.getBounds()))) {
+            if (getBoundsLeft().intersects((t.getBounds())) && t.getId() != Id.coin) {
                 setVelX(0);
                 x = t.getX() + t.getWidth();
             }
 
-            if (getBoundsRight().intersects((t.getBounds()))) {
+            if (getBoundsRight().intersects((t.getBounds())) && t.getId() != Id.coin) {
                 setVelX(0);
                 x = t.getX() - t.getWidth();
             }
+
+            if(getBounds().intersects(t.getBounds()) && t.getId()==Id.coin)
+            {
+                Game.coins++;
+                t.die();
+            }
+
+
 
         }
 
@@ -173,16 +184,20 @@ public class Player extends Entity {
 
                     //PLAYER INTERSECT WITH GOOMBA
 
-                    if (safeClocks == 0)
+//                    if (safeClocks == 0)
                         status--;
 
-                    safeClocks++;
-
-                    if (safeClocks == 30)
-                        safeClocks = 0;
+//                    safeClocks++;
+//
+//                    if (safeClocks == 30)
+//                        safeClocks = 0;
 
                     if (status == -1)
                         die();
+
+                    e.die();
+
+
                 }
             }
         }
