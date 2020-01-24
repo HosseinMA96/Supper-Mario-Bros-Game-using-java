@@ -6,7 +6,7 @@ import Mario.Id;
 import java.awt.*;
 
 public abstract class Tile {
-    protected int x,y,width,height,velX,velY;
+    protected int x,y,width,height,velX,velY,facing;
     protected boolean solid,activated=false;
     protected Id id;
     protected Handler handler;
@@ -47,6 +47,13 @@ public abstract class Tile {
         return solid;
     }
 
+    public int getFacing() {
+        return facing;
+    }
+
+    public void setFacing(int facing) {
+        this.facing = facing;
+    }
 
     public int getX() {
         return x;

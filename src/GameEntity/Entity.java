@@ -10,7 +10,7 @@ public abstract class Entity {
 //    protected boolean solid;
     protected Id id;
     protected Handler handler;
-    protected boolean jumping=false;
+    protected boolean jumping=false,goingDownPipe;
     protected boolean falling=true;
     protected double gravity=0.0;
     protected int facing=0; // facing left =0 , facing right =1
@@ -54,7 +54,14 @@ public abstract class Entity {
 
     }
 
+    public void setGoingDownPipe(boolean goingDownPipe) {
+        this.goingDownPipe = goingDownPipe;
+    }
 
+    public boolean getGoingDownPipe()
+    {
+        return goingDownPipe;
+    }
     public int getX() {
         return x;
     }

@@ -7,6 +7,7 @@ public enum Id {
     greenMushroom,
     goomba,
     powerUp,
+    pipe,
     wall;
 
 }

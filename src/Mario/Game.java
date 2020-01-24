@@ -27,8 +27,8 @@ public class Game extends Canvas implements Runnable {
     public static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
     public static  SpriteSheet sheet;
     public static Handler handler;
-    public static Sprite grass,greenMushroom,redMushroom,powerUp,usedPowerUp;
-    public static Sprite player[][]=new Sprite[3][8];//first index is status, second is frame
+    public static Sprite grass,greenMushroom,redMushroom,powerUp,usedPowerUp,pipeBody;
+    public static Sprite player[][]=new Sprite[3][12];//first index is status, second is frame
     public static Camera cam;
     public static Sprite[] goomba=new Sprite[8];
     private BufferedImage image;
@@ -61,6 +61,28 @@ public class Game extends Canvas implements Runnable {
 
         }
 
+        //sitting faced right 9. small mario cannot sit
+        player[1][8]=new Sprite(sheet,6,14);
+        player[2][8]=new Sprite(sheet,15,15);
+
+        //sitting faced left 10. small mario cannot sit
+        player[1][9]=new Sprite(sheet,7,14);
+        player[2][9]=new Sprite(sheet,16,15);
+
+        //Jumping to right 10
+        player[0][10]=new Sprite(sheet,9,15);
+        player[1][10]=new Sprite(sheet,10,15);
+        player[2][10]=new Sprite(sheet,11,15);
+
+        //Jumping to left 11
+        player[0][11]=new Sprite(sheet,12,15);
+        player[1][11]=new Sprite(sheet,13,15);
+        player[2][11]=new Sprite(sheet,14,15);
+
+
+
+
+
         goomba[0]=new Sprite(sheet,1,14);
         goomba[1]=new Sprite(sheet,2,14);
         goomba[2]=new Sprite(sheet,3,14);
@@ -68,6 +90,9 @@ public class Game extends Canvas implements Runnable {
 
         powerUp=new Sprite(sheet,4,14);
         usedPowerUp=new Sprite(sheet,5,14);
+
+        pipeBody=new Sprite(sheet,2,13);
+       // pipeHead=new Sprite(sheet,1,13);
 
 
 
@@ -189,9 +214,12 @@ public class Game extends Canvas implements Runnable {
     public void tick() {
         handler.tick();
 
+
+
         for (Entity e:handler.getEntity()){
             if(e.getId()==Id.player1)
             {
+                if(!e.getGoingDownPipe())
                 cam.tick(e);
             }
         }

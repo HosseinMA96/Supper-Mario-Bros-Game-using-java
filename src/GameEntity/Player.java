@@ -12,10 +12,11 @@ import java.awt.*;
 
 public class Player extends Entity {
 
-    private int frame = 0, frameDelay = 0,safeClocks;
-    private boolean animate = false;
+    private int frame = 0, frameDelay = 0, safeClocks, pixelsTraveled = 0;
+    private boolean animate = false, sit;
     private int status = 0; //status is mario size, 0 for small, 1 for medium and 2 for fire mario
     //frame delay is the amount of the time the game upddates before it changes the animation
+    //if face ==0 faced left
 
     public Player(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
         super(x, y, width, height, id, handler);
@@ -26,10 +27,17 @@ public class Player extends Entity {
 
     @Override
     public void render(Graphics g) {
-        
-        if(jumping)
-        {
 
+        if (jumping) {
+                g.drawImage(Game.player[status][11-facing].getBufferedImage(), x, y, width, height, null);
+                return;
+        }
+
+        if(sit && status>0)
+        {
+            System.out.println("in sitting wtf");
+            g.drawImage(Game.player[status][9-facing].getBufferedImage(), x, y, width, height, null);
+            return;
         }
 
         if (facing == 0)
@@ -44,6 +52,10 @@ public class Player extends Entity {
         x += velX;
         y += velY;
 
+        if (goingDownPipe)
+            pixelsTraveled += velY;
+
+
 //        if (x <= 0)
 //            x = 0;
 
@@ -53,8 +65,8 @@ public class Player extends Entity {
 //        if (x + width >= 1080)
 //            x = 1080 - width;
 
-        if (y + height >= 775)
-            y = 775 - height;
+//        if (y + height >= 775)
+//            y = 775 - height;
 
         if (velX != 0)
             animate = true;
@@ -64,8 +76,8 @@ public class Player extends Entity {
 
         //Ehtemalan shekaste shodan ro inja bayad begi dawsh
         for (Tile t : handler.getTile()) {
-            if (!t.getSolid())
-                break;
+            if (!t.getSolid() || goingDownPipe)
+                continue;
 
             if (t.getId() == Id.wall) {
                 if (getBoundsTop().intersects(t.getBounds())) {
@@ -102,7 +114,16 @@ public class Player extends Entity {
 
 
             if (getBoundsBottom().intersects((t.getBounds()))) {
+
+
                 setVelY(0);
+
+                int k=1;
+
+                if(t.getId()==Id.pipe)
+                    y = t.getY() - 64;
+
+                else
                 y = t.getY() - t.getHeight();
                 if (falling)
                     falling = false;
@@ -152,15 +173,15 @@ public class Player extends Entity {
 
                     //PLAYER INTERSECT WITH GOOMBA
 
-                    if(safeClocks==0)
-                    status--;
+                    if (safeClocks == 0)
+                        status--;
 
                     safeClocks++;
 
-                    if(safeClocks==30)
-                        safeClocks=0;
+                    if (safeClocks == 30)
+                        safeClocks = 0;
 
-                    if(status==-1)
+                    if (status == -1)
                         die();
                 }
             }
@@ -169,7 +190,7 @@ public class Player extends Entity {
          * Jumping parabola formula must lie here
          * gravity = acceleration
          */
-        if (jumping) {
+        if (jumping && !goingDownPipe) {
             gravity -= .3;
             setVelY((int) -gravity);
             //JOptionPane.showMessageDialog(null,gravity);
@@ -180,7 +201,7 @@ public class Player extends Entity {
             }
         }
 
-        if (falling) {
+        if (falling && !goingDownPipe) {
             gravity += .3;
             setVelY((int) gravity);
         }
@@ -203,6 +224,40 @@ public class Player extends Entity {
         else
             frame = 3;
 
+        if (goingDownPipe) {
+            JOptionPane.showMessageDialog(null,"going Down");
+            for (int i = 0; i < Game.handler.getTile().size(); i++) {
+                Tile t = Game.handler.getTile().get(i);
+
+                if (t.getId() == Id.pipe) {
+                    if (getBoundsBottom().intersects(t.getBounds())) {
+                        switch (t.getFacing()) {
+                            case 0:
+                                JOptionPane.showMessageDialog(null,"sefr");
+                                setVelY(-2);
+                                setVelX(0);
+                                break;
+
+                            case 2:
+                                JOptionPane.showMessageDialog(null,"Do");
+                                setVelY(2);
+                                setVelX(0);
+                                break;
+                        }
+
+                        if (pixelsTraveled > t.getHeight() + height)
+                            goingDownPipe = false;
+                    }
+
+                }
+
+            }
+        }
+
+    }
+
+    public void setSit(boolean sit) {
+        this.sit = sit;
     }
 
     public void setFacing(int f) {

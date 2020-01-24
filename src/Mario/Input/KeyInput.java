@@ -1,9 +1,12 @@
 package Mario.Input;
 
 import GameEntity.Entity;
+import GameEntity.Player;
+import GameTile.Tile;
 import Mario.Game;
 import Mario.Id;
 
+import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -19,6 +22,8 @@ public class KeyInput implements KeyListener {
 
 //            if (en.getJumping())
 //                continue;
+            if(en.getGoingDownPipe())
+                return;
 
             switch (key) {
 
@@ -31,6 +36,30 @@ public class KeyInput implements KeyListener {
 
 
                     break;
+
+                case KeyEvent.VK_S:
+                    ((Player)en).setSit(true);
+
+                    for (int q=0;q<Game.handler.getTile().size();q++)
+                    {
+                        Tile t=Game.getHandler().getTile().get(q);
+
+                        if(t.getId()==Id.pipe){
+//                            System.out.println("mario : "+en.getBoundsBottom());
+//                            System.out.println("pipe : "+t.getBounds());
+                          //  System.out.println();
+                            if(en.getBoundsBottom().intersects(t.getBounds()))
+                            {
+                                JOptionPane.showMessageDialog(null,"intersect");
+                                if(en.getGoingDownPipe() != true)
+                                    en.setGoingDownPipe(true);
+
+                            }
+                        }
+                    }
+
+                    break;
+
 
 //
 //                case KeyEvent.VK_S:
@@ -78,6 +107,7 @@ public class KeyInput implements KeyListener {
 
                     case KeyEvent.VK_S:
                         en.setVelY(0);
+                        ((Player)en).setSit(false);
                         break;
 
 
@@ -88,6 +118,9 @@ public class KeyInput implements KeyListener {
                     case KeyEvent.VK_A:
                         en.setVelX(0);
                         break;
+
+
+
 
                 }
             }
