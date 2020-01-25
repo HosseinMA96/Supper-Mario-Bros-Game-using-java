@@ -53,11 +53,20 @@ public class Player extends Entity {
 
     @Override
     public void tick() {
+
+
         if(Game.isRunning()==false)
             return;
 
         x += velX;
+
+        if(x<-Game.cam.getLastX())
+            x=-Game.cam.getLastX();
+
         y += velY;
+
+        System.out.println("last x "+Game.cam.getLastX());
+        System.out.println("mario X "+x);
 
         if (goingDownPipe)
             pixelsTraveled += velY;
@@ -186,6 +195,19 @@ public class Player extends Entity {
 
             }
 
+            if (e.getId() == Id.fireFlower) {
+                if (getBounds().intersects(e.getBounds())) {
+                    status++;
+
+                    if (status == 3)
+                        status = 2;
+
+                    e.die();
+                }
+
+
+            }
+
             if (e.getId() == Id.greenMushroom) {
                 if (getBounds().intersects(e.getBounds())) {
                     Game.lives++;
@@ -290,6 +312,8 @@ public class Player extends Entity {
                 }
             }
         }
+
+
         /**
          * Jumping parabola formula must lie here
          * gravity = acceleration
@@ -362,6 +386,10 @@ public class Player extends Entity {
 
     public void setSit(boolean sit) {
         this.sit = sit;
+    }
+
+    public int getStatus() {
+        return status;
     }
 
     public void setFacing(int f) {

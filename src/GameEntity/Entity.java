@@ -71,7 +71,9 @@ public abstract class Entity {
 
     }
 
-
+    public int getFacing() {
+        return facing;
+    }
 
     public void setGoingDownPipe(boolean goingDownPipe) {
         this.goingDownPipe = goingDownPipe;

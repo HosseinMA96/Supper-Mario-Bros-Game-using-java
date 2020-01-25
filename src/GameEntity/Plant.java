@@ -47,7 +47,7 @@ public class Plant extends Entity {
                 frame++;
 
                 if(frame>1)
-                    frame=0;d
+                    frame=0;
             }
 
 

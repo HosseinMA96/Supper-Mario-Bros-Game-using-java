@@ -22,13 +22,16 @@ public class Handler {
 
     public void render(Graphics g) {
        // System.out.println(Game.getVisibleArea());
-        for (Entity en : entity)
+        for (int i=0;i<entity.size();i++)
+            entity.get(i).render(g);
         //    if(Game.getVisibleArea() != null && en.getBounds().intersects(Game.getVisibleArea()))
-            en.render(g);
 
-        for (Tile tl : tile)
+
+       for (int i=0;i<tile.size();i++)
+           tile.get(i).render(g);
+
        //     if(Game.getVisibleArea() != null && tl.getBounds().intersects(Game.getVisibleArea()))
-            tl.render(g);
+
     }
 
     public void tick() {
@@ -90,7 +93,7 @@ public class Handler {
 
                 if(red==255 && green==255 && blue==0)
                 {
-                    addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.redMushroom,"RED"));
+                    addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.greenMushroom,"GREEN"));
                 }
 
                 if(red ==0 && (green>123 && green<129) && blue==0)
@@ -105,7 +108,8 @@ public class Handler {
 
                 if(red== 0 && green==100 && blue==0)
                 {
-                    addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.greenMushroom,"GREEN"));
+                   // addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.greenMushroom,"GREEN"));
+                    addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.fireFlower,"FLOWER"));
                 }
 
                 if(red==150 && green==80 && blue==0)

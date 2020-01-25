@@ -14,6 +14,8 @@ public enum Id {
     castleDoor,
     prince,
     plant,
+    fireFlower,
+    fireBall,
     wall;
 
 }

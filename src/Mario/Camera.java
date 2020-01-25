@@ -3,7 +3,7 @@ package Mario;
 import GameEntity.Entity;
 
 public class Camera {
-    private int x,y;
+    private int x,y,lastX=0;
 
     public void tick(Entity player)
     {
@@ -12,6 +12,10 @@ public class Camera {
     }
 
     public int getX() {
+        if(x>lastX)
+            return lastX;
+
+        lastX=x;
         return x;
     }
 
@@ -25,5 +29,10 @@ public class Camera {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public int getLastX()
+    {
+        return lastX;
     }
 }

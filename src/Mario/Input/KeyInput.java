@@ -1,6 +1,7 @@
 package Mario.Input;
 
 import GameEntity.Entity;
+import GameEntity.FireBall;
 import GameEntity.Player;
 import GameTile.Tile;
 import Mario.Game;
@@ -15,7 +16,8 @@ public class KeyInput implements KeyListener {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
-        for (Entity en : Game.getHandler().getEntity()) {
+        for (int i=0;i<Game.handler.getEntity().size();i++) {
+            Entity en=Game.getHandler().getEntity().get(i);
 
             if (en.getId() != Id.player1)
                 continue;
@@ -26,6 +28,20 @@ public class KeyInput implements KeyListener {
                 return;
 
             switch (key) {
+
+                case  KeyEvent.VK_SPACE:
+                    if(((Player)en).getStatus() != 2)
+                        break;
+
+                if(en.getFacing()==0)
+                    Game.handler.addEntity((new FireBall(en.getX()+24,en.getY()+12,24,24,Id.fireBall,Game.handler,en.getFacing())));
+
+                else
+                    Game.handler.addEntity((new FireBall(en.getX()-24,en.getY()+12,24,24,Id.fireBall,Game.handler,en.getFacing())));
+                break;
+
+
+
 
                 case KeyEvent.VK_W:
 //                    en.setVelY(-5);

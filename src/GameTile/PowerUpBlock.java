@@ -63,12 +63,16 @@ public class PowerUpBlock extends Tile{
             //INja farz jardi power up ha faghat gharch and
             if(spriteY<y-height){
 //                JOptionPane.showMessageDialog(null,"pre trig");
+                //implement flower
 
                 if(powerUpName.equals("RED"))
                 handler.addEntity(new RedMushroom(x,spriteY,width,height,Id.redMushroom,handler));
 
                 if (powerUpName.equals("GREEN"))
                     handler.addEntity(new GreenMushroom(x,spriteY,width,height,Id.greenMushroom,handler));
+
+                if(powerUpName.equals("FLOWER"))
+                    handler.addEntity(new FireFlower(x,spriteY,width,height,Id.fireFlower,handler));
 
 //                JOptionPane.showMessageDialog(null,"Triggered");
                 poppedUp=true;
