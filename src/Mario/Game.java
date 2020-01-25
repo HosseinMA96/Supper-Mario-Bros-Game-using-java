@@ -7,15 +7,12 @@ package Mario;
 //34 Plants!
 //ye marhale ham oon parcham va raftan marhale baad
 //37 Soundswwwww
-//38 Background image
+//38 Background levelsImage
 //39 Fire balls
 
 import GameEntity.Entity;
-import GameEntity.Player;
 import GameGFX.Sprite;
 import GameGFX.SpriteSheet;
-import GameTile.Tile;
-import GameTile.Wall;
 import Mario.Input.KeyInput;
 
 import javax.imageio.ImageIO;
@@ -24,6 +21,8 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 import static java.lang.System.exit;
 
@@ -39,18 +38,20 @@ public class Game extends Canvas implements Runnable {
     public static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
     public static SpriteSheet sheet;
     public static Handler handler;
-    public static Sprite grass, greenMushroom, redMushroom, powerUp, usedPowerUp, pipeBody, coin;
+    public static Sprite grass, greenMushroom, redMushroom, powerUp, usedPowerUp, pipeBody, coin, castleBrick, castleDoor,prince;
     public static Sprite player[][] = new Sprite[3][12];//first index is status, second is frame
     public static Camera cam;
-    public static Sprite[] goomba = new Sprite[8],koopa=new Sprite[8];
-    private BufferedImage image;
-    private int  deathScreenTime = 0,gameOverTicks;
+    public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8];
+    private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
+    private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 0;
     public static int coins, lives = 3;
+    public static boolean startNext=false,totallyFinished=false;
+   // private sboolean totallyFinished=false;
 
     //he 10 you 10
 
     private Thread thread;
-    private boolean running = false;
+    private static boolean running = false;
     public static boolean showDeathScreen = true, gameOver = false;
 
     private void init() {
@@ -101,35 +102,39 @@ public class Game extends Canvas implements Runnable {
 
         koopa[0] = new Sprite(sheet, 1, 12);
         koopa[1] = new Sprite(sheet, 2, 12);
-        koopa[2]=new Sprite(sheet, 3, 12);
-        koopa[3]=new Sprite(sheet, 4, 12);
+        koopa[2] = new Sprite(sheet, 3, 12);
+        koopa[3] = new Sprite(sheet, 4, 12);
 
         //spinning
-        koopa[4]=new Sprite(sheet, 5, 12);
+        koopa[4] = new Sprite(sheet, 5, 12);
 
 
         powerUp = new Sprite(sheet, 4, 14);
         usedPowerUp = new Sprite(sheet, 5, 14);
 
         pipeBody = new Sprite(sheet, 2, 13);
+
+        castleBrick = new Sprite(sheet, 4, 1);
+        castleDoor = new Sprite(sheet, 5, 1);
+        prince=new Sprite(sheet,6,1);
+
         // pipeHead=new Sprite(sheet,1,13);
-
-
 
 
         // handler.addEntity(new Player(300,512,64,64,true,Id.player1,handler));
         // handler.addTile(new Wall(200,200,64,64,true,Id.wall,handler));
 
-        try {
-            image = ImageIO.read(new File("C:\\Users\\erfan\\Desktop\\dummy\\res\\level1.png"));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        if(currentLevel<numberOfMaps)
+         handler.createLevel(levelsImage.get(currentLevel));
+        else
+            JOptionPane.showMessageDialog(null,"All levels finished");
 
-        // handler.createLevel(image);
     }
 
     private synchronized void start() {
+//        if(!running)
+//            return;
+
         if (running)
             return;
 
@@ -141,13 +146,18 @@ public class Game extends Canvas implements Runnable {
     }
 
     private synchronized void stop() {
+   //     System.out.println("in stop startNext is "+startNext);
+
         if (!running)
             return;
+
+      //  System.out.println("after return stop");
 
         running = false;
 
         try {
             thread.join();
+            System.out.println("afterJoined");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -159,37 +169,55 @@ public class Game extends Canvas implements Runnable {
 
     @Override
     public void run() {
-        init();
-        requestFocus();
-        long lastTime = System.nanoTime();
-        long timer = System.currentTimeMillis();
-        double delta = 0.0;
-        double ns = 1000000000.0 / 60.0;
-        int frames = 0;
-        int ticks = 0;
+        createLevels(numberOfMaps);
+        while(!totallyFinished) {
+            System.out.println("in mother loop with current map "+currentLevel);
 
-        while (running) {
-            long now = System.nanoTime();
-            delta += (now - lastTime) / ns;
-            lastTime = now;
+            if(currentLevel==numberOfMaps)
+                break;
 
-            while (delta > -1) {
-                tick();
-                ticks++;
-                delta--;
-            }
+            init();
+            requestFocus();
+            long lastTime = System.nanoTime();
+            long timer = System.currentTimeMillis();
+            double delta = 0.0;
+            double ns = 1000000000.0 / 50;
+            int frames = 0;
+            int ticks = 0;
+            running=true;
+            showDeathScreen=true;
 
-            render();
-            frames++;
+            while (running) {
 
-            if (System.currentTimeMillis() - timer > 1000) {
-                timer += 1000;
-                //    System.out.println(frames + "  Frames Per Second " + ticks + " Updates Per Second");
-                frames = 0;
-                ticks = 0;
+             //   System.out.println(handler.getTile().size());
+
+                //      System.out.println("im in game loop");
+
+                //  System.out.println(currentLevel);
+
+                long now = System.nanoTime();
+                delta += (now - lastTime) / ns;
+                lastTime = now;
+
+                while (delta > -1) {
+                    tick();
+                    ticks++;
+                    delta--;
+                }
+
+                render();
+                frames++;
+
+                if (System.currentTimeMillis() - timer > 1000) {
+                    timer += 1000;
+                    //    System.out.println(frames + "  Frames Per Second " + ticks + " Updates Per Second");
+                    frames = 0;
+                    ticks = 0;
+                }
             }
         }
-        stop();
+            stop();
+
     }
 
     /**
@@ -219,46 +247,43 @@ public class Game extends Canvas implements Runnable {
         g.fillRect(0, 0, getWidth(), getHeight());
 
         //handle gameOver
-        if(gameOver)
-        {
+        if (gameOver) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Courier", Font.BOLD, 50));
             g.drawString("Game over", 610, 400);
 
-            long currentTime=System.currentTimeMillis();
+            long currentTime = System.currentTimeMillis();
 
             gameOverTicks++;
 
 
-            if(gameOverTicks==500)
+            if (gameOverTicks == 500)
                 exit(0);
 
         }
 
 
         //handle Coinds
-        if (!showDeathScreen && !gameOver){
+        if (!showDeathScreen && !gameOver) {
             g.drawImage(coin.getBufferedImage(), 20, 20, 30, 30, null);
             g.setColor(Color.BLUE.WHITE);
-            g.setFont(new Font("Courier",Font.BOLD,20));
-            g.drawString("x"+coins,100,95);
+            g.setFont(new Font("Courier", Font.BOLD, 20));
+            g.drawString("x" + coins, 46, 46);
 
-        }
-
-
-        else if(!gameOver){
+        } else if (!gameOver) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Courier", Font.BOLD, 30));
-            g.drawImage(Game.player[0][0].getBufferedImage(),500,300,100,100,null);
+            g.drawImage(Game.player[0][0].getBufferedImage(), 500, 300, 100, 100, null);
 
-            g.drawString("x" + lives, 610, 400);
+            g.drawString("x" + lives, 600,400);
+            g.drawString("Level "+ currentLevel+1,500,280);
         }
 
 
         //move camera
         g.translate(cam.getX(), cam.getY());
 
-        if(!showDeathScreen)
+        if (!showDeathScreen)
             handler.render(g);
 
         g.dispose();
@@ -290,7 +315,7 @@ public class Game extends Canvas implements Runnable {
             showDeathScreen = false;
             deathScreenTime = 0;
             handler.clearLevel();
-            handler.createLevel(image);
+            handler.createLevel(levelsImage.get(currentLevel));
         }
 
 
@@ -318,28 +343,105 @@ public class Game extends Canvas implements Runnable {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         game.start();
+
+        //System.out.println("After start");
+
+
+
+//        while (true) {
+//           JOptionPane.showMessageDialog(null,"in while true");
+//
+//            while(!startNext){
+//             //   System.out.println(startNext);
+//
+//            }
+
+//            System.out.println(startNext);
+//
+//
+//
+//            JOptionPane.showMessageDialog(null,"passed first");
+//
+//            if (Game.currentLevel == Game.numberOfMaps) {
+//                JOptionPane.showMessageDialog(null, "Game has finished !");
+//                break;
+//            }
+//            JOptionPane.showMessageDialog(null,"passed second");
+//            frame.remove(game);
+//             game = new Game();frame = new JFrame(TITLE);
+//            frame.add(game);
+//            frame.pack();
+//            frame.setResizable(true);
+//            frame.setLocationRelativeTo(null);
+//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//            frame.setVisible(true);
+//            game.start();
+//
+//
+//            startNext=false;
+//        }
+
     }
 
+    public static void setRunning() {
+        running = true;
+    }
 
     public static int getFrameWidth() {
         return WIDTH * SCALE;
     }
 
-    public static Rectangle getVisibleArea()
-    {
-        for (int i=0;i<handler.getEntity().size();i++)
-        {
-            Entity e=handler.getEntity().get(i);
+    public static Rectangle getVisibleArea() {
+        for (int i = 0; i < handler.getEntity().size(); i++) {
+            Entity e = handler.getEntity().get(i);
 
-            if(e.getId()==Id.player1){
-                return new Rectangle(e.getX()-(getFrameWidth()/2-5),e.getY()-(getFrameHeight()),getFrameWidth()+10,getFrameHeight()+10);
+            if (e.getId() == Id.player1) {
+                return new Rectangle(e.getX() - (getFrameWidth() / 2 - 5), e.getY() - (getFrameHeight()), getFrameWidth() + 10, getFrameHeight() + 10);
             }
         }
 
         return null;
     }
 
-    public static int  getFrameHeight() {
+    public static int getFrameHeight() {
         return HEIGHT * SCALE;
+    }
+
+    public static void goNextLevel() {
+      //  System.out.println("in next level method");
+
+      //  System.out.println("current level"+ currentLevel);
+      //  System.out.println("number of maps "+numberOfMaps);
+
+        if (currentLevel == numberOfMaps) {
+//            JOptionPane.showMessageDialog(null,"Game has finished !");
+            running = false;
+            totallyFinished=true;
+            //Handle endgame
+            return;
+
+        } else {
+            currentLevel++;
+            running = false;
+
+        }
+
+    }
+
+    public static boolean isRunning() {
+        return running;
+    }
+
+    public void createLevels(int numberOfMaps) {
+        for (int i = 0; i < numberOfMaps; i++) {
+            try {
+                BufferedImage bf;
+                bf = ImageIO.read(new File("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png"));
+                levelsImage.add(bf);
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Unable to find map number" + i + 1);
+            }
+        }
     }
 }

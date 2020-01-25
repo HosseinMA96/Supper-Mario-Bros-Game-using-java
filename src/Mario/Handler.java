@@ -108,6 +108,22 @@ public class Handler {
                     addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.greenMushroom,"GREEN"));
                 }
 
+                if(red==150 && green==80 && blue==0)
+                {
+                    addTile(new CastleBrick(x*64,y*64,64,64,true,Id.casteBrick,this));
+                }
+
+                if(red==220 && green==255 && blue==255)
+                {
+                    addTile(new CastleDoor(x*64,y*64,64,64,true,Id.castleDoor,this));
+                }
+
+
+                if(red==100 && green==100 && blue==255)
+                {
+                    addTile(new Prince(x*64,y*64,64,64,true,Id.castleDoor,this));
+                }
+
 
 
 

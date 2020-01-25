@@ -10,6 +10,9 @@ public enum Id {
     pipe,
     coin,
     koopa,
+    casteBrick,
+    castleDoor,
+    prince,
     wall;
 
 }

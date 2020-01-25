@@ -53,6 +53,9 @@ public class Player extends Entity {
 
     @Override
     public void tick() {
+        if(Game.isRunning()==false)
+            return;
+
         x += velX;
         y += velY;
 
@@ -82,9 +85,15 @@ public class Player extends Entity {
         //  for (Tile t : handler.getTile()) {
         for (int i = 0; i < handler.getTile().size(); i++) {
             Tile t = handler.getTile().get(i);
-            if (!t.getSolid() || goingDownPipe)
+            if (!t.getSolid() || goingDownPipe || t.getId()==Id.casteBrick)
                 continue;
 
+            //next level
+            if (t.getId()==Id.prince || t.getId() == Id.castleDoor && getBounds().intersects(t.getBounds())) {
+                Game.goNextLevel();
+             //   JOptionPane.showMessageDialog(null,"next level");
+                return;
+            }
             if (t.getId() == Id.wall) {
                 if (getBoundsTop().intersects(t.getBounds())) {
                     setVelY(0);
@@ -246,14 +255,14 @@ public class Player extends Entity {
 
                         e.velX = -4;
                         e.koopaState = KoopaState.SPINNING;
-                     //   System.out.println("go left t");
+                        //   System.out.println("go left t");
                         gravity = 2;
                         continue;
 
                     } else if (getBoundsRight().intersects(e.getBoundsLeft())) {
                         e.velX = 4;
                         e.koopaState = KoopaState.SPINNING;
-                      //  System.out.println("go right t");
+                        //  System.out.println("go right t");
                         gravity = 2;
                         continue;
                     }
