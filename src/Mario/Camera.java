@@ -8,7 +8,7 @@ public class Camera {
     public void tick(Entity player)
     {
         setX(-player.getX()+ Game.WITDH*2);
-        setY(-player.getY() +Game.HEIGHT*2);
+        setY(-player.getY() +Game.HEIGHT*2 );
     }
 
     public int getX() {

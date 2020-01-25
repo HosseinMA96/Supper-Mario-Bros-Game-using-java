@@ -2,6 +2,13 @@ package Mario;
 //27 boss
 //23 , 24 pipes
 //28, Menus and hframe and icons
+//30 Drawing and ticking optimization
+//31 & 32 koopas
+//34 Plants!
+//ye marhale ham oon parcham va raftan marhale baad
+//37 Soundswwwww
+//38 Background image
+//39 Fire balls
 
 import GameEntity.Entity;
 import GameEntity.Player;
@@ -35,10 +42,10 @@ public class Game extends Canvas implements Runnable {
     public static Sprite grass, greenMushroom, redMushroom, powerUp, usedPowerUp, pipeBody, coin;
     public static Sprite player[][] = new Sprite[3][12];//first index is status, second is frame
     public static Camera cam;
-    public static Sprite[] goomba = new Sprite[8];
+    public static Sprite[] goomba = new Sprite[8],koopa=new Sprite[8];
     private BufferedImage image;
-    private int numberOfLives = 3, deathScreenTime = 0,gameOverTicks;
-    public static int coins, lives = 1;
+    private int  deathScreenTime = 0,gameOverTicks;
+    public static int coins, lives = 3;
 
     //he 10 you 10
 
@@ -91,6 +98,14 @@ public class Game extends Canvas implements Runnable {
         goomba[0] = new Sprite(sheet, 1, 14);
         goomba[1] = new Sprite(sheet, 2, 14);
         goomba[2] = new Sprite(sheet, 3, 14);
+
+        koopa[0] = new Sprite(sheet, 1, 12);
+        koopa[1] = new Sprite(sheet, 2, 12);
+        koopa[2]=new Sprite(sheet, 3, 12);
+        koopa[3]=new Sprite(sheet, 4, 12);
+
+        //spinning
+        koopa[4]=new Sprite(sheet, 5, 12);
 
 
         powerUp = new Sprite(sheet, 4, 14);
@@ -306,11 +321,25 @@ public class Game extends Canvas implements Runnable {
     }
 
 
-    public int getFrameWidth() {
+    public static int getFrameWidth() {
         return WIDTH * SCALE;
     }
 
-    public int getFrameHeight() {
+    public static Rectangle getVisibleArea()
+    {
+        for (int i=0;i<handler.getEntity().size();i++)
+        {
+            Entity e=handler.getEntity().get(i);
+
+            if(e.getId()==Id.player1){
+                return new Rectangle(e.getX()-(getFrameWidth()/2-5),e.getY()-(getFrameHeight()),getFrameWidth()+10,getFrameHeight()+10);
+            }
+        }
+
+        return null;
+    }
+
+    public static int  getFrameHeight() {
         return HEIGHT * SCALE;
     }
 }

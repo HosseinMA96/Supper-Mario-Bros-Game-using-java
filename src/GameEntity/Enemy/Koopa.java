@@ -1,7 +1,6 @@
 package GameEntity.Enemy;
 
 import GameEntity.Entity;
-import GameGFX.Sprite;
 import GameTile.Tile;
 import Mario.Game;
 import Mario.Handler;
@@ -9,47 +8,59 @@ import Mario.Id;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
-public class Goomba extends Entity {
-    private boolean isDying=false,animate=false;
-    private int frame=0,frameDelay=0,helpFrame,diecounter;
+public class Koopa extends Entity {
+    private boolean animate = false;
+    private boolean isDying = false;
+    private int shellCount;
+    private int frame = 0, frameDelay = 0, helpFrame, diecounter, facing;
 
-    public void setDying(boolean dying) {
-        isDying = dying;
+    @Override
+    public void setFacing(int facing) {
+        this.facing = facing;
     }
 
-
-    public Goomba(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
+    public Koopa(int x, int y, int width, int height, Id id, Handler handler) {
         super(x, y, width, height, id, handler);
-        velX=1;
+
+        velX = -2;
+        koopaState = KoopaState.WALKING;
     }
 
     @Override
-    public void render(Graphics g)
-    {
-        if(isDying)
-        {
-
-            g.drawImage(Game.goomba[2].getBufferedImage(), x, y, width, height, null);
-
-            die();
-
+    public void render(Graphics g) {
+        if (koopaState != KoopaState.WALKING) {
+            //   JOptionPane.showMessageDialog(null,"is snpinn");
+            g.drawImage(Game.koopa[4].getBufferedImage(), x, y, width, height, null);
             return;
         }
-        g.drawImage(Game.goomba[helpFrame].getBufferedImage(), x, y, width, height, null);
+//        if (isDying) {
+//
+//            g.drawImage(Game.koopa[4].getBufferedImage(), x, y, width, height, null);
+//
+//            die();
+//
+//            return;
+//        }
+
+        //go to right
+        if (velX > 0)
+            g.drawImage(Game.koopa[helpFrame].getBufferedImage(), x, y, width, height, null);
+
+        else
+            g.drawImage(Game.koopa[helpFrame + 2].getBufferedImage(), x, y, width, height, null);
 
 
         frameDelay++;
 
-        if(frameDelay==100)
-        {
+        if (frameDelay == 100) {
             helpFrame++;
-            frameDelay=0;
+            frameDelay = 0;
         }
 
-        if(helpFrame==2)
-            helpFrame=0;
-
+        if (helpFrame == 2)
+            helpFrame = 0;
 
 
         return;
@@ -61,18 +72,16 @@ public class Goomba extends Entity {
 //            g.drawImage(Game.goomba[frame].getBufferedImage(), x, y, width, height, null);
 
 
-
     }
 
-    public boolean getDying()
-    {
-        return isDying;
-    }
+    public void tick() {
+        if (koopaState == KoopaState.SHELL) {
+            velX = 0;
+            velY = 0;
+        }
 
-    public void tick()
-    {
-        x+=velX;
-        y+=velY;
+        x += velX;
+        y += velY;
 
         if (velX != 0)
             animate = true;
@@ -82,7 +91,7 @@ public class Goomba extends Entity {
 
 
         for (Tile t : handler.getTile()) {
-            if (t.getId()==Id.coin)
+            if (t.getId() == Id.coin)
                 continue;
 
 //            if (t.getId() == Id.wall) {
@@ -115,11 +124,19 @@ public class Goomba extends Entity {
 
 
             if (getBoundsLeft().intersects((t.getBounds()))) {
-                setVelX(1);
+                if (koopaState == KoopaState.WALKING)
+                    setVelX(2);
+
+                else
+                    setVelX(4);
             }
 
             if (getBoundsRight().intersects((t.getBounds()))) {
-                setVelX(-1);
+                if (koopaState == KoopaState.WALKING)
+                    setVelX(-2);
+
+                else
+                    setVelX(-4);
 
             }
 
@@ -165,10 +182,8 @@ public class Goomba extends Entity {
 //
 //        else
 //            frame = 3;
-
-        for (int i=0;i<handler.getEntity().size();i++)
-            if(handler.getEntity().get(i).getId()==Id.koopa && !(handler.getEntity().get(i).equals(this)) && (handler.getEntity().get(i).getBounds().intersects(this.getBounds())) && (handler.getEntity().get(i).getKoopaState()==KoopaState.SPINNING))
-            {
+        for (int i = 0; i < handler.getEntity().size(); i++)
+            if (handler.getEntity().get(i).getId() == Id.koopa && !(handler.getEntity().get(i).equals(this)) && (handler.getEntity().get(i).getBounds().intersects(this.getBounds())) && (handler.getEntity().get(i).getKoopaState() == KoopaState.SPINNING)) {
                 die();
                 break;
             }

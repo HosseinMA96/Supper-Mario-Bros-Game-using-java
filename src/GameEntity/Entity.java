@@ -1,5 +1,6 @@
 package GameEntity;
 
+import GameEntity.Enemy.KoopaState;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
@@ -10,14 +11,18 @@ public abstract class Entity {
     protected int x,y,width,height,velX,velY;
 //    protected boolean solid;
     protected Id id;
+    protected KoopaState koopaState;
     protected Handler handler;
     protected boolean jumping=false,goingDownPipe;
     protected boolean falling=true;
     protected double gravity=0.0;
     protected int facing=0; // facing left =0 , facing right =1
 
+    public KoopaState getKoopaState() {
+        return koopaState;
+    }
 
-    public Entity(int x, int y, int width, int height,Id id,Handler handler) {
+    public Entity(int x, int y, int width, int height, Id id, Handler handler) {
         this.x = x;
         this.y = y;
         this.width = width;

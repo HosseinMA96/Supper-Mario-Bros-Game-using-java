@@ -1,6 +1,7 @@
 package Mario;
 
 import GameEntity.Enemy.Goomba;
+import GameEntity.Enemy.Koopa;
 import GameEntity.Entity;
 import GameEntity.RedMushroom;
 import GameEntity.Player;
@@ -18,11 +19,15 @@ public class Handler {
 //        createLevel();
     }
 
+
     public void render(Graphics g) {
+       // System.out.println(Game.getVisibleArea());
         for (Entity en : entity)
+        //    if(Game.getVisibleArea() != null && en.getBounds().intersects(Game.getVisibleArea()))
             en.render(g);
 
         for (Tile tl : tile)
+       //     if(Game.getVisibleArea() != null && tl.getBounds().intersects(Game.getVisibleArea()))
             tl.render(g);
     }
 
@@ -38,6 +43,7 @@ public class Handler {
 
 
         for (int i=0;i<tile.size();i++)
+        //    if(Game.getVisibleArea() != null && tile.get(i).getBounds().intersects(Game.getVisibleArea()))
             tile.get(i).tick();
     }
 
@@ -78,7 +84,8 @@ public class Handler {
                 if(red==50 && green==50 && blue==50) {
                  //   JOptionPane.showMessageDialog(null,"Goomba");
                     //   JOptionPane.showMessageDialog(null,"RedMushroom");
-                    addEntity(new Goomba(x * 64, y * 64, 64, 64, true, Id.goomba, this));
+                    //addEntity(new Goomba(x * 64, y * 64, 64, 64, true, Id.goomba, this));
+                    addEntity(new Koopa(x * 64, y * 64, 64, 64, Id.koopa, this));
                 }
 
                 if(red==255 && green==255 && blue==0)

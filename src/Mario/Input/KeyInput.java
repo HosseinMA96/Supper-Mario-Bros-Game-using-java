@@ -29,7 +29,7 @@ public class KeyInput implements KeyListener {
 
                 case KeyEvent.VK_W:
 //                    en.setVelY(-5);
-                    if (!en.getJumping()) {
+                    if (!en.getJumping()  ) {
                         en.setJumping(true);
                         en.setGravity(10.0);
                     }
@@ -69,12 +69,18 @@ public class KeyInput implements KeyListener {
 
                 case KeyEvent.VK_D:
 
+//                    if(en.getJumping())
+//                        return;
+
 
                     en.setVelX(5);
                     en.setFacing(1);
                     break;
 
                 case KeyEvent.VK_A:
+//                    if(en.getJumping())
+//                        return;
+
                     en.setFacing(0);
                     en.setVelX(-5);
                     break;

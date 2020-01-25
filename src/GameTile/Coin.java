@@ -13,7 +13,7 @@ public class Coin extends Tile {
 
     @Override
     public void render(Graphics g) {
-g.drawImage(Game.coin.getBufferedImage(),x,y,width,height,null);
+        g.drawImage(Game.coin.getBufferedImage(), x, y, width, height, null);
     }
 
     @Override

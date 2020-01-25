@@ -9,6 +9,7 @@ public enum Id {
     powerUp,
     pipe,
     coin,
+    koopa,
     wall;
 
 }

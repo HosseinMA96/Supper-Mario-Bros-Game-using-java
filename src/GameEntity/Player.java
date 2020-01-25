@@ -1,6 +1,7 @@
 package GameEntity;
 
 import GameEntity.Enemy.Goomba;
+import GameEntity.Enemy.KoopaState;
 import GameTile.PowerUpBlock;
 import GameTile.Tile;
 import Mario.Game;
@@ -9,8 +10,10 @@ import Mario.Id;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 public class Player extends Entity {
+    private Random random;
 
     private int frame = 0, frameDelay = 0, safeClocks, pixelsTraveled = 0;
     private boolean animate = false, sit;
@@ -21,6 +24,7 @@ public class Player extends Entity {
     public Player(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
         super(x, y, width, height, id, handler);
 //        velX = 1;
+        random = new Random();
 //        velY = -1;
     }
 
@@ -29,14 +33,13 @@ public class Player extends Entity {
     public void render(Graphics g) {
 
         if (jumping) {
-                g.drawImage(Game.player[status][11-facing].getBufferedImage(), x, y, width, height, null);
-                return;
+            g.drawImage(Game.player[status][11 - facing].getBufferedImage(), x, y, width, height, null);
+            return;
         }
 
-        if(sit && status>0)
-        {
-          //  System.out.println("in sitting wtf");
-            g.drawImage(Game.player[status][9-facing].getBufferedImage(), x, y, width, height, null);
+        if (sit && status > 0) {
+            //  System.out.println("in sitting wtf");
+            g.drawImage(Game.player[status][9 - facing].getBufferedImage(), x, y, width, height, null);
             return;
         }
 
@@ -76,9 +79,9 @@ public class Player extends Entity {
             animate = false;
 
         //Ehtemalan shekaste shodan ro inja bayad begi dawsh
-      //  for (Tile t : handler.getTile()) {
-        for(int i=0;i<handler.getTile().size();i++){
-            Tile t=handler.getTile().get(i);
+        //  for (Tile t : handler.getTile()) {
+        for (int i = 0; i < handler.getTile().size(); i++) {
+            Tile t = handler.getTile().get(i);
             if (!t.getSolid() || goingDownPipe)
                 continue;
 
@@ -121,13 +124,13 @@ public class Player extends Entity {
 
                 setVelY(0);
 
-                int k=1;
+                int k = 1;
 
-                if(t.getId()==Id.pipe)
+                if (t.getId() == Id.pipe)
                     y = t.getY() - 64;
 
                 else
-                y = t.getY() - t.getHeight();
+                    y = t.getY() - t.getHeight();
                 if (falling)
                     falling = false;
             } else {
@@ -149,12 +152,10 @@ public class Player extends Entity {
                 x = t.getX() - t.getWidth();
             }
 
-            if(getBounds().intersects(t.getBounds()) && t.getId()==Id.coin)
-            {
+            if (getBounds().intersects(t.getBounds()) && t.getId() == Id.coin) {
                 Game.coins++;
                 t.die();
             }
-
 
 
         }
@@ -195,7 +196,7 @@ public class Player extends Entity {
                     //PLAYER INTERSECT WITH GOOMBA
 
 //                    if (safeClocks == 0)
-                        status--;
+                    status--;
 
 //                    safeClocks++;
 //
@@ -208,6 +209,75 @@ public class Player extends Entity {
                     e.die();
 
 
+                }
+            }
+
+            if (e.getId() == Id.koopa) {
+                if (e.koopaState == KoopaState.WALKING) {
+                    if (getBoundsBottom().intersects(e.getBoundsTop())) {
+                        e.koopaState = KoopaState.SHELL;
+                        jumping = true;
+                        falling = false;
+                        gravity = 10;
+
+
+                    } else if (getBounds().intersects(e.getBounds())) {
+                        if (safeClocks == 0)
+                            status--;
+
+
+                        if (status == -1)
+                            die();
+
+                        e.die();
+                    }
+
+                    continue;
+
+                }
+
+                if (e.koopaState == KoopaState.SHELL) {
+                    if (getBoundsBottom().intersects(e.getBoundsTop())) {
+                        e.die();
+
+                    }
+
+                    if (getBoundsLeft().intersects(e.getBoundsRight())) {
+
+                        e.velX = -4;
+                        e.koopaState = KoopaState.SPINNING;
+                     //   System.out.println("go left t");
+                        gravity = 2;
+                        continue;
+
+                    } else if (getBoundsRight().intersects(e.getBoundsLeft())) {
+                        e.velX = 4;
+                        e.koopaState = KoopaState.SPINNING;
+                      //  System.out.println("go right t");
+                        gravity = 2;
+                        continue;
+                    }
+                    continue;
+
+                }
+
+                if (e.koopaState == KoopaState.SPINNING) {
+                    if (getBoundsBottom().intersects(e.getBoundsTop())) {
+                        e.die();
+                        continue;
+                    }
+
+//                    } else if (getBounds().intersects(e.getBounds())) {
+//                        if (safeClocks == 0)
+//                            status--;
+//
+////
+//
+//                        if (status == -1)
+//                            die();
+//
+//                        e.die();
+//                    }
                 }
             }
         }
@@ -250,7 +320,7 @@ public class Player extends Entity {
             frame = 3;
 
         if (goingDownPipe) {
-            JOptionPane.showMessageDialog(null,"going Down");
+            JOptionPane.showMessageDialog(null, "going Down");
             for (int i = 0; i < Game.handler.getTile().size(); i++) {
                 Tile t = Game.handler.getTile().get(i);
 
@@ -258,13 +328,13 @@ public class Player extends Entity {
                     if (getBoundsBottom().intersects(t.getBounds())) {
                         switch (t.getFacing()) {
                             case 0:
-                                JOptionPane.showMessageDialog(null,"sefr");
+                                JOptionPane.showMessageDialog(null, "sefr");
                                 setVelY(-2);
                                 setVelX(0);
                                 break;
 
                             case 2:
-                                JOptionPane.showMessageDialog(null,"Do");
+                                JOptionPane.showMessageDialog(null, "Do");
                                 setVelY(2);
                                 setVelX(0);
                                 break;
