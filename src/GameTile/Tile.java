@@ -1,5 +1,7 @@
 package GameTile;
 
+import GameEntity.Entity;
+import GameEntity.Plant;
 import Mario.Handler;
 import Mario.Id;
 
@@ -19,6 +21,7 @@ public abstract class Tile {
         this.solid=solid;
         this.id=id;
         this.handler=handler;
+
     }
 
     /**

@@ -41,7 +41,7 @@ public class Game extends Canvas implements Runnable {
     public static Sprite grass, greenMushroom, redMushroom, powerUp, usedPowerUp, pipeBody, coin, castleBrick, castleDoor,prince;
     public static Sprite player[][] = new Sprite[3][12];//first index is status, second is frame
     public static Camera cam;
-    public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8];
+    public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8],plant=new Sprite[2];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
     private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 0;
     public static int coins, lives = 3;
@@ -117,6 +117,9 @@ public class Game extends Canvas implements Runnable {
         castleBrick = new Sprite(sheet, 4, 1);
         castleDoor = new Sprite(sheet, 5, 1);
         prince=new Sprite(sheet,6,1);
+
+        plant[0]=new Sprite(sheet, 7, 12);
+        plant[1]=new Sprite(sheet, 6, 12);
 
         // pipeHead=new Sprite(sheet,1,13);
 

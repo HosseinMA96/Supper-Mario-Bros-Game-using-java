@@ -196,9 +196,9 @@ public class Player extends Entity {
 
             }
 
-            if (e.getId() == Id.goomba) {
+            if (e.getId() == Id.goomba || e.getId()==Id.plant) {
 
-                if (getBoundsBottom().intersects(e.getBoundsTop())) {
+                if (getBoundsBottom().intersects(e.getBoundsTop()) && e.getId()!=Id.plant) {
                     e.die();
                 } else if (getBounds().intersects(e.getBounds())) {
 

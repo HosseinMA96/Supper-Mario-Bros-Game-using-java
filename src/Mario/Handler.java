@@ -95,7 +95,7 @@ public class Handler {
 
                 if(red ==0 && (green>123 && green<129) && blue==0)
                 {
-                    addTile(new Pipe(x*64,y*64,64,64*15,true,Id.pipe,this,128-green));
+                    addTile(new Pipe(x*64,y*64,64,64*15,true,Id.pipe,this,128-green,true));
                 }
 
                 if(red== 255 && green==250 && blue==0)
@@ -119,9 +119,9 @@ public class Handler {
                 }
 
 
-                if(red==100 && green==100 && blue==255)
+                if(red==100 && green==255 && blue==255)
                 {
-                    addTile(new Prince(x*64,y*64,64,64,true,Id.castleDoor,this));
+                    addTile(new CastleDoor(x*64,y*64,64,64,true,Id.castleDoor,this));
                 }
 
 

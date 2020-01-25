@@ -13,6 +13,7 @@ public enum Id {
     casteBrick,
     castleDoor,
     prince,
+    plant,
     wall;
 
 }

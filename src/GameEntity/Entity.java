@@ -71,6 +71,8 @@ public abstract class Entity {
 
     }
 
+
+
     public void setGoingDownPipe(boolean goingDownPipe) {
         this.goingDownPipe = goingDownPipe;
     }
