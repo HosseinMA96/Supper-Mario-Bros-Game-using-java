@@ -22,6 +22,7 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.security.Key;
 import java.util.ArrayList;
 
 import static java.lang.System.exit;
@@ -197,6 +198,8 @@ public class Game extends Canvas implements Runnable {
             if (currentLevel == numberOfMaps)
                 break;
 
+
+
             init();
             requestFocus();
             long lastTime = System.nanoTime();
@@ -287,6 +290,10 @@ public class Game extends Canvas implements Runnable {
 
         //handle Coinds
         if (!showDeathScreen && !gameOver) {
+
+            if(KeyInput.infiniteBalls)
+                fireBalls=5;
+
             g.drawImage(coin.getBufferedImage(), 20, 20, 30, 30, null);
             g.setColor(Color.BLUE.WHITE);
             g.setFont(new Font("Courier", Font.BOLD, 20));
@@ -295,7 +302,7 @@ public class Game extends Canvas implements Runnable {
             for (int i = 0; i < lives; i++)
                 g.drawImage(star.getBufferedImage(), 1150 + 60 * i, 40, 60, 60, null);
 
-            if (Player.status == 2d)
+            if (Player.status == 2)
                 for (int i = 0; i < fireBalls; i++)
                     g.drawImage(fireBall.getBufferedImage(), 1150 + 30 * i, 650, 30, 30, null);
 

@@ -18,8 +18,8 @@ public class Player extends Entity {
     private Random random;
 
     private int frame = 0, frameDelay = 0, pixelsTraveled = 0;
-    private boolean animate = false, sit;
-    public static int status = 0, safeClocks = 0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
+    private boolean animate = false, sit,fireMario=false;
+    public static int status = 2,liveFireBalls, safeClocks = 0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
     //frame delay is the amount of the time the game upddates before it changes the animation
     //if face ==0 faced left
 
@@ -283,8 +283,17 @@ public class Player extends Entity {
 //
 //                    if (status == 3)
 //                        status = 2;
-                    growUp();
-                    Game.fireBalls = 5;
+                //    growUp();
+
+                    if(status>0)
+                    {
+                        growUp();
+                        Game.fireBalls = 5;
+                    }
+
+                    else
+                        Game.coins+=2;
+
 
                     e.die();
                 }
@@ -505,6 +514,13 @@ public class Player extends Entity {
     }
 
     private void growUp() {
+
+        if(Game.lives<3)
+        {
+            Game.lives++;
+            return;
+        }
+
         status++;
         if (status == 3)
             status = 2;

@@ -12,8 +12,8 @@ import java.awt.event.KeyListener;
 
 public class KeyInput implements KeyListener {
     private boolean fire = false;
-    public static boolean longJump, invincible, fullLives;
-    private int jPressed, lPressed, iPressed;
+    public static boolean longJump, invincible, fullLives,infiniteBalls;
+    private int jPressed, lPressed, iPressed,bPressed;
 
     @Override
 
@@ -45,11 +45,12 @@ public class KeyInput implements KeyListener {
                 case KeyEvent.VK_SPACE:
                     setCheatZero();
 
-                    if (((Player) en).getStatus() != 2 || fire || Game.fireBalls == 0)
-                        break;
+                    if (((Player) en).getStatus() != 2 || fire || Game.fireBalls == 0 || Player.liveFireBalls==3)
+                        return;
 
                     fire = true;
                     Game.fireBalls--;
+                    Player.liveFireBalls++;
 
                     if (en.getFacing() == 0)
                         Game.handler.addEntity((new FireBall(en.getX() + 24, en.getY() + 12, 24, 24, Id.fireBall, Game.handler, en.getFacing())));
@@ -129,6 +130,7 @@ public class KeyInput implements KeyListener {
                     jPressed++;
                     iPressed = 0;
                     lPressed = 0;
+                    bPressed=0;
 
 
                     if (jPressed == 3)
@@ -140,6 +142,7 @@ public class KeyInput implements KeyListener {
                             longJump=false;
 
                         jPressed=0;
+                        jPressed=0;
                     }
 
 
@@ -149,6 +152,7 @@ public class KeyInput implements KeyListener {
                     jPressed = 0;
                     iPressed = 0;
                     lPressed++;
+                    bPressed=0;
 
                     if (lPressed == 3) {
                         Game.lives = 3;
@@ -160,11 +164,24 @@ public class KeyInput implements KeyListener {
                     jPressed = 0;
                     iPressed++;
                     lPressed = 0;
+                    bPressed=0;
 
                     if (iPressed == 3)
                         invincible = true;
 
                     break;
+
+
+                    case KeyEvent.VK_B:
+                        jPressed = 0;
+                        iPressed=0;
+                        lPressed = 0;
+                        bPressed++;
+
+                        if(bPressed==3)
+                            infiniteBalls=true;
+
+                        break;
 
             }
 
@@ -222,12 +239,12 @@ public class KeyInput implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        System.out.println(e.getKeyChar());
     }
 
     private void setCheatZero() {
         jPressed = 0;
         lPressed = 0;
         iPressed = 0;
+        bPressed=0;
     }
 }

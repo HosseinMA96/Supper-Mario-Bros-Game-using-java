@@ -35,20 +35,32 @@ public class FireBall extends Entity {
         x+=velX;
         y+=velY;
 
-//        if(x>Game.cam.getX() || y> Game.cam.getY() || x<Game.cam.getX()-4*Game.WITDH || y<Game.cam.getY()-4*Game.HEIGHT)
-//        {
-//            die();
-//            return;
-//        }
+        System.out.println("Game cam lastx "+Game.cam.getLastX());
+        System.out.println("Game cam getY "+Game.cam.getY());
+        System.out.println("x "+x);
+        System.out.println("Y "+y);
+
+        //|| y>Math.abs(Game.cam.getY())+400 || y<Math.abs(Game.cam.getY())-400
+        if(x<Math.abs(Game.cam.getLastX()) || x>Math.abs(Game.cam.getLastX())+1400 )
+        {
+            System.out.println("wtf");
+            Player.liveFireBalls--;
+            die();
+            return;
+        }
 
         for (int i = 0; i < handler.getTile().size(); i++) {
             Tile t = handler.getTile().get(i);
+
+            if(t.getSolid()==false)
+                continue;
 
             if (t.getId() == Id.redMushroom || t.getId() == Id.greenMushroom || t.getId() == Id.coin || t.getId() == Id.fireFlower  || t.getId() == Id.coin)
                 continue;
 
                 if (getBoundsLeft().intersects(t.getBounds()) || getBoundsRight().intersects(t.getBounds())) {
                     die();
+                    Player.liveFireBalls--;
                     return;
                 }
 
@@ -59,6 +71,7 @@ public class FireBall extends Entity {
                 if(numberOfCollisions==5)
                 {
                     die();
+                    Player.liveFireBalls--;
                     return;
                 }
 
@@ -83,6 +96,7 @@ public class FireBall extends Entity {
                 {
                     e.die();
                     die();
+                    Player.liveFireBalls--;
                     return;
                 }
             }
