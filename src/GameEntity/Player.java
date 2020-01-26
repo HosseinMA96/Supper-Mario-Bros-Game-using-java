@@ -157,8 +157,15 @@ public class Player extends Entity {
                         falling = true;
                     }
                     //   JOptionPane.showMessageDialog(null,"set actv");
-                    ((PowerUpBlock) t).setActivated(true);
-                    System.out.println("Trig");
+//                    ((PowerUpBlock) t).setActivated(true);
+
+                    if(safeClocks==0)
+                    {
+                        safeClocks=80;
+                        ((PowerUpBlock) t).addHit();
+                    }
+
+              //      System.out.println("Trig");
                     //  JOptionPane.showMessageDialog(null,"hit");
                     continue;
                 }

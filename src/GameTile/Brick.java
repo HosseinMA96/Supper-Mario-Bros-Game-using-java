@@ -13,7 +13,7 @@ public class Brick extends  Tile {
 
     @Override
     public void render(Graphics g) {
-        g.drawImage(Game.brick.getBufferedImage(),x,y,width,height,null);
+        g.drawImage(Game.ordinaryBrick.getBufferedImage(),x,y,width,height,null);
     }
 
     @Override

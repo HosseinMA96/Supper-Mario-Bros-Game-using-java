@@ -38,7 +38,7 @@ public class Game extends Canvas implements Runnable {
     public static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
     public static SpriteSheet sheet;
     public static Handler handler;
-    public static Sprite grass, greenMushroom, redMushroom, powerUp, brick, stair, usedPowerUp, pipeBody, coin, castleBrick, star, castleDoor, prince, fireBall, fireFlower;
+    public static Sprite grass, greenMushroom, redMushroom,dummy, powerUp, specialBrick,destroyedSpecialBreak,destroyedBrick, ordinaryBrick,destroyedOrdinaryBrick, stair, usedPowerUp, pipeBody, coin, castleBrick, star, castleDoor, prince, fireBall, fireFlower;
     public static Sprite player[][] = new Sprite[3][12];//first index is status, second is frame
     public static Camera cam;
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
@@ -129,7 +129,13 @@ public class Game extends Canvas implements Runnable {
         star = new Sprite(sheet, 9, 1);
 
         stair = new Sprite(sheet, 10, 1);
-        brick = new Sprite(sheet, 11, 1);
+        ordinaryBrick = new Sprite(sheet, 11, 1);
+        destroyedOrdinaryBrick=new Sprite(sheet, 12, 1);
+
+        specialBrick=new Sprite(sheet, 13, 1);
+        destroyedSpecialBreak=new Sprite(sheet, 14, 1);
+
+        dummy=new Sprite(sheet,6,6);
 
 
         for (int i = 0; i < 4; i++)
