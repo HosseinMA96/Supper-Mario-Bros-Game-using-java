@@ -103,6 +103,11 @@ public class Handler {
                     addTile(new Pipe(x*64,y*64,64,64,true,Id.pipe,this,128-green,true));
                 }
 
+                if(red ==100 && green==250 && blue==100)
+                {
+                    addTile(new Pipe(x*64,y*64,64,64,true,Id.pipe,this,0,false));
+                }
+
                 if(red== 255 && green==250 && blue==0)
                 {
                     addTile(new Coin(x*64,y*64,64,64,true,Id.coin,this));

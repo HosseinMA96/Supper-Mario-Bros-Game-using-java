@@ -6,6 +6,7 @@ import Mario.Handler;
 import Mario.Id;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Plant extends Entity {
 
@@ -20,7 +21,14 @@ public class Plant extends Entity {
         insidePipe = false;
         velX = 0;
 
+        int temp=(new Random().nextInt(90));
+        wait+=temp;
 
+
+    }
+
+    public boolean isInsidePipe() {
+        return insidePipe;
     }
 
     @Override

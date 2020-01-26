@@ -1,6 +1,7 @@
 package GameEntity;
 
 import GameEntity.Enemy.KoopaState;
+import GameEntity.Enemy.Plant;
 import GameTile.PowerUpBlock;
 import GameTile.Tile;
 import Mario.Game;
@@ -245,6 +246,9 @@ public class Player extends Entity {
 //                    status--;
 //
 ////                    safeClocks++;
+
+                    if(e.getId()==Id.plant && (((Plant)e).isInsidePipe()))
+                        continue;
 ////
 ////                    if (safeClocks == 30)
 ////                        safeClocks = 0;
