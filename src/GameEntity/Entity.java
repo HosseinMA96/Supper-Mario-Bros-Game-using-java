@@ -1,6 +1,7 @@
 package GameEntity;
 
 import GameEntity.Enemy.KoopaState;
+import GameEntity.Enemy.Plant;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
@@ -9,17 +10,17 @@ import java.awt.*;
 import java.util.Random;
 
 public abstract class Entity {
-    protected int x,y,width,height,velX,velY;
-//    protected boolean solid;
+    protected int x, y, width, height, velX, velY;
+    //    protected boolean solid;
     protected Id id;
     protected KoopaState koopaState;
     protected Handler handler;
-    protected boolean jumping=false,goingDownPipe;
-    protected boolean falling=true;
-    protected double gravity=0.0;
-    protected int facing=0; // facing left =0 , facing right =1
-    private int temp,scoreToBeAddedIfKilled;
-    private Random random=new Random();
+    protected boolean jumping = false, goingDownPipe;
+    protected boolean falling = true;
+    protected double gravity = 0.0;
+    protected int facing = 0; // facing left =0 , facing right =1
+    private int temp, scoreToBeAddedIfKilled;
+    private Random random = new Random();
 
     public KoopaState getKoopaState() {
         return koopaState;
@@ -31,38 +32,37 @@ public abstract class Entity {
         this.width = width;
         this.height = height;
 //        this.solid=solid;
-        this.id=id;
-        this.handler=handler;
+        this.id = id;
+        this.handler = handler;
         generateScore();
     }
 
     /**
      * Instead of creating bufferStrategies we use grapgics so
      * the game will not lag due to many objects displayed in the screen
+     *
      * @param g
      */
     public abstract void render(Graphics g);
 
-    private void generateScore()
-    {
-        temp=random.nextInt(2);
+    private void generateScore() {
+        temp = random.nextInt(2);
 
-        if(temp==1)
-        {
-            if(id==Id.player1)
+        if (temp == 1) {
+            if (id == Id.player1)
                 return;
 
-            if(id==Id.goomba)
-                scoreToBeAddedIfKilled=1;
+            if (id == Id.goomba)
+                scoreToBeAddedIfKilled = 1;
 
-            if(id==Id.hedgehog)
-                scoreToBeAddedIfKilled=2;
+            if (id == Id.hedgehog)
+                scoreToBeAddedIfKilled = 2;
 
-            if(id==Id.koopa)
-                scoreToBeAddedIfKilled=2;
+            if (id == Id.koopa)
+                scoreToBeAddedIfKilled = 2;
 
-            if(id==Id.player1)
-                scoreToBeAddedIfKilled=1;
+            if (id == Id.player1)
+                scoreToBeAddedIfKilled = 1;
 
 
         }
@@ -75,21 +75,23 @@ public abstract class Entity {
     public abstract void tick();
 
 
-    public void die()
-    {
-        System.out.println("temp : "+temp);
-        System.out.println("coins added  : "+scoreToBeAddedIfKilled);
-        Game.coins+=scoreToBeAddedIfKilled;
+    public void die() {
+        System.out.println("temp : " + temp);
+        System.out.println("coins added  : " + scoreToBeAddedIfKilled);
+        Game.coins += scoreToBeAddedIfKilled;
         handler.removeEntity(this);
 
-        if(id==Id.player1)
-        {
-            Game.lives--;
-            Game.showDeathScreen=true;
+        if (id == Id.player1) {
+            if (Player.safeClocks == 0) {
+                Game.lives--;
+                Game.showDeathScreen = true;
+                Player.safeClocks++;
+
+                if (Game.lives == 0)
+                    Game.gameOver = true;
+            }
 
 
-            if(Game.lives==0)
-                Game.gameOver=true;
         }
 
     }
@@ -98,8 +100,7 @@ public abstract class Entity {
 //        return solid;
 //    }
 
-    public void setFacing(int f)
-    {
+    public void setFacing(int f) {
 
     }
 
@@ -111,10 +112,10 @@ public abstract class Entity {
         this.goingDownPipe = goingDownPipe;
     }
 
-    public boolean getGoingDownPipe()
-    {
+    public boolean getGoingDownPipe() {
         return goingDownPipe;
     }
+
     public int getX() {
         return x;
     }
@@ -163,37 +164,31 @@ public abstract class Entity {
         this.velY = velY;
     }
 
-    public Rectangle getBounds()
-    {
-        return new Rectangle(getX(),getY(),width,height);
+    public Rectangle getBounds() {
+        return new Rectangle(getX(), getY(), width, height);
     }
 
-    public Rectangle getBoundsTop()
-    {
-        return new Rectangle(getX()+10,getY(),width-20,5);
+    public Rectangle getBoundsTop() {
+        return new Rectangle(getX() + 10, getY(), width - 20, 5);
     }
 
-    public Rectangle getBoundsBottom()
-    {
-        return new Rectangle(getX()+10,getY()+height-5,width-20,5);
+    public Rectangle getBoundsBottom() {
+        return new Rectangle(getX() + 10, getY() + height - 5, width - 20, 5);
     }
 
-    public Rectangle getBoundsLeft()
-    {
-        return new Rectangle(getX(),getY()+10,5,height-20);
+    public Rectangle getBoundsLeft() {
+        return new Rectangle(getX(), getY() + 10, 5, height - 20);
     }
 
-    public Rectangle getBoundsRight()
-    {
-        return new Rectangle(getX()+width-5,getY()+10,5,height-20);
+    public Rectangle getBoundsRight() {
+        return new Rectangle(getX() + width - 5, getY() + 10, 5, height - 20);
     }
 
     public double getGravity() {
         return gravity;
     }
 
-    public boolean getJumping()
-    {
+    public boolean getJumping() {
         return jumping;
     }
 

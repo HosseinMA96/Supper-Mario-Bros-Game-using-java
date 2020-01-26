@@ -16,7 +16,7 @@ public class Plant extends Entity {
     private boolean moving, insidePipe;
 
     public Plant(int x, int y, int width, int height, Id id, Handler handler) {
-        super(x, y, 60, 60, id, handler);
+        super(x, y, 50, 50, id, handler);
         moving = false;
         insidePipe = false;
         velX = 0;
@@ -104,5 +104,9 @@ public class Plant extends Entity {
         }
 
 
+    }
+
+    public boolean isMoving() {
+        return moving;
     }
 }

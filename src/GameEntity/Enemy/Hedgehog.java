@@ -67,7 +67,7 @@ public class Hedgehog extends Entity {
 
 
         for (Tile t : handler.getTile()) {
-            if (t.getId() == Id.coin)
+            if (t.getSolid()==false)
                 continue;
 
             if (getBoundsBottom().intersects((t.getBounds()))) {

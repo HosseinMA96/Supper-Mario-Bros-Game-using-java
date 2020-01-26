@@ -17,6 +17,7 @@ public enum Id {
     fireFlower,
     fireBall,
     hedgehog,
+    hole,
     wall;
 
 }

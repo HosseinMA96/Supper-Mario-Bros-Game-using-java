@@ -87,9 +87,8 @@ public class Koopa extends Entity {
 
 
         for (Tile t : handler.getTile()) {
-            if (t.getId() == Id.coin)
+            if (t.getSolid()==false)
                 continue;
-
 //            if (t.getId() == Id.wall) {
 //                if (getBoundsTop().intersects(t.getBounds())) {
 //                    setVelY(0);

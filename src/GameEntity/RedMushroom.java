@@ -40,7 +40,7 @@ public class RedMushroom extends Entity {
 
         for (Tile t : handler.getTile()) {
             if (!t.getSolid())
-                break;
+                continue;
 
 //            if (t.getId() == Id.wall) {
 //                if (getBoundsTop().intersects(t.getBounds())) {

@@ -136,9 +136,9 @@ public class Handler {
                     addTile(new CastleDoor(x*64,y*64,64,64,true,Id.castleDoor,this));
                 }
 
-                if(red==240 && green==100 && blue==0)
+                if(red==220 && green==220 && blue==220)
                 {
-                    addEntity(new Hedgehog(x * 64, y * 64, 64, 64, Id.hedgehog, this));
+                    addTile(new Hole(x * 64, y * 64, 64, 64,false,Id.hole,this));
              //       JOptionPane.showMessageDialog(null,"tichi");
                 }
 

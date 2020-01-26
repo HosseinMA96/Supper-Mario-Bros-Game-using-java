@@ -7,6 +7,7 @@ import GameTile.Tile;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
+import javafx.print.PageLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,9 +16,9 @@ import java.util.Random;
 public class Player extends Entity {
     private Random random;
 
-    private int frame = 0, frameDelay = 0, safeClocks, pixelsTraveled = 0;
+    private int frame = 0, frameDelay = 0, pixelsTraveled = 0;
     private boolean animate = false, sit;
-    public static int status = 0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
+    public static int status = 0,safeClocks=0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
     //frame delay is the amount of the time the game upddates before it changes the animation
     //if face ==0 faced left
 
@@ -54,8 +55,18 @@ public class Player extends Entity {
     @Override
     public void tick() {
 
+
+
         if(Game.paused)
             return;
+
+        if(safeClocks!=0)
+        {
+            safeClocks++;
+
+            if(safeClocks==180)
+                safeClocks=0;
+        }
 
 
         if(Game.isRunning()==false)
@@ -97,6 +108,21 @@ public class Player extends Entity {
         //  for (Tile t : handler.getTile()) {
         for (int i = 0; i < handler.getTile().size(); i++) {
             Tile t = handler.getTile().get(i);
+
+            if (getBounds().intersects(t.getBounds()) && t.getId() == Id.coin) {
+                Game.coins++;
+                t.die();
+            }
+
+            if(t.getId()==Id.hole && getBoundsBottom().intersects(t.getBounds()))
+            {
+                inflict();
+                x=Game.cam.getLastX();
+                velX=0;
+                velY=0;
+                Game.showDeathScreen=true;
+            }
+
             if (!t.getSolid() || goingDownPipe || t.getId()==Id.casteBrick)
                 continue;
 
@@ -140,7 +166,7 @@ public class Player extends Entity {
             }
 
 
-            if (getBoundsBottom().intersects((t.getBounds())) && t.getId() != Id.coin) {
+            if (getBoundsBottom().intersects((t.getBounds())) ) {
 
 
                 setVelY(0);
@@ -163,20 +189,17 @@ public class Player extends Entity {
             }
 
 
-            if (getBoundsLeft().intersects((t.getBounds())) && t.getId() != Id.coin) {
+            if (getBoundsLeft().intersects((t.getBounds())) ) {
                 setVelX(0);
                 x = t.getX() + t.getWidth();
             }
 
-            if (getBoundsRight().intersects((t.getBounds())) && t.getId() != Id.coin) {
+            if (getBoundsRight().intersects((t.getBounds()))) {
                 setVelX(0);
                 x = t.getX() - t.getWidth();
             }
 
-            if (getBounds().intersects(t.getBounds()) && t.getId() == Id.coin) {
-                Game.coins++;
-                t.die();
-            }
+
 
 
         }
@@ -247,7 +270,7 @@ public class Player extends Entity {
 //
 ////                    safeClocks++;
 
-                    if(e.getId()==Id.plant && (((Plant)e).isInsidePipe()))
+                    if(e.getId()==Id.plant && (((Plant)e).isInsidePipe() || ((Plant)e).isMoving()))
                         continue;
 ////
 ////                    if (safeClocks == 30)

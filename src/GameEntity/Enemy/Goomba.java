@@ -85,7 +85,7 @@ public class Goomba extends Entity {
 
 
         for (Tile t : handler.getTile()) {
-            if (t.getId()==Id.coin)
+            if (t.getSolid()==false)
                 continue;
 
 //            if (t.getId() == Id.wall) {
