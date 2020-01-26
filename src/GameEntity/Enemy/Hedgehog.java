@@ -7,15 +7,21 @@ import Mario.Handler;
 import Mario.Id;
 
 import java.awt.*;
+import java.util.Random;
 
 public class Hedgehog extends Entity {
     private int helpFrame, frameDelay;
     private boolean animate = false;
 
+
     public Hedgehog(int x, int y, int width, int height, Id id, Handler handler) {
         super(x, y, width, height, id, handler);
         velX = -3;
+
+
     }
+
+
 
     @Override
     public void render(Graphics g) {

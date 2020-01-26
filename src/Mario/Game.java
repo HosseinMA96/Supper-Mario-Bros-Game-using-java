@@ -11,6 +11,7 @@ package Mario;
 //39 Fire balls
 
 import GameEntity.Entity;
+import GameEntity.Player;
 import GameGFX.Sprite;
 import GameGFX.SpriteSheet;
 import Mario.Input.KeyInput;
@@ -287,6 +288,7 @@ public class Game extends Canvas implements Runnable {
             for (int i=0;i<lives;i++)
                 g.drawImage(star.getBufferedImage(),1150+60*i,40,60,60,null);
 
+            if(Player.status==2d)
             for (int i = 0; i< fireBalls; i++)
                 g.drawImage(fireBall.getBufferedImage(),1150+30*i,700,30,30,null);
 

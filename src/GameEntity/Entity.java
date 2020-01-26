@@ -6,6 +6,7 @@ import Mario.Handler;
 import Mario.Id;
 
 import java.awt.*;
+import java.util.Random;
 
 public abstract class Entity {
     protected int x,y,width,height,velX,velY;
@@ -17,6 +18,8 @@ public abstract class Entity {
     protected boolean falling=true;
     protected double gravity=0.0;
     protected int facing=0; // facing left =0 , facing right =1
+    private int temp,scoreToBeAddedIfKilled;
+    private Random random=new Random();
 
     public KoopaState getKoopaState() {
         return koopaState;
@@ -30,6 +33,7 @@ public abstract class Entity {
 //        this.solid=solid;
         this.id=id;
         this.handler=handler;
+        generateScore();
     }
 
     /**
@@ -38,6 +42,31 @@ public abstract class Entity {
      * @param g
      */
     public abstract void render(Graphics g);
+
+    private void generateScore()
+    {
+        temp=random.nextInt(2);
+
+        if(temp==1)
+        {
+            if(id==Id.player1)
+                return;
+
+            if(id==Id.goomba)
+                scoreToBeAddedIfKilled=1;
+
+            if(id==Id.hedgehog)
+                scoreToBeAddedIfKilled=2;
+
+            if(id==Id.koopa)
+                scoreToBeAddedIfKilled=2;
+
+            if(id==Id.player1)
+                scoreToBeAddedIfKilled=1;
+
+
+        }
+    }
 
 
     /**
@@ -48,6 +77,9 @@ public abstract class Entity {
 
     public void die()
     {
+        System.out.println("temp : "+temp);
+        System.out.println("coins added  : "+scoreToBeAddedIfKilled);
+        Game.coins+=scoreToBeAddedIfKilled;
         handler.removeEntity(this);
 
         if(id==Id.player1)

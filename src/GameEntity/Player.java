@@ -16,7 +16,7 @@ public class Player extends Entity {
 
     private int frame = 0, frameDelay = 0, safeClocks, pixelsTraveled = 0;
     private boolean animate = false, sit;
-    private int status = 0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
+    public static int status = 0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
     //frame delay is the amount of the time the game upddates before it changes the animation
     //if face ==0 faced left
 
