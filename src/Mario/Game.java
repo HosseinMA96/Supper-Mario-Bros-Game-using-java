@@ -38,15 +38,15 @@ public class Game extends Canvas implements Runnable {
     public static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
     public static SpriteSheet sheet;
     public static Handler handler;
-    public static Sprite grass, greenMushroom, redMushroom, powerUp, usedPowerUp, pipeBody, coin, castleBrick, castleDoor,prince,fireBall,fireFlower;
+    public static Sprite grass, greenMushroom, redMushroom, powerUp, usedPowerUp, pipeBody, coin, castleBrick, castleDoor, prince, fireBall, fireFlower;
     public static Sprite player[][] = new Sprite[3][12];//first index is status, second is frame
     public static Camera cam;
-    public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8],plant=new Sprite[2];
+    public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
     private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 0;
     public static int coins, lives = 3;
-    public static boolean startNext=false,totallyFinished=false;
-   // private sboolean totallyFinished=false;
+    public static boolean startNext = false, totallyFinished = false;
+    // private sboolean totallyFinished=false;
 
     //he 10 you 10
 
@@ -116,23 +116,26 @@ public class Game extends Canvas implements Runnable {
 
         castleBrick = new Sprite(sheet, 4, 1);
         castleDoor = new Sprite(sheet, 5, 1);
-        prince=new Sprite(sheet,6,1);
+        prince = new Sprite(sheet, 6, 1);
 
-        plant[0]=new Sprite(sheet, 7, 12);
-        plant[1]=new Sprite(sheet, 6, 12);
+        plant[0] = new Sprite(sheet, 7, 12);
+        plant[1] = new Sprite(sheet, 6, 12);
 
         // pipeHead=new Sprite(sheet,1,13);
-        fireBall=new Sprite(sheet,7,1);
-        fireFlower=new Sprite(sheet,8,1);
+        fireBall = new Sprite(sheet, 7, 1);
+        fireFlower = new Sprite(sheet, 8, 1);
+
+        for (int i=0;i<4;i++)
+            hedgehog[i]=new Sprite(sheet, i + 8, 12);
 
 
         // handler.addEntity(new Player(300,512,64,64,true,Id.player1,handler));
         // handler.addTile(new Wall(200,200,64,64,true,Id.wall,handler));
 
-        if(currentLevel<numberOfMaps)
-         handler.createLevel(levelsImage.get(currentLevel));
+        if (currentLevel < numberOfMaps)
+            handler.createLevel(levelsImage.get(currentLevel));
         else
-            JOptionPane.showMessageDialog(null,"All levels finished");
+            JOptionPane.showMessageDialog(null, "All levels finished");
 
     }
 
@@ -151,18 +154,18 @@ public class Game extends Canvas implements Runnable {
     }
 
     private synchronized void stop() {
-   //     System.out.println("in stop startNext is "+startNext);
+        //     System.out.println("in stop startNext is "+startNext);
 
         if (!running)
             return;
 
-      //  System.out.println("after return stop");
+        //  System.out.println("after return stop");
 
         running = false;
 
         try {
             thread.join();
-           // System.out.println("afterJoined");
+            // System.out.println("afterJoined");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -175,10 +178,10 @@ public class Game extends Canvas implements Runnable {
     @Override
     public void run() {
         createLevels(numberOfMaps);
-        while(!totallyFinished) {
-          //  System.out.println("in mother loop with current map "+currentLevel);
+        while (!totallyFinished) {
+            //  System.out.println("in mother loop with current map "+currentLevel);
 
-            if(currentLevel==numberOfMaps)
+            if (currentLevel == numberOfMaps)
                 break;
 
             init();
@@ -189,12 +192,12 @@ public class Game extends Canvas implements Runnable {
             double ns = 1000000000.0 / 50;
             int frames = 0;
             int ticks = 0;
-            running=true;
-            showDeathScreen=true;
+            running = true;
+            showDeathScreen = true;
 
             while (running) {
 
-             //   System.out.println(handler.getTile().size());
+                //   System.out.println(handler.getTile().size());
 
                 //      System.out.println("im in game loop");
 
@@ -221,7 +224,7 @@ public class Game extends Canvas implements Runnable {
                 }
             }
         }
-            stop();
+        stop();
 
     }
 
@@ -280,8 +283,8 @@ public class Game extends Canvas implements Runnable {
             g.setFont(new Font("Courier", Font.BOLD, 30));
             g.drawImage(Game.player[0][0].getBufferedImage(), 500, 300, 100, 100, null);
 
-            g.drawString("x" + lives, 600,400);
-            g.drawString("Level "+ currentLevel+1,500,280);
+            g.drawString("x" + lives, 600, 400);
+            g.drawString("Level " + currentLevel + 1, 500, 280);
         }
 
 
@@ -352,7 +355,6 @@ public class Game extends Canvas implements Runnable {
         //System.out.println("After start");
 
 
-
 //        while (true) {
 //           JOptionPane.showMessageDialog(null,"in while true");
 //
@@ -413,15 +415,15 @@ public class Game extends Canvas implements Runnable {
     }
 
     public static void goNextLevel() {
-      //  System.out.println("in next level method");
+        //  System.out.println("in next level method");
 
-      //  System.out.println("current level"+ currentLevel);
-      //  System.out.println("number of maps "+numberOfMaps);
+        //  System.out.println("current level"+ currentLevel);
+        //  System.out.println("number of maps "+numberOfMaps);
 
         if (currentLevel == numberOfMaps) {
 //            JOptionPane.showMessageDialog(null,"Game has finished !");
             running = false;
-            totallyFinished=true;
+            totallyFinished = true;
             //Handle endgame
             return;
 

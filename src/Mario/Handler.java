@@ -1,12 +1,14 @@
 package Mario;
 
 import GameEntity.Enemy.Goomba;
+import GameEntity.Enemy.Hedgehog;
 import GameEntity.Enemy.Koopa;
 import GameEntity.Entity;
 import GameEntity.RedMushroom;
 import GameEntity.Player;
 import GameTile.*;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -125,7 +127,14 @@ public class Handler {
 
                 if(red==100 && green==255 && blue==255)
                 {
+              //      JOptionPane.showMessageDialog(null,"castelDor");
                     addTile(new CastleDoor(x*64,y*64,64,64,true,Id.castleDoor,this));
+                }
+
+                if(red==240 && green==100 && blue==0)
+                {
+                    addEntity(new Hedgehog(x * 64, y * 64, 64, 64, Id.hedgehog, this));
+             //       JOptionPane.showMessageDialog(null,"tichi");
                 }
 
 

@@ -41,7 +41,9 @@ public class FireBall extends Entity {
         for (int i = 0; i < handler.getTile().size(); i++) {
             Tile t = handler.getTile().get(i);
 
-            if (t.getId() != Id.redMushroom || t.getId() != Id.greenMushroom || t.getId() != Id.coin || t.getId() != Id.fireFlower)
+            if (t.getId() == Id.redMushroom || t.getId() == Id.greenMushroom || t.getId() == Id.coin || t.getId() == Id.fireFlower  || t.getId() == Id.coin)
+                continue;
+            
                 if (getBoundsLeft().intersects(t.getBounds()) || getBoundsRight().intersects(t.getBounds())) {
                     die();
                     return;
@@ -72,7 +74,7 @@ public class FireBall extends Entity {
         for (int i = 0; i < handler.getEntity().size(); i++) {
             Entity e=handler.getEntity().get(i);
 
-            if(e.getId()==Id.goomba || e.getId()==Id.koopa)
+            if(e.getId()==Id.goomba || e.getId()==Id.koopa || e.getId()==Id.hedgehog)
             {
                 if(getBoundsBottom().intersects(e.getBounds()))
                 {

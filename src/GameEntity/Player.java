@@ -184,10 +184,12 @@ public class Player extends Entity {
 
             if (e.getId() == Id.redMushroom) {
                 if (getBounds().intersects(e.getBounds())) {
-                    status++;
-
-                    if (status == 3)
-                        status = 2;
+//                    status++;
+//
+//                    if (status == 3)
+//                        status = 2;
+//                    inflict();
+                    growUp();
 
                     e.die();
                 }
@@ -195,12 +197,22 @@ public class Player extends Entity {
 
             }
 
+            if(e.getId()==Id.hedgehog)
+            {
+                if(getBounds().intersects(e.getBounds()))
+                {
+                    inflict();
+                    e.die();
+                }
+            }
+
             if (e.getId() == Id.fireFlower) {
                 if (getBounds().intersects(e.getBounds())) {
-                    status++;
-
-                    if (status == 3)
-                        status = 2;
+//                    status++;
+//
+//                    if (status == 3)
+//                        status = 2;
+                    inflict();
 
                     e.die();
                 }
@@ -227,15 +239,17 @@ public class Player extends Entity {
                     //PLAYER INTERSECT WITH GOOMBA
 
 //                    if (safeClocks == 0)
-                    status--;
-
-//                    safeClocks++;
+//                    status--;
 //
-//                    if (safeClocks == 30)
-//                        safeClocks = 0;
+////                    safeClocks++;
+////
+////                    if (safeClocks == 30)
+////                        safeClocks = 0;
+//
+//                    if (status == -1)
+//                        die();
 
-                    if (status == -1)
-                        die();
+                    inflict();
 
                     e.die();
 
@@ -254,11 +268,13 @@ public class Player extends Entity {
 
                     } else if (getBounds().intersects(e.getBounds())) {
                         if (safeClocks == 0)
-                            status--;
+//                            status--;
+//
+//
+//                        if (status == -1)
+//                            die();
 
-
-                        if (status == -1)
-                            die();
+                            inflict();
 
                         e.die();
                     }
@@ -275,14 +291,14 @@ public class Player extends Entity {
 
                     if (getBoundsLeft().intersects(e.getBoundsRight())) {
 
-                        e.velX = -4;
+                        e.velX = -6;
                         e.koopaState = KoopaState.SPINNING;
                         //   System.out.println("go left t");
                         gravity = 2;
                         continue;
 
                     } else if (getBoundsRight().intersects(e.getBoundsLeft())) {
-                        e.velX = 4;
+                        e.velX = 6;
                         e.koopaState = KoopaState.SPINNING;
                         //  System.out.println("go right t");
                         gravity = 2;
@@ -386,6 +402,29 @@ public class Player extends Entity {
 
     public void setSit(boolean sit) {
         this.sit = sit;
+    }
+
+    private void inflict()
+    {
+        status--;
+
+
+        if(status==-1)
+        {
+            die();
+            status=0;
+        }
+
+
+    }
+
+    private void growUp()
+    {
+        status++;
+        if(status==3)
+            status=2;
+
+        //or increase lives?
     }
 
     public int getStatus() {

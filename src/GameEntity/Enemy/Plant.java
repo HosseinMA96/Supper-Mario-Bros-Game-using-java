@@ -1,5 +1,6 @@
-package GameEntity;
+package GameEntity.Enemy;
 
+import GameEntity.Entity;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;

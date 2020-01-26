@@ -1,7 +1,6 @@
 package GameTile;
 
-import GameEntity.Plant;
-import Mario.Game;
+import GameEntity.Enemy.Plant;
 import Mario.Handler;
 import Mario.Id;
 
