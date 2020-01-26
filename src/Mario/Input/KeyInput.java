@@ -11,74 +11,84 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyInput implements KeyListener {
-    private boolean fire=false;
+    private boolean fire = false;
+    public static boolean longJump, invincible, fullLives;
+    private int jPressed, lPressed, iPressed;
 
     @Override
+
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
-        for (int i=0;i<Game.handler.getEntity().size();i++) {
-            Entity en=Game.getHandler().getEntity().get(i);
+        for (int i = 0; i < Game.handler.getEntity().size(); i++) {
+            Entity en = Game.getHandler().getEntity().get(i);
 
             if (en.getId() != Id.player1)
                 continue;
 
 //            if (en.getJumping())
 //                continue;
-            if(en.getGoingDownPipe())
+            if (en.getGoingDownPipe() || Game.showDeathScreen || Game.paused)
                 return;
 
             switch (key) {
                 case KeyEvent.VK_P:
-                    if(Game.paused==true)
-                        Game.paused=false;
+                    setCheatZero();
+
+                    if (Game.paused == true)
+                        Game.paused = false;
 
                     else
-                        Game.paused=true;
+                        Game.paused = true;
                     break;
 
-                case  KeyEvent.VK_SPACE:
-                    if(((Player)en).getStatus() != 2 || fire || Game.fireBalls ==0)
+                case KeyEvent.VK_SPACE:
+                    setCheatZero();
+
+                    if (((Player) en).getStatus() != 2 || fire || Game.fireBalls == 0)
                         break;
 
-                    fire=true;
+                    fire = true;
                     Game.fireBalls--;
 
-                if(en.getFacing()==0)
-                    Game.handler.addEntity((new FireBall(en.getX()+24,en.getY()+12,24,24,Id.fireBall,Game.handler,en.getFacing())));
+                    if (en.getFacing() == 0)
+                        Game.handler.addEntity((new FireBall(en.getX() + 24, en.getY() + 12, 24, 24, Id.fireBall, Game.handler, en.getFacing())));
 
-                else
-                    Game.handler.addEntity((new FireBall(en.getX()-24,en.getY()+12,24,24,Id.fireBall,Game.handler,en.getFacing())));
-                break;
-
-
+                    else
+                        Game.handler.addEntity((new FireBall(en.getX() - 24, en.getY() + 12, 24, 24, Id.fireBall, Game.handler, en.getFacing())));
+                    break;
 
 
                 case KeyEvent.VK_W:
+                    setCheatZero();
 //                    en.setVelY(-5);
-                    if (!en.getJumping()  ) {
+                    if (!en.getJumping()) {
                         en.setJumping(true);
+
                         en.setGravity(11.5);
+
+                        if (longJump)
+                            en.setGravity(30);
                     }
 
 
                     break;
 
                 case KeyEvent.VK_S:
-                    ((Player)en).setSit(true);
 
-                    for (int q=0;q<Game.handler.getTile().size();q++)
-                    {
-                        Tile t=Game.getHandler().getTile().get(q);
+                    setCheatZero();
+                    ((Player) en).setSit(true);
 
-                        if(t.getId()==Id.pipe){
+                    for (int q = 0; q < Game.handler.getTile().size(); q++) {
+                        Tile t = Game.getHandler().getTile().get(q);
+
+                        if (t.getId() == Id.pipe) {
 //                            System.out.println("mario : "+en.getBoundsBottom());
 //                            System.out.println("pipe : "+t.getBounds());
-                          //  System.out.println();
-                            if(en.getBoundsBottom().intersects(t.getBounds()))
-                            {
-                           //     JOptionPane.showMessageDialog(null,"intersect");
-                                if(en.getGoingDownPipe() != true)
+                            //  System.out.println();
+                            if (en.getBoundsBottom().intersects(t.getBounds())) {
+                                //     JOptionPane.showMessageDialog(null,"intersect");
+                                if (en.getGoingDownPipe() != true)
                                     en.setGoingDownPipe(true);
 
                             }
@@ -95,6 +105,7 @@ public class KeyInput implements KeyListener {
 
 
                 case KeyEvent.VK_D:
+                    setCheatZero();
 
 //                    if(en.getJumping())
 //                        return;
@@ -105,11 +116,54 @@ public class KeyInput implements KeyListener {
                     break;
 
                 case KeyEvent.VK_A:
+                    setCheatZero();
 //                    if(en.getJumping())
 //                        return;
 
                     en.setFacing(0);
                     en.setVelX(-5);
+                    break;
+
+
+                case KeyEvent.VK_J:
+                    jPressed++;
+                    iPressed = 0;
+                    lPressed = 0;
+
+
+                    if (jPressed == 3)
+                    {
+                        if(longJump==false)
+                        longJump = true;
+
+                        else
+                            longJump=false;
+
+                        jPressed=0;
+                    }
+
+
+                    break;
+
+                case KeyEvent.VK_L:
+                    jPressed = 0;
+                    iPressed = 0;
+                    lPressed++;
+
+                    if (lPressed == 3) {
+                        Game.lives = 3;
+                        lPressed = 0;
+                    }
+                    break;
+
+                case KeyEvent.VK_I:
+                    jPressed = 0;
+                    iPressed++;
+                    lPressed = 0;
+
+                    if (iPressed == 3)
+                        invincible = true;
+
                     break;
 
             }
@@ -140,7 +194,7 @@ public class KeyInput implements KeyListener {
 
                     case KeyEvent.VK_S:
                         en.setVelY(0);
-                        ((Player)en).setSit(false);
+                        ((Player) en).setSit(false);
                         break;
 
 
@@ -152,11 +206,9 @@ public class KeyInput implements KeyListener {
                         en.setVelX(0);
                         break;
 
-                        case KeyEvent.VK_SPACE:
-                            fire=false;
-                                    break;
-
-
+                    case KeyEvent.VK_SPACE:
+                        fire = false;
+                        break;
 
 
                 }
@@ -170,6 +222,12 @@ public class KeyInput implements KeyListener {
 
     @Override
     public void keyTyped(KeyEvent e) {
-        //For cheats
+        System.out.println(e.getKeyChar());
+    }
+
+    private void setCheatZero() {
+        jPressed = 0;
+        lPressed = 0;
+        iPressed = 0;
     }
 }

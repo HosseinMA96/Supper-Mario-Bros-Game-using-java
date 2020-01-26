@@ -2,11 +2,13 @@ package GameEntity;
 
 import GameEntity.Enemy.KoopaState;
 import GameEntity.Enemy.Plant;
+import GameTile.Brick;
 import GameTile.PowerUpBlock;
 import GameTile.Tile;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
+import Mario.Input.KeyInput;
 
 import javax.swing.*;
 import java.awt.*;
@@ -166,6 +168,30 @@ public class Player extends Entity {
                     }
 
               //      System.out.println("Trig");
+                    //  JOptionPane.showMessageDialog(null,"hit");
+                    continue;
+                }
+
+
+            }
+
+
+            if (t.getId() == Id.brick) {
+                if (getBoundsTop().intersects(t.getBounds())) {
+                    if (jumping) {
+                        jumping = false;
+                        //  gravity = 0.8;
+                        gravity = 2;
+                        falling = true;
+                    }
+                    //   JOptionPane.showMessageDialog(null,"set actv");
+//                    ((PowerUpBlock) t).setActivated(true);
+
+
+                        ((Brick) t).die();
+
+
+                    //      System.out.println("Trig");
                     //  JOptionPane.showMessageDialog(null,"hit");
                     continue;
                 }
@@ -463,6 +489,10 @@ public class Player extends Entity {
     }
 
     private void inflict() {
+
+        if(KeyInput.invincible)
+            return;
+
         status--;
 
 

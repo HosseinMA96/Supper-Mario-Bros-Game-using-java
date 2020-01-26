@@ -13,7 +13,7 @@ import java.util.Random;
 public class PowerUpBlock extends Tile {
     private Sprite powerUp;
  //   boolean poppedUp = false;
-    private int hitsTaken = 0, spriteY = getY(),coinsGiven;
+    private int hitsTaken = 0, spriteY = getY(),coinsGiven,deathCounter=0;
     private String powerUpName;
     private boolean hasCoin, hasMushroom,change, normalState =true;
     private Random random = new Random();
@@ -52,6 +52,9 @@ public class PowerUpBlock extends Tile {
         else
         {
             g.drawImage(Game.destroyedSpecialBreak.getBufferedImage(), x, y, width, height, null);
+            deathCounter++;
+
+            if(deathCounter==60)
             super.die();
         }
 
