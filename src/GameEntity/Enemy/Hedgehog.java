@@ -47,6 +47,9 @@ public class Hedgehog extends Entity {
     @Override
     public void tick() {
 
+        if(Game.paused)
+            return;
+
         x += velX;
         y += velY;
 

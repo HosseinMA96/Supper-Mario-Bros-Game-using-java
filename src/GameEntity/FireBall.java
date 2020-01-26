@@ -29,6 +29,9 @@ public class FireBall extends Entity {
 
     @Override
     public void tick() {
+        if(Game.paused)
+            return;
+
         x+=velX;
         y+=velY;
 
@@ -43,7 +46,7 @@ public class FireBall extends Entity {
 
             if (t.getId() == Id.redMushroom || t.getId() == Id.greenMushroom || t.getId() == Id.coin || t.getId() == Id.fireFlower  || t.getId() == Id.coin)
                 continue;
-            
+
                 if (getBoundsLeft().intersects(t.getBounds()) || getBoundsRight().intersects(t.getBounds())) {
                     die();
                     return;

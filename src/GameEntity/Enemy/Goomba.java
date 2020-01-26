@@ -71,6 +71,9 @@ public class Goomba extends Entity {
 
     public void tick()
     {
+        if(Game.paused)
+            return;
+
         x+=velX;
         y+=velY;
 

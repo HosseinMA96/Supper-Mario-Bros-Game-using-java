@@ -15,7 +15,7 @@ public class Plant extends Entity {
     private boolean moving, insidePipe;
 
     public Plant(int x, int y, int width, int height, Id id, Handler handler) {
-        super(x, y, width, height, id, handler);
+        super(x, y, 60, 60, id, handler);
         moving = false;
         insidePipe = false;
         velX = 0;
@@ -60,6 +60,9 @@ public class Plant extends Entity {
 
     @Override
     public void tick() {
+        if(Game.paused)
+            return;
+
         y += velY;
 
         if (!moving)

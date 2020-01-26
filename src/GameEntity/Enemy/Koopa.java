@@ -68,6 +68,9 @@ public class Koopa extends Entity {
     }
 
     public void tick() {
+        if(Game.paused)
+            return;
+
         if (koopaState == KoopaState.SHELL) {
             velX = 0;
             velY = 0;

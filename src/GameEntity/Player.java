@@ -1,6 +1,5 @@
 package GameEntity;
 
-import GameEntity.Enemy.Goomba;
 import GameEntity.Enemy.KoopaState;
 import GameTile.PowerUpBlock;
 import GameTile.Tile;
@@ -53,6 +52,9 @@ public class Player extends Entity {
 
     @Override
     public void tick() {
+
+        if(Game.paused)
+            return;
 
 
         if(Game.isRunning()==false)
@@ -212,7 +214,8 @@ public class Player extends Entity {
 //
 //                    if (status == 3)
 //                        status = 2;
-                    inflict();
+                    growUp();
+                    Game.fireBalls =5;
 
                     e.die();
                 }

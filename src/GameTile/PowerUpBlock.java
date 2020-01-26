@@ -52,7 +52,8 @@ public class PowerUpBlock extends Tile{
     @Override
     public void tick()
     {
-
+        if(Game.paused)
+            return;
 //        if(poppedUp)
 //            JOptionPane.showMessageDialog(null,"poppped up");
         if(activated && !poppedUp)

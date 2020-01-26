@@ -7,7 +7,6 @@ import GameTile.Tile;
 import Mario.Game;
 import Mario.Id;
 
-import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -30,12 +29,20 @@ public class KeyInput implements KeyListener {
                 return;
 
             switch (key) {
+                case KeyEvent.VK_P:
+                    if(Game.paused==true)
+                        Game.paused=false;
+
+                    else
+                        Game.paused=true;
+                    break;
 
                 case  KeyEvent.VK_SPACE:
-                    if(((Player)en).getStatus() != 2 || fire)
+                    if(((Player)en).getStatus() != 2 || fire || Game.fireBalls ==0)
                         break;
 
                     fire=true;
+                    Game.fireBalls--;
 
                 if(en.getFacing()==0)
                     Game.handler.addEntity((new FireBall(en.getX()+24,en.getY()+12,24,24,Id.fireBall,Game.handler,en.getFacing())));

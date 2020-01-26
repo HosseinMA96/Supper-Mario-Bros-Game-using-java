@@ -22,7 +22,6 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 import static java.lang.System.exit;
 
@@ -38,14 +37,14 @@ public class Game extends Canvas implements Runnable {
     public static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
     public static SpriteSheet sheet;
     public static Handler handler;
-    public static Sprite grass, greenMushroom, redMushroom, powerUp, usedPowerUp, pipeBody, coin, castleBrick, castleDoor, prince, fireBall, fireFlower;
+    public static Sprite grass, greenMushroom, redMushroom, powerUp, usedPowerUp, pipeBody, coin, castleBrick,star, castleDoor, prince, fireBall, fireFlower;
     public static Sprite player[][] = new Sprite[3][12];//first index is status, second is frame
     public static Camera cam;
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
     private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 0;
-    public static int coins, lives = 3;
-    public static boolean startNext = false, totallyFinished = false;
+    public static int coins, lives = 3, fireBalls =5;
+    public static boolean startNext = false, totallyFinished = false,paused=false;
     // private sboolean totallyFinished=false;
 
     //he 10 you 10
@@ -125,6 +124,11 @@ public class Game extends Canvas implements Runnable {
         fireBall = new Sprite(sheet, 7, 1);
         fireFlower = new Sprite(sheet, 8, 1);
 
+
+        star = new Sprite(sheet, 9, 1);
+
+
+
         for (int i=0;i<4;i++)
             hedgehog[i]=new Sprite(sheet, i + 8, 12);
 
@@ -196,6 +200,8 @@ public class Game extends Canvas implements Runnable {
             showDeathScreen = true;
 
             while (running) {
+
+
 
                 //   System.out.println(handler.getTile().size());
 
@@ -278,13 +284,33 @@ public class Game extends Canvas implements Runnable {
             g.setFont(new Font("Courier", Font.BOLD, 20));
             g.drawString("x" + coins, 46, 46);
 
+            for (int i=0;i<lives;i++)
+                g.drawImage(star.getBufferedImage(),1150+60*i,40,60,60,null);
+
+            for (int i = 0; i< fireBalls; i++)
+                g.drawImage(fireBall.getBufferedImage(),1150+30*i,700,30,30,null);
+
+            g.drawString("Level "+(currentLevel+1),600,40);
+
+
+
         } else if (!gameOver) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Courier", Font.BOLD, 30));
             g.drawImage(Game.player[0][0].getBufferedImage(), 500, 300, 100, 100, null);
 
-            g.drawString("x" + lives, 600, 400);
-            g.drawString("Level " + currentLevel + 1, 500, 280);
+            g.drawString("x" + lives, 700, 400);
+
+
+            g.drawString("Level " + (currentLevel + 1), 600, 280);
+        }
+
+        if(paused && !showDeathScreen)
+        {
+            g.setColor(Color.white);
+            g.setFont(new Font("Courier", Font.BOLD, 50));
+            g.drawString("Paused", 550, 100);
+
         }
 
 
@@ -321,6 +347,8 @@ public class Game extends Canvas implements Runnable {
         //frames * 3 seconds
         if (deathScreenTime == 180) {
             showDeathScreen = false;
+            paused=false;
+
             deathScreenTime = 0;
             handler.clearLevel();
             handler.createLevel(levelsImage.get(currentLevel));
@@ -330,6 +358,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public Game() {
+
         Dimension size = new Dimension(WITDH * SCALE, HEIGHT * SCALE);
         setPreferredSize(size);
         setMaximumSize(size);
@@ -346,7 +375,8 @@ public class Game extends Canvas implements Runnable {
         JFrame frame = new JFrame(TITLE);
         frame.add(game);
         frame.pack();
-        frame.setResizable(true);
+        frame.setSize(new Dimension(1400,800));
+        frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
