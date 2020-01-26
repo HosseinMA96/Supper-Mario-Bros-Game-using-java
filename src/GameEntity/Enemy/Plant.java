@@ -13,12 +13,12 @@ public class Plant extends Entity {
     private int wait;
     private int pixelsTraveled = 0,frame=0,frameDelay;
 
-    private boolean moving, insidePipe;
+    private boolean moving=false, changeState,insidePipe=true;
 
     public Plant(int x, int y, int width, int height, Id id, Handler handler) {
         super(x, y, 50, 50, id, handler);
         moving = false;
-        insidePipe = false;
+        changeState = false;
         velX = 0;
 
         int temp=(new Random().nextInt(90));
@@ -27,8 +27,8 @@ public class Plant extends Entity {
 
     }
 
-    public boolean isInsidePipe() {
-        return insidePipe;
+    public boolean isChangeState() {
+        return changeState;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Plant extends Entity {
 //        g.setColor(Color.red);
 //        g.drawRect(x,y,width,height);
 
-        if(!moving && !insidePipe)
+        if(!moving && !changeState)
         {
             g.drawImage(Game.plant[0].getBufferedImage(),x,y,width,height,null);
             return;
@@ -77,23 +77,31 @@ public class Plant extends Entity {
             wait++;
 
         if (wait >= 180) {
-            if (insidePipe)
-                insidePipe = false;
+            if (changeState)
+                changeState = false;
 
             else
-                insidePipe = true;
+                changeState = true;
 
             moving = true;
+
+            if(insidePipe)
+                insidePipe=false;
+
             wait = 0;
         }
 
         if (moving) {
-            if (insidePipe)
+            if (changeState)
                 setVelY(-3);
             else
                 velY = 3;
 
             pixelsTraveled += velY;
+
+
+            if(pixelsTraveled >= getHeight())
+                insidePipe=true;
 
             if (pixelsTraveled >= getHeight() || pixelsTraveled<=-getHeight()) {
                 pixelsTraveled = 0;
@@ -106,7 +114,7 @@ public class Plant extends Entity {
 
     }
 
-    public boolean isMoving() {
-        return moving;
+    public boolean isInsidePipe() {
+        return insidePipe;
     }
 }

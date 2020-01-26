@@ -18,6 +18,8 @@ public enum Id {
     fireBall,
     hedgehog,
     hole,
+    stair,
+    brick,
     wall;
 
 }

@@ -133,7 +133,7 @@ public class Handler {
                 if(red==100 && green==255 && blue==255)
                 {
               //      JOptionPane.showMessageDialog(null,"castelDor");
-                    addTile(new CastleDoor(x*64,y*64,64,64,true,Id.castleDoor,this));
+                    addTile(new Prince(x*64,y*64,64,64,true,Id.prince,this));
                 }
 
                 if(red==220 && green==220 && blue==220)
@@ -141,6 +141,23 @@ public class Handler {
                     addTile(new Hole(x * 64, y * 64, 64, 64,false,Id.hole,this));
              //       JOptionPane.showMessageDialog(null,"tichi");
                 }
+
+                if(red==30 && green==30 && blue==30)
+                {
+                    addTile(new Stair(x * 64, y * 64, 64, 64,true,Id.stair,this));
+                    //       JOptionPane.showMessageDialog(null,"tichi");
+                }
+
+                if(red==100 && green==80 && blue==20)
+                {
+                    addTile(new Brick(x * 64, y * 64, 64, 64,true,Id.brick,this));
+                    //       JOptionPane.showMessageDialog(null,"tichi");
+                }
+
+
+
+
+
 
 
 

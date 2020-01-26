@@ -7,7 +7,6 @@ import GameTile.Tile;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
-import javafx.print.PageLayout;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,7 +17,7 @@ public class Player extends Entity {
 
     private int frame = 0, frameDelay = 0, pixelsTraveled = 0;
     private boolean animate = false, sit;
-    public static int status = 0,safeClocks=0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
+    public static int status = 0, safeClocks = 0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
     //frame delay is the amount of the time the game upddates before it changes the animation
     //if face ==0 faced left
 
@@ -33,7 +32,7 @@ public class Player extends Entity {
     @Override
     public void render(Graphics g) {
 
-        if (jumping) {
+        if (jumping || velY < 2) {
             g.drawImage(Game.player[status][11 - facing].getBufferedImage(), x, y, width, height, null);
             return;
         }
@@ -56,31 +55,32 @@ public class Player extends Entity {
     public void tick() {
 
 
+        // System.out.println(velY);
+        //  System.out.println(gravity);
 
-        if(Game.paused)
+        if (Game.paused)
             return;
 
-        if(safeClocks!=0)
-        {
+        if (safeClocks != 0) {
             safeClocks++;
 
-            if(safeClocks==180)
-                safeClocks=0;
+            if (safeClocks == 100)
+                safeClocks = 0;
         }
 
 
-        if(Game.isRunning()==false)
+        if (Game.isRunning() == false)
             return;
 
         x += velX;
 
-        if(x<-Game.cam.getLastX())
-            x=-Game.cam.getLastX();
+        if (x < -Game.cam.getLastX())
+            x = -Game.cam.getLastX();
 
         y += velY;
 
-      //  System.out.println("last x "+Game.cam.getLastX());
-       // System.out.println("mario X "+x);
+        //  System.out.println("last x "+Game.cam.getLastX());
+        // System.out.println("mario X "+x);
 
         if (goingDownPipe)
             pixelsTraveled += velY;
@@ -114,22 +114,21 @@ public class Player extends Entity {
                 t.die();
             }
 
-            if(t.getId()==Id.hole && getBoundsBottom().intersects(t.getBounds()))
-            {
+            if (t.getId() == Id.hole && getBoundsBottom().intersects(t.getBounds())) {
                 inflict();
-                x=Game.cam.getLastX();
-                velX=0;
-                velY=0;
-                Game.showDeathScreen=true;
+                x = Game.cam.getLastX();
+                velX = 0;
+                velY = 0;
+                Game.showDeathScreen = true;
             }
 
-            if (!t.getSolid() || goingDownPipe || t.getId()==Id.casteBrick)
+            if (!t.getSolid() || goingDownPipe || t.getId() == Id.casteBrick)
                 continue;
 
             //next level
-            if (t.getId()==Id.prince || t.getId() == Id.castleDoor && getBounds().intersects(t.getBounds())) {
+            if (t.getId() == Id.prince || t.getId() == Id.castleDoor && getBounds().intersects(t.getBounds())) {
                 Game.goNextLevel();
-             //   JOptionPane.showMessageDialog(null,"next level");
+                //   JOptionPane.showMessageDialog(null,"next level");
                 return;
             }
             if (t.getId() == Id.wall) {
@@ -159,14 +158,29 @@ public class Player extends Entity {
                     }
                     //   JOptionPane.showMessageDialog(null,"set actv");
                     ((PowerUpBlock) t).setActivated(true);
+                    System.out.println("Trig");
                     //  JOptionPane.showMessageDialog(null,"hit");
+                    continue;
                 }
 
 
             }
 
 
-            if (getBoundsBottom().intersects((t.getBounds())) ) {
+            if (getBoundsTop().intersects((t.getBounds()))) {
+
+                if (jumping) {
+                    jumping = false;
+                    //  gravity = 0.8;
+                    gravity = 2;
+                    falling = true;
+                }
+
+                continue;
+            }
+
+
+            if (getBoundsBottom().intersects((t.getBounds()))) {
 
 
                 setVelY(0);
@@ -189,17 +203,17 @@ public class Player extends Entity {
             }
 
 
-            if (getBoundsLeft().intersects((t.getBounds())) ) {
+            if (getBoundsLeft().intersects((t.getBounds()))) {
                 setVelX(0);
                 x = t.getX() + t.getWidth();
+                System.out.println("in Bleft");
             }
 
             if (getBoundsRight().intersects((t.getBounds()))) {
                 setVelX(0);
                 x = t.getX() - t.getWidth();
+                System.out.println("in Brightی");
             }
-
-
 
 
         }
@@ -223,10 +237,8 @@ public class Player extends Entity {
 
             }
 
-            if(e.getId()==Id.hedgehog)
-            {
-                if(getBounds().intersects(e.getBounds()))
-                {
+            if (e.getId() == Id.hedgehog) {
+                if (getBounds().intersects(e.getBounds())) {
                     inflict();
                     e.die();
                 }
@@ -239,7 +251,7 @@ public class Player extends Entity {
 //                    if (status == 3)
 //                        status = 2;
                     growUp();
-                    Game.fireBalls =5;
+                    Game.fireBalls = 5;
 
                     e.die();
                 }
@@ -251,15 +263,18 @@ public class Player extends Entity {
                 if (getBounds().intersects(e.getBounds())) {
                     Game.lives++;
 
+                    if(Game.lives==4)
+                        Game.lives=3;
+
                     e.die();
                 }
 
 
             }
 
-            if (e.getId() == Id.goomba || e.getId()==Id.plant) {
+            if (e.getId() == Id.goomba || e.getId() == Id.plant) {
 
-                if (getBoundsBottom().intersects(e.getBoundsTop()) && e.getId()!=Id.plant) {
+                if (getBoundsBottom().intersects(e.getBoundsTop()) && e.getId() != Id.plant) {
                     e.die();
                 } else if (getBounds().intersects(e.getBounds())) {
 
@@ -270,7 +285,7 @@ public class Player extends Entity {
 //
 ////                    safeClocks++;
 
-                    if(e.getId()==Id.plant && (((Plant)e).isInsidePipe() || ((Plant)e).isMoving()))
+                    if (e.getId() == Id.plant && (((Plant) e).isInsidePipe()))
                         continue;
 ////
 ////                    if (safeClocks == 30)
@@ -325,6 +340,7 @@ public class Player extends Entity {
                         e.koopaState = KoopaState.SPINNING;
                         //   System.out.println("go left t");
                         gravity = 2;
+                        safeClocks = 1;
                         continue;
 
                     } else if (getBoundsRight().intersects(e.getBoundsLeft())) {
@@ -332,6 +348,7 @@ public class Player extends Entity {
                         e.koopaState = KoopaState.SPINNING;
                         //  System.out.println("go right t");
                         gravity = 2;
+                        safeClocks = 1;
                         continue;
                     }
                     continue;
@@ -342,19 +359,23 @@ public class Player extends Entity {
                     if (getBoundsBottom().intersects(e.getBoundsTop())) {
                         e.die();
                         continue;
-                    }
-
-//                    } else if (getBounds().intersects(e.getBounds())) {
+                    } else if (getBounds().intersects(e.getBounds())) {
 //                        if (safeClocks == 0)
 //                            status--;
 //
+//                        counter
 ////
 //
 //                        if (status == -1)
 //                            die();
 //
 //                        e.die();
-//                    }
+                        if (safeClocks == 0) {
+                            inflict();
+                            safeClocks = 1;
+                        }
+
+                    }
                 }
             }
         }
@@ -434,25 +455,22 @@ public class Player extends Entity {
         this.sit = sit;
     }
 
-    private void inflict()
-    {
+    private void inflict() {
         status--;
 
 
-        if(status==-1)
-        {
+        if (status == -1) {
             die();
-            status=0;
+            status = 0;
         }
 
 
     }
 
-    private void growUp()
-    {
+    private void growUp() {
         status++;
-        if(status==3)
-            status=2;
+        if (status == 3)
+            status = 2;
 
         //or increase lives?
     }

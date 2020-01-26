@@ -58,7 +58,7 @@ public class KeyInput implements KeyListener {
 //                    en.setVelY(-5);
                     if (!en.getJumping()  ) {
                         en.setJumping(true);
-                        en.setGravity(10.0);
+                        en.setGravity(11.5);
                     }
 
 

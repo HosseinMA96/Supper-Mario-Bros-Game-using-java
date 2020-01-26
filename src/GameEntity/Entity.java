@@ -76,8 +76,8 @@ public abstract class Entity {
 
 
     public void die() {
-        System.out.println("temp : " + temp);
-        System.out.println("coins added  : " + scoreToBeAddedIfKilled);
+     //   System.out.println("temp : " + temp);
+     //   System.out.println("coins added  : " + scoreToBeAddedIfKilled);
         Game.coins += scoreToBeAddedIfKilled;
         handler.removeEntity(this);
 
