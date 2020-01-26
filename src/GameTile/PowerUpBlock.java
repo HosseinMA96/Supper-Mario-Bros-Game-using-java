@@ -12,10 +12,10 @@ import java.util.Random;
 
 public class PowerUpBlock extends Tile {
     private Sprite powerUp;
- //   boolean poppedUp = false;
-    private int hitsTaken = 0, spriteY = getY(),coinsGiven,deathCounter=0,safeCounter=0;
+    //   boolean poppedUp = false;
+    private int hitsTaken = 0, spriteY = getY(), coinsGiven, deathCounter = 0;
     private String powerUpName;
-    private boolean hasCoin, hasMushroom,change=false, normalState =true,activeHelper=false;
+    private boolean hasCoin, hasMushroom, change = false, normalState = true, activeHelper = false,mushroomGiven=false;
     private Random random = new Random();
 
 
@@ -25,51 +25,53 @@ public class PowerUpBlock extends Tile {
         this.powerUpName = powerUpname;
 
 
+        long temp = System.currentTimeMillis() % 2;
+        hasCoin = temp > 0;
 
-        long temp = System.currentTimeMillis()%2;
-        hasCoin = temp >0;
+      
 
-        hasCoin=false;
+        temp = random.nextInt(100);
+        hasMushroom = temp > 80;
 
-       temp= random.nextInt(100);
-        hasMushroom=temp>80;
 
-        hasMushroom=true;
 
     }
 
     public void addHit() {
 
 
-
-
         hitsTaken++;
-        System.out.println("hit = "+hitsTaken);
+        System.out.println("hit = " + hitsTaken);
 
-        if(hitsTaken<4)
-        change=true;
+        if (hitsTaken < 4)
+            change = true;
     }
 
     @Override
     public void render(Graphics g) {
 
 
-        if (!normalState)
+        if (!normalState) {
+
+
             g.drawImage(powerUp.getBufferedImage(), x, spriteY, width, height, null);
+        }
 
         if (!activated)
             g.drawImage(Game.specialBrick.getBufferedImage(), x, y, width, height, null);
 
-         if(hitsTaken>=3)
-        {
-            System.out.println("in destoryed "+activated+" "+hitsTaken);
+        if (hitsTaken >= 3) {
+            if(hasMushroom && mushroomGiven==false){
+                tick();
+                return;
+            }
+        //    System.out.println("in destoryed " + activated + " " + hitsTaken);
             g.drawImage(Game.destroyedSpecialBreak.getBufferedImage(), x, y, width, height, null);
             deathCounter++;
 
-            if(deathCounter==60)
-            super.die();
+            if (deathCounter == 60)
+                super.die();
         }
-
 
 
     }
@@ -77,10 +79,6 @@ public class PowerUpBlock extends Tile {
 
     @Override
     public void tick() {
-        safeCounter++;
-
-        if(safeCounter>60)
-            safeCounter=60;
 
 
         if (Game.paused)
@@ -89,13 +87,12 @@ public class PowerUpBlock extends Tile {
 //            JOptionPane.showMessageDialog(null,"poppped up");
         if (change) {
 
-            normalState =false;
-       //     System.out.println(false);
-         //   change=false;
+            normalState = false;
+            //     System.out.println(false);
+            //   change=false;
 
-            if (hasCoin)
-            {
-                powerUp=Game.coin;
+            if (hasCoin) {
+                powerUp = Game.coin;
                 spriteY -= 6;
             }
 
@@ -108,10 +105,9 @@ public class PowerUpBlock extends Tile {
 //                JOptionPane.showMessageDialog(null,"pre trig");
                 //implement flower
 
-                normalState =true;
-                spriteY=y;
-             //   System.out.println(true);
-
+                normalState = true;
+                spriteY = y;
+                //   System.out.println(true);
 
 
 //
@@ -125,6 +121,7 @@ public class PowerUpBlock extends Tile {
 
                     Game.coins++;
                     coinsGiven++;
+
                 }
                 // handler.addTile(new Coin(x,spriteY,width,height,true,Id.coin,handler));
                 //   addTile(new Coin(x*64,y*64,64,64,true,Id.coin,this));
@@ -132,17 +129,16 @@ public class PowerUpBlock extends Tile {
 //                JOptionPane.showMessageDialog(null,"Triggered");
                 change = false;
 
-                if((hasMushroom && coinsGiven==3) || (hasMushroom && hasCoin==false))
-                {
-                    spriteY=getY();
-                    activated=true;
-                    powerUp=Game.redMushroom;
-                    handler.addEntity(new RedMushroom(x, spriteY, width, height, Id.redMushroom, handler));
-                }
+                if ((hasMushroom && coinsGiven == 3) || (hasMushroom && hasCoin == false && hitsTaken >= 3)) {
 
-                else if(hitsTaken==3)
-                {
-                    activated=true;
+                    System.out.println("BINGO");
+                    spriteY = getY();
+                    activated = true;
+                    powerUp = Game.redMushroom;
+                    mushroomGiven=true;
+                    handler.addEntity(new RedMushroom(x, spriteY, width, height, Id.redMushroom, handler));
+                } else if (hitsTaken == 3) {
+                    activated = true;
                 }
             }
 

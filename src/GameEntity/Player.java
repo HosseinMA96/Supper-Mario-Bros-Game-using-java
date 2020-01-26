@@ -285,9 +285,9 @@ public class Player extends Entity {
 //                        status = 2;
                 //    growUp();
 
-                    if(status>0)
+                    if(status==1)
                     {
-                        growUp();
+                        status=2;
                         Game.fireBalls = 5;
                     }
 

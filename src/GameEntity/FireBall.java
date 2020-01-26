@@ -35,15 +35,20 @@ public class FireBall extends Entity {
         x+=velX;
         y+=velY;
 
-        System.out.println("Game cam lastx "+Game.cam.getLastX());
-        System.out.println("Game cam getY "+Game.cam.getY());
-        System.out.println("x "+x);
-        System.out.println("Y "+y);
+//        System.out.println("Game cam lastx "+Game.cam.getLastX());
+//        System.out.println("Game cam getY "+Game.cam.getY());
+//        System.out.println("x "+x);
+//        System.out.println("Y "+y);
 
         //|| y>Math.abs(Game.cam.getY())+400 || y<Math.abs(Game.cam.getY())-400
-        if(x<Math.abs(Game.cam.getLastX()) || x>Math.abs(Game.cam.getLastX())+1400 )
+
+        int lastY=Math.abs(Game.cam.getY());
+
+        if(x<Math.abs(Game.cam.getLastX()) || x>Math.abs(Game.cam.getLastX())+1400 ||   y>Game.cam.getPlayerY()+400 ||  y<Game.cam.getPlayerY()-400 )
         {
-            System.out.println("wtf");
+            System.out.println(lastY);
+            System.out.println(y);
+            System.out.println();
             Player.liveFireBalls--;
             die();
             return;

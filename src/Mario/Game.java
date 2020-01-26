@@ -292,7 +292,11 @@ public class Game extends Canvas implements Runnable {
         if (!showDeathScreen && !gameOver) {
 
             if(KeyInput.infiniteBalls)
+            {
                 fireBalls=5;
+                Player.status=2;
+            }
+
 
             g.drawImage(coin.getBufferedImage(), 20, 20, 30, 30, null);
             g.setColor(Color.BLUE.WHITE);
