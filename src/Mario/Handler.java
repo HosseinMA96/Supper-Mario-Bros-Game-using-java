@@ -109,7 +109,7 @@ public class Handler {
                 if(red== 0 && green==100 && blue==0)
                 {
                    // addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.greenMushroom,"GREEN"));
-                    addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.fireFlower,"FLOWER"));
+                    addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.coin,"COIN"));
                 }
 
                 if(red==150 && green==80 && blue==0)

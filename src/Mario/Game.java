@@ -162,7 +162,7 @@ public class Game extends Canvas implements Runnable {
 
         try {
             thread.join();
-            System.out.println("afterJoined");
+           // System.out.println("afterJoined");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -176,7 +176,7 @@ public class Game extends Canvas implements Runnable {
     public void run() {
         createLevels(numberOfMaps);
         while(!totallyFinished) {
-            System.out.println("in mother loop with current map "+currentLevel);
+          //  System.out.println("in mother loop with current map "+currentLevel);
 
             if(currentLevel==numberOfMaps)
                 break;

@@ -65,8 +65,8 @@ public class Player extends Entity {
 
         y += velY;
 
-        System.out.println("last x "+Game.cam.getLastX());
-        System.out.println("mario X "+x);
+      //  System.out.println("last x "+Game.cam.getLastX());
+       // System.out.println("mario X "+x);
 
         if (goingDownPipe)
             pixelsTraveled += velY;

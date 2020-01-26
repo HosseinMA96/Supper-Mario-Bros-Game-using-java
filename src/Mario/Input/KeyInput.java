@@ -12,6 +12,8 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class KeyInput implements KeyListener {
+    private boolean fire=false;
+
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -30,8 +32,10 @@ public class KeyInput implements KeyListener {
             switch (key) {
 
                 case  KeyEvent.VK_SPACE:
-                    if(((Player)en).getStatus() != 2)
+                    if(((Player)en).getStatus() != 2 || fire)
                         break;
+
+                    fire=true;
 
                 if(en.getFacing()==0)
                     Game.handler.addEntity((new FireBall(en.getX()+24,en.getY()+12,24,24,Id.fireBall,Game.handler,en.getFacing())));
@@ -66,7 +70,7 @@ public class KeyInput implements KeyListener {
                           //  System.out.println();
                             if(en.getBoundsBottom().intersects(t.getBounds()))
                             {
-                                JOptionPane.showMessageDialog(null,"intersect");
+                           //     JOptionPane.showMessageDialog(null,"intersect");
                                 if(en.getGoingDownPipe() != true)
                                     en.setGoingDownPipe(true);
 
@@ -140,6 +144,10 @@ public class KeyInput implements KeyListener {
                     case KeyEvent.VK_A:
                         en.setVelX(0);
                         break;
+
+                        case KeyEvent.VK_SPACE:
+                            fire=false;
+                                    break;
 
 
 

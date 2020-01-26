@@ -9,6 +9,7 @@ import java.awt.*;
 
 public class FireBall extends Entity {
     private int numberOfCollisions=0;
+    public static int fireBallsInScreen=0;
 
     public FireBall(int x, int y, int width, int height, Id id, Handler handler, int facing) {
         super(x, y, width, height, id, handler);

@@ -57,6 +57,9 @@ public class PowerUpBlock extends Tile{
 //            JOptionPane.showMessageDialog(null,"poppped up");
         if(activated && !poppedUp)
         {
+            if(powerUpName.equals("COIN"))
+                spriteY-=6;
+
             spriteY--;
 
 
@@ -73,6 +76,13 @@ public class PowerUpBlock extends Tile{
 
                 if(powerUpName.equals("FLOWER"))
                     handler.addEntity(new FireFlower(x,spriteY,width,height,Id.fireFlower,handler));
+
+                if(powerUpName.equals("COIN"))
+                {
+                    Game.coins++;
+                }
+                   // handler.addTile(new Coin(x,spriteY,width,height,true,Id.coin,handler));
+             //   addTile(new Coin(x*64,y*64,64,64,true,Id.coin,this));
 
 //                JOptionPane.showMessageDialog(null,"Triggered");
                 poppedUp=true;
