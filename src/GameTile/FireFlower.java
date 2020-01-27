@@ -8,8 +8,12 @@ import Mario.Id;
 import java.awt.*;
 
 public class FireFlower extends Entity {
-    public FireFlower(int x, int y, int width, int height, Id id, Handler handler) {
-        super(x, y, width, height, id, handler);
+
+    public boolean popped=false;
+
+    //handle it
+    public FireFlower(int x, int y, int width, int height, Id id, Handler handler,int tg) {
+        super(x, y, width, height, id, handler,tg);
     }
 
     @Override
@@ -20,5 +24,13 @@ public class FireFlower extends Entity {
     @Override
     public void tick() {
 
+    }
+
+    public void die()
+    {
+
+    }
+    public boolean isPopped() {
+        return popped;
     }
 }

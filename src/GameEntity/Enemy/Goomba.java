@@ -19,23 +19,23 @@ public class Goomba extends Entity {
     }
 
 
-    public Goomba(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
-        super(x, y, width, height, id, handler);
+    public Goomba(int x, int y, int width, int height, boolean solid, Id id, Handler handler,int tg) {
+        super(x, y, width, height, id, handler,tg);
         velX=1;
     }
 
     @Override
     public void render(Graphics g)
     {
-        if(isDying)
-        {
-
-            g.drawImage(Game.goomba[2].getBufferedImage(), x, y, width, height, null);
-
-            die();
-
-            return;
-        }
+//        if(isDying)
+//        {
+//
+//            g.drawImage(Game.goomba[2].getBufferedImage(), x, y, width, height, null);
+//
+//
+//
+//            return;
+//        }
         g.drawImage(Game.goomba[helpFrame].getBufferedImage(), x, y, width, height, null);
 
 
@@ -176,5 +176,15 @@ public class Goomba extends Entity {
                 break;
             }
 
+
+
     }
+
+    public void die()
+    {
+        handler.deadEnemies.add(new DeadEnemy(tag,id));
+        super.die();
+    }
+
+
 }

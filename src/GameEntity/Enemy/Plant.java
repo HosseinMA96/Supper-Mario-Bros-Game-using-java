@@ -6,7 +6,6 @@ import Mario.Handler;
 import Mario.Id;
 
 import java.awt.*;
-import java.util.Random;
 
 public class Plant extends Entity {
 
@@ -15,14 +14,13 @@ public class Plant extends Entity {
 
     private boolean moving=false, changeState,insidePipe=true;
 
-    public Plant(int x, int y, int width, int height, Id id, Handler handler) {
-        super(x, y, 50, 50, id, handler);
+    public Plant(int x, int y, int width, int height, Id id, Handler handler,int tg) {
+        super(x, y, 50, 50, id, handler,tg);
         moving = false;
         changeState = false;
         velX = 0;
 
-        int temp=(new Random().nextInt(90));
-        wait+=temp;
+
 
 
     }
@@ -116,5 +114,11 @@ public class Plant extends Entity {
 
     public boolean isInsidePipe() {
         return insidePipe;
+    }
+
+    public void die()
+    {
+        handler.deadEnemies.add(new DeadEnemy(tag,id));
+        super.die();
     }
 }

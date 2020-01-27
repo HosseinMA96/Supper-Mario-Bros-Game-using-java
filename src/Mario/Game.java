@@ -19,6 +19,8 @@ import Mario.Input.KeyInput;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -48,7 +50,7 @@ public class Game extends Canvas implements Runnable {
     public static Camera cam;
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
-    private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 0,endGame;
+    private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 0, endGame;
     public static int coins, lives = 3, fireBalls = 5, savedCoins;
     public static boolean startNext = false, totallyFinished = false, paused = false, showScoreScreen;
     public static JFrame frame;
@@ -209,9 +211,8 @@ public class Game extends Canvas implements Runnable {
 //             //   break;
 //            }
 
-            if(endGame>=180)
+            if (endGame >= 180)
                 break;
-
 
 
             init();
@@ -226,11 +227,11 @@ public class Game extends Canvas implements Runnable {
             showDeathScreen = true;
 
             while (running) {
-
-                if(endGame !=0)
+                
+                if (endGame != 0)
                     endGame++;
 
-                if(endGame==360)
+                if (endGame == 360)
                     exit(0);
 
                 //   System.out.println(handler.getTile().size());
@@ -244,9 +245,12 @@ public class Game extends Canvas implements Runnable {
                 lastTime = now;
 
                 while (delta > -1) {
-                    tick();
-                    ticks++;
-                    delta--;
+
+                        tick();
+                        ticks++;
+                        delta--;
+
+
                 }
 
                 render();
@@ -418,8 +422,8 @@ public class Game extends Canvas implements Runnable {
             deathScreenTime = 0;
             handler.clearLevel();
 
-            if(currentLevel!=numberOfMaps)
-            handler.createLevel(levelsImage.get(currentLevel));
+            if (currentLevel != numberOfMaps)
+                handler.createLevel(levelsImage.get(currentLevel));
         }
 
 
@@ -440,7 +444,36 @@ public class Game extends Canvas implements Runnable {
 
     public static void main(String[] args) {
         game = new Game();
+        JPanel panel=new JPanel();
+
+        panel.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent e) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent e) {
+                if(e.getKeyCode()==KeyEvent.VK_P)
+                {
+                    if(paused)
+                        paused=false;
+
+                    else
+                        paused=true;
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent e) {
+
+            }
+        });
+
+
         frame = new JFrame(TITLE);
+        frame.add(panel);
+
         frame.add(game);
         frame.pack();
         frame.setSize(new Dimension(1400, 800));
@@ -527,7 +560,7 @@ public class Game extends Canvas implements Runnable {
 //            return;
 //
 
-        if(currentLevel==numberOfMaps-1)
+        if (currentLevel == numberOfMaps - 1)
             endGame++;
 
         currentLevel++;

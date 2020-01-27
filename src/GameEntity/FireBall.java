@@ -12,7 +12,7 @@ public class FireBall extends Entity {
     public static int fireBallsInScreen=0;
 
     public FireBall(int x, int y, int width, int height, Id id, Handler handler, int facing) {
-        super(x, y, width, height, id, handler);
+        super(x, y, width, height, id, handler,0);
 
         if (facing == 0)
             velX = -8;
@@ -31,6 +31,9 @@ public class FireBall extends Entity {
     public void tick() {
         if(Game.paused)
             return;
+
+        handler.fireBallX.add(x);
+        handler.fireBallY.add(y);
 
         x+=velX;
         y+=velY;

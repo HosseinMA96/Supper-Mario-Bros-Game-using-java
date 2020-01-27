@@ -14,8 +14,8 @@ public class Hedgehog extends Entity {
     private boolean animate = false;
 
 
-    public Hedgehog(int x, int y, int width, int height, Id id, Handler handler) {
-        super(x, y, width, height, id, handler);
+    public Hedgehog(int x, int y, int width, int height, Id id, Handler handler,int tg) {
+        super(x, y, width, height, id, handler,tg);
         velX = -3;
 
 
@@ -132,5 +132,11 @@ public class Hedgehog extends Entity {
             }
 
 
+    }
+
+    public void die()
+    {
+        handler.deadEnemies.add(new DeadEnemy(tag,id));
+        super.die();
     }
 }

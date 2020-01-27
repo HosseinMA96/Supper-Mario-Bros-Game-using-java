@@ -19,8 +19,8 @@ public class PowerUpBlock extends Tile {
     private Random random = new Random();
 
 
-    public PowerUpBlock(int x, int y, int width, int height, boolean solid, Id id, Handler handler, Sprite powerUp, String powerUpname) {
-        super(x, y, width, height, solid, id, handler);
+    public PowerUpBlock(int x, int y, int width, int height, boolean solid, Id id, Handler handler, Sprite powerUp, String powerUpname,int tg) {
+        super(x, y, width, height, solid, id, handler,tg);
         this.powerUp = Game.dummy;
         this.powerUpName = powerUpname;
 
@@ -131,7 +131,7 @@ public class PowerUpBlock extends Tile {
 
                 if ((hasMushroom && coinsGiven == 3) || (hasMushroom && hasCoin == false && hitsTaken >= 3)) {
 
-                    System.out.println("BINGO");
+                 //   System.out.println("BINGO");
                     spriteY = getY();
                     activated = true;
                     powerUp = Game.redMushroom;
@@ -149,5 +149,25 @@ public class PowerUpBlock extends Tile {
 
     public boolean isActivated() {
         return activated;
+    }
+
+    public int getHitsTaken() {
+        return hitsTaken;
+    }
+
+    public boolean isHasCoin() {
+        return hasCoin;
+    }
+
+    public boolean isHasMushroom() {
+        return hasMushroom;
+    }
+
+    public void setHasCoin(boolean hasCoin) {
+        this.hasCoin = hasCoin;
+    }
+
+    public void setHasMushroom(boolean hasMushroom) {
+        this.hasMushroom = hasMushroom;
     }
 }

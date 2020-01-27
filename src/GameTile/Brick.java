@@ -4,13 +4,13 @@ import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
 
-import java.awt.*;
+import java.awt.*;imlement sender protocel for the tile classes
 
 public class Brick extends  Tile {
     private int deathCounter=0;
 
-    public Brick(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
-        super(x, y, width, height, solid, id, handler);
+    public Brick(int x, int y, int width, int height, boolean solid, Id id, Handler handler,int tg) {
+        super(x, y, width, height, solid, id, handler,tg);
     }
 
     @Override

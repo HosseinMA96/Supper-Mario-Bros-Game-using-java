@@ -18,19 +18,21 @@ public abstract class Entity {
     protected boolean jumping = false, goingDownPipe;
     protected boolean falling = true;
     protected double gravity = 0.0;
-    protected int facing = 0; // facing left =0 , facing right =1
+    protected int facing = 0,tag; // facing left =0 , facing right =1
     private int temp, scoreToBeAddedIfKilled;
     private Random random = new Random();
+
 
     public KoopaState getKoopaState() {
         return koopaState;
     }
 
-    public Entity(int x, int y, int width, int height, Id id, Handler handler) {
+    public Entity(int x, int y, int width, int height, Id id, Handler handler,int tg) {
         this.x = x;
         this.y = y;
         this.width = width;
         this.height = height;
+        tag=tg;
 //        this.solid=solid;
         this.id = id;
         this.handler = handler;
@@ -194,5 +196,10 @@ public abstract class Entity {
 
     public void setJumping(boolean jumping) {
         this.jumping = jumping;
+    }
+
+    public int getTag()
+    {
+        return tag;
     }
 }

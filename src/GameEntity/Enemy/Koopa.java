@@ -21,8 +21,9 @@ public class Koopa extends Entity {
         this.facing = facing;
     }
 
-    public Koopa(int x, int y, int width, int height, Id id, Handler handler) {
-        super(x, y, width, height, id, handler);
+    public Koopa(int x, int y, int width, int height, Id id, Handler handler,int tg) {
+        super(x, y, width, height, id, handler,tg);
+        tag=tg;
 
         velX = -2;
         koopaState = KoopaState.WALKING;
@@ -166,4 +167,13 @@ public class Koopa extends Entity {
             }
 
     }
+
+    public void die()
+    {
+       handler.deadEnemies.add(new DeadEnemy(tag,id));
+       super.die();
+    }
+
+
+
 }

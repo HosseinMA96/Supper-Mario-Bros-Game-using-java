@@ -1,5 +1,6 @@
 package Mario;
 
+import GameEntity.Enemy.DeadEnemy;
 import GameEntity.Enemy.Goomba;
 import GameEntity.Enemy.Hedgehog;
 import GameEntity.Enemy.Koopa;
@@ -16,6 +17,9 @@ import java.util.ArrayList;
 public class Handler {
     private ArrayList<Entity> entity = new ArrayList<>();
     private ArrayList<Tile> tile = new ArrayList<>();
+    public static Player player;
+    public static ArrayList<Integer> changedKoopaTags,fireBallX,fireBallY;
+    public static ArrayList<DeadEnemy> deadEnemies;
 
     public Handler() {
 //        createLevel();
@@ -23,32 +27,34 @@ public class Handler {
 
 
     public void render(Graphics g) {
-       // System.out.println(Game.getVisibleArea());
-        for (int i=0;i<entity.size();i++)
+        // System.out.println(Game.getVisibleArea());
+        for (int i = 0; i < entity.size(); i++)
             entity.get(i).render(g);
         //    if(Game.getVisibleArea() != null && en.getBounds().intersects(Game.getVisibleArea()))
 
 
-       for (int i=0;i<tile.size();i++)
-           tile.get(i).render(g);
+        for (int i = 0; i < tile.size(); i++)
+            tile.get(i).render(g);
 
-       //     if(Game.getVisibleArea() != null && tl.getBounds().intersects(Game.getVisibleArea()))
+        //     if(Game.getVisibleArea() != null && tl.getBounds().intersects(Game.getVisibleArea()))
 
     }
 
     public void tick() {
 //        for (Entity en : entity)
 //            en.tick();
+
+        clearAll();
 //
 //        for (Tile tl : tile)
 //            tl.tick();
 
-        for (int i=0;i<entity.size();i++)
+        for (int i = 0; i < entity.size(); i++)
             entity.get(i).tick();
 
 
-        for (int i=0;i<tile.size();i++)
-        //    if(Game.getVisibleArea() != null && tile.get(i).getBounds().intersects(Game.getVisibleArea()))
+        for (int i = 0; i < tile.size(); i++)
+            //    if(Game.getVisibleArea() != null && tile.get(i).getBounds().intersects(Game.getVisibleArea()))
             tile.get(i).tick();
     }
 
@@ -60,106 +66,88 @@ public class Handler {
 //            if(i!=0 && i!=1 && i!=16 && i!=17 && i!=15)
 //                addTile(new Wall(i * 64, 300, 64, 64, true, Id.wall, this));
 //        }
-        int width=level.getWidth();
-        int height=level.getHeight();
+        int width = level.getWidth();
+        int height = level.getHeight();
 
-        for (int y=0;y<height;y++)
-        {
-            for (int x=0;x<width;x++){
-                int pixel=level.getRGB(x,y);
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                int pixel = level.getRGB(x, y);
 
                 //Shift bit value. RGB is 256 * 256 * 256 like a 2^24 number
-                int red=(pixel>> 16 ) & 0xff;
-                int green=(pixel>> 8 ) & 0xff;
-                int blue=(pixel) & 0xff;
+                int red = (pixel >> 16) & 0xff;
+                int green = (pixel >> 8) & 0xff;
+                int blue = (pixel) & 0xff;
 
-                if(red == 0 && green==0 && blue ==0)
-                    addTile(new Wall(x*64,y*64,64,64,true,Id.wall,this));
+                if (red == 0 && green == 0 && blue == 0)
+                    addTile(new Wall(x * 64, y * 64, 64, 64, true, Id.wall, this));
 
-                if(red==0 && green ==0 && blue == 255) {
-                //    JOptionPane.showMessageDialog(null,"player");
-                    addEntity(new Player(x * 64, y * 64, 64, 64, false, Id.player1, this));
+                if (red == 0 && green == 0 && blue == 255) {
+                    //    JOptionPane.showMessageDialog(null,"player");
+                    player = new Player(x * 64, y * 64, 64, 64, false, Id.player1, this)
+                    addEntity(player);
                 }
 
-                if(red==255 && green==0 && blue==0) {
-                 //   JOptionPane.showMessageDialog(null,"RedMushroom");
+                if (red == 255 && green == 0 && blue == 0) {
+                    //   JOptionPane.showMessageDialog(null,"RedMushroom");
                     addEntity(new RedMushroom(x * 64, y * 64, 64, 64, Id.redMushroom, this));
                 }
 
-                if(red==50 && green==50 && blue==50) {
-                 //   JOptionPane.showMessageDialog(null,"Goomba");
+                if (red == 50 && green == 50 && blue == 50) {
+                    //   JOptionPane.showMessageDialog(null,"Goomba");
                     //   JOptionPane.showMessageDialog(null,"RedMushroom");
                     //addEntity(new Goomba(x * 64, y * 64, 64, 64, true, Id.goomba, this));
                     addEntity(new Koopa(x * 64, y * 64, 64, 64, Id.koopa, this));
                 }
 
-                if(red==255 && green==255 && blue==0)
-                {
-                    addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.greenMushroom,"GREEN"));
+                if (red == 255 && green == 255 && blue == 0) {
+                    addTile(new PowerUpBlock(x * 64, y * 64, 64, 64, true, Id.powerUp, this, Game.greenMushroom, "GREEN"));
                 }
 
-                if(red ==0 && (green>123 && green<129) && blue==0)
-                {
-                    addTile(new Pipe(x*64,y*64,64,64,true,Id.pipe,this,128-green,true));
+                if (red == 0 && (green > 123 && green < 129) && blue == 0) {
+                    addTile(new Pipe(x * 64, y * 64, 64, 64, true, Id.pipe, this, 128 - green, true));
                 }
 
-                if(red ==100 && green==250 && blue==100)
-                {
-                    addTile(new Pipe(x*64,y*64,64,64,true,Id.pipe,this,0,false));
+                if (red == 100 && green == 250 && blue == 100) {
+                    addTile(new Pipe(x * 64, y * 64, 64, 64, true, Id.pipe, this, 0, false));
                 }
 
-                if(red== 255 && green==250 && blue==0)
-                {
-                    addTile(new Coin(x*64,y*64,64,64,true,Id.coin,this));
+                if (red == 255 && green == 250 && blue == 0) {
+                    addTile(new Coin(x * 64, y * 64, 64, 64, true, Id.coin, this));
                 }
 
-                if(red== 0 && green==100 && blue==0)
-                {
-                   // addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.greenMushroom,"GREEN"));
-                    addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.fireFlower,"FLOWER"));
+                if (red == 0 && green == 100 && blue == 0) {
+                    // addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.greenMushroom,"GREEN"));
+                    addTile(new PowerUpBlock(x * 64, y * 64, 64, 64, true, Id.powerUp, this, Game.fireFlower, "FLOWER"));
                 }
 
-                if(red==150 && green==80 && blue==0)
-                {
-                    addTile(new CastleBrick(x*64,y*64,64,64,true,Id.casteBrick,this));
+                if (red == 150 && green == 80 && blue == 0) {
+                    addTile(new CastleBrick(x * 64, y * 64, 64, 64, true, Id.casteBrick, this));
                 }
 
-                if(red==220 && green==255 && blue==255)
-                {
-                    addTile(new CastleDoor(x*64,y*64,64,64,true,Id.castleDoor,this));
+                if (red == 220 && green == 255 && blue == 255) {
+                    addTile(new CastleDoor(x * 64, y * 64, 64, 64, true, Id.castleDoor, this));
                 }
 
 
-                if(red==100 && green==255 && blue==255)
-                {
-              //      JOptionPane.showMessageDialog(null,"castelDor");
-                    addTile(new Prince(x*64,y*64,64,64,true,Id.prince,this));
+                if (red == 100 && green == 255 && blue == 255) {
+                    //      JOptionPane.showMessageDialog(null,"castelDor");
+                    addTile(new Prince(x * 64, y * 64, 64, 64, true, Id.prince, this));
                 }
 
-                if(red==220 && green==220 && blue==220)
-                {
-                    addTile(new Hole(x * 64, y * 64, 64, 64,false,Id.hole,this));
-             //       JOptionPane.showMessageDialog(null,"tichi");
-                }
-
-                if(red==30 && green==30 && blue==30)
-                {
-                    addTile(new Stair(x * 64, y * 64, 64, 64,true,Id.stair,this));
+                if (red == 220 && green == 220 && blue == 220) {
+                    addTile(new Hole(x * 64, y * 64, 64, 64, false, Id.hole, this));
                     //       JOptionPane.showMessageDialog(null,"tichi");
                 }
 
-                if(red==100 && green==80 && blue==20)
-                {
-                    addTile(new Brick(x * 64, y * 64, 64, 64,true,Id.brick,this));
+                if (red == 30 && green == 30 && blue == 30) {
+                    addTile(new Stair(x * 64, y * 64, 64, 64, true, Id.stair, this));
                     //       JOptionPane.showMessageDialog(null,"tichi");
                 }
 
-
-
-
-
-
-
+                if (red == 100 && green == 80 && blue == 20) {
+                    addTile(new Brick(x * 64, y * 64, 64, 64, true, Id.brick, this));
+                    //       JOptionPane.showMessageDialog(null,"tichi");
+                }
 
 
             }
@@ -190,9 +178,24 @@ public class Handler {
         return tile;
     }
 
-    public void clearLevel()
-    {
+    public void clearLevel() {
         entity.clear();
         tile.clear();
+    }
+
+    private void clearAll() {
+        changedKoopaTags = new ArrayList<>();
+//        deadKoopaTags = new ArrayList<>();
+//        deadGoombaTags = new ArrayList<>();
+//        deadHedgehogTags = new ArrayList<>();
+//        deadPlantTags = new ArrayList<>();
+//        changedPowerUpBlockTags = new ArrayList<>();
+//        destroyedBrickTags = new ArrayList<>();
+//        usedFlowerTags = new ArrayList<>();
+//        usedCoinsTags = new ArrayList<>();
+//        usedCoinTags = new ArrayList<>();
+        fireBallX= new ArrayList<>();
+        getFireBallY= new ArrayList<>();
+        deadEnemies=new ArrayList<>();
     }
 }

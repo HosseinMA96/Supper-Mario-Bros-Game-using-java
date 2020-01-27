@@ -7,8 +7,8 @@ import Mario.Id;
 import java.awt.*;
 
 public class Coin extends Tile {
-    public Coin(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
-        super(x, y, width, height, false, id, handler);
+    public Coin(int x, int y, int width, int height, boolean solid, Id id, Handler handler,int tg) {
+        super(x, y, width, height, false, id, handler,tg);
     }
 
     @Override

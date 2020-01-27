@@ -6,12 +6,12 @@ import Mario.Id;
 import java.awt.*;
 
 public abstract class Tile {
-    protected int x,y,width,height,velX,velY,facing;
+    protected int x,y,width,height,velX,velY,facing,tag;
     protected boolean solid,activated=false;
     protected Id id;
     protected Handler handler;
 
-    public Tile(int x, int y, int width, int height,boolean solid,Id id,Handler handler) {
+    public Tile(int x, int y, int width, int height,boolean solid,Id id,Handler handler,int tg) {
         this.x = x;
         this.y = y;
         this.width = width;
@@ -19,6 +19,7 @@ public abstract class Tile {
         this.solid=solid;
         this.id=id;
         this.handler=handler;
+        tag=tg;
 
     }
 
@@ -105,4 +106,7 @@ public abstract class Tile {
         return new Rectangle(getX(),getY(),width,height);
     }
 
+    public int getTag() {
+        return tag;
+    }
 }

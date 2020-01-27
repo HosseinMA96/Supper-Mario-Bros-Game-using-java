@@ -1,5 +1,6 @@
 package GameEntity;
 
+import GameEntity.Enemy.DeadEnemy;
 import GameTile.Tile;
 import Mario.Game;
 import Mario.Handler;
@@ -12,8 +13,8 @@ public class RedMushroom extends Entity {
     private Random random=new Random();
     private int dir;
 
-    public RedMushroom(int x, int y, int width, int height, Id id, Handler handler) {
-        super(x, y, width, height, id, handler);
+    public RedMushroom(int x, int y, int width, int height, Id id, Handler handler,int tg) {
+        super(x, y, width, height, id, handler,tg);
         dir=random.nextInt(2);
 
         if(dir==0)
@@ -87,5 +88,11 @@ public class RedMushroom extends Entity {
             setVelY((int) gravity);
         }
 
+    }
+
+    public void die()
+    {
+        Handler.deadEnemies.add(new DeadEnemy(tag,id));
+        super.die();
     }
 }

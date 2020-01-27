@@ -9,7 +9,7 @@ import java.awt.*;
 public class CastleDoor extends Tile {
 
     public CastleDoor(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
-        super(x, y, width, height, solid, id, handler);
+        super(x, y, width, height, solid, id, handler,0);
     }
 
     @Override
