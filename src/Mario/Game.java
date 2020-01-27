@@ -22,8 +22,12 @@ import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.security.Key;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
 import static java.lang.System.exit;
 
@@ -39,14 +43,17 @@ public class Game extends Canvas implements Runnable {
     public static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
     public static SpriteSheet sheet;
     public static Handler handler;
-    public static Sprite grass, greenMushroom, redMushroom,dummy, powerUp, specialBrick,destroyedSpecialBreak,destroyedBrick, ordinaryBrick,destroyedOrdinaryBrick, stair, usedPowerUp, pipeBody, coin, castleBrick, star, castleDoor, prince, fireBall, fireFlower;
+    public static Sprite grass, greenMushroom, redMushroom, dummy, powerUp, specialBrick, destroyedSpecialBreak, destroyedBrick, ordinaryBrick, destroyedOrdinaryBrick, stair, usedPowerUp, pipeBody, coin, castleBrick, star, castleDoor, prince, fireBall, fireFlower;
     public static Sprite player[][] = new Sprite[3][12];//first index is status, second is frame
     public static Camera cam;
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
     private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 0;
-    public static int coins, lives = 3, fireBalls = 5;
-    public static boolean startNext = false, totallyFinished = false, paused = false;
+    public static int coins, lives = 3, fireBalls = 5, savedCoins;
+    public static boolean startNext = false, totallyFinished = false, paused = false,showScoreScreen;
+    public static JFrame frame;
+    private static List<String> allLines;
+    public static Game game;
     // private sboolean totallyFinished=false;
 
     //he 10 you 10
@@ -131,12 +138,12 @@ public class Game extends Canvas implements Runnable {
 
         stair = new Sprite(sheet, 10, 1);
         ordinaryBrick = new Sprite(sheet, 11, 1);
-        destroyedOrdinaryBrick=new Sprite(sheet, 12, 1);
+        destroyedOrdinaryBrick = new Sprite(sheet, 12, 1);
 
-        specialBrick=new Sprite(sheet, 13, 1);
-        destroyedSpecialBreak=new Sprite(sheet, 14, 1);
+        specialBrick = new Sprite(sheet, 13, 1);
+        destroyedSpecialBreak = new Sprite(sheet, 14, 1);
 
-        dummy=new Sprite(sheet,6,6);
+        dummy = new Sprite(sheet, 6, 6);
 
 
         for (int i = 0; i < 4; i++)
@@ -197,7 +204,6 @@ public class Game extends Canvas implements Runnable {
 
             if (currentLevel == numberOfMaps)
                 break;
-
 
 
             init();
@@ -271,6 +277,27 @@ public class Game extends Canvas implements Runnable {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
 
+        if(showScoreScreen)
+        {
+            g.setFont(new Font("Courier", Font.BOLD, 50));
+            g.setColor(Color.WHITE);
+            g.drawString("Scores in level"+(currentLevel), 700, 50);
+            g.drawString("Current score : "+(savedCoins), 700, 100);
+            g.drawString("Previous scores : ", 700, 150);
+
+            g.setFont(new Font("Courier", Font.BOLD, 20));
+
+            for (int i=allLines.size()-2;i>=0;i--)
+                g.drawString("["+(i+1)+"] : "+allLines.get(i), 700, 170+i*20);
+
+
+
+
+            //move camera
+
+
+        }
+
         //handle gameOver
         if (gameOver) {
             g.setColor(Color.WHITE);
@@ -289,12 +316,11 @@ public class Game extends Canvas implements Runnable {
 
 
         //handle Coinds
-        if (!showDeathScreen && !gameOver) {
+        if (!showDeathScreen && !gameOver && !showScoreScreen) {
 
-            if(KeyInput.infiniteBalls)
-            {
-                fireBalls=5;
-                Player.status=2;
+            if (KeyInput.infiniteBalls) {
+                fireBalls = 5;
+                Player.status = 2;
             }
 
 
@@ -313,14 +339,16 @@ public class Game extends Canvas implements Runnable {
             g.drawString("Level " + (currentLevel + 1), 600, 40);
 
 
-        } else if (!gameOver) {
+        }
+
+         if (!gameOver && showDeathScreen && !showScoreScreen) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Courier", Font.BOLD, 30));
             g.drawImage(Game.player[0][0].getBufferedImage(), 500, 300, 100, 100, null);
 
             g.drawString("x" + lives, 700, 400);
 
-
+      //       System.out.println("current lvl is "+currentLevel);
             g.drawString("Level " + (currentLevel + 1), 600, 280);
         }
 
@@ -366,6 +394,7 @@ public class Game extends Canvas implements Runnable {
         if (deathScreenTime == 180) {
             showDeathScreen = false;
             paused = false;
+            showScoreScreen=false;
 
             deathScreenTime = 0;
             handler.clearLevel();
@@ -389,8 +418,8 @@ public class Game extends Canvas implements Runnable {
 
 
     public static void main(String[] args) {
-        Game game = new Game();
-        JFrame frame = new JFrame(TITLE);
+        game = new Game();
+        frame = new JFrame(TITLE);
         frame.add(game);
         frame.pack();
         frame.setSize(new Dimension(1400, 800));
@@ -463,6 +492,7 @@ public class Game extends Canvas implements Runnable {
     }
 
     public static void goNextLevel() {
+      //  System.out.println("YIPIKAII-MOTHER-FUCKER!");
         //  System.out.println("in next level method");
 
         //  System.out.println("current level"+ currentLevel);
@@ -492,6 +522,7 @@ public class Game extends Canvas implements Runnable {
             try {
                 BufferedImage bf;
                 bf = ImageIO.read(new File("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png"));
+    //            System.out.println("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png");
                 levelsImage.add(bf);
 
             } catch (Exception ex) {
@@ -499,4 +530,111 @@ public class Game extends Canvas implements Runnable {
             }
         }
     }
+
+
+    //////////////////////////////////////////////////////////
+    public static void saveScores(int level) {
+        try {
+
+            File t = new File("C:\\Game");
+            if (t.isFile() && !t.isDirectory()) {
+                deleteFile(t);
+
+                if (!t.isDirectory()) {
+                    t = new File("C:\\Game");
+                    t.mkdir();
+                }
+            }
+
+            loadScores(level);
+
+            File f = new File("C:\\Game\\scores" + level + ".txt");
+
+
+            if (new File(f.getAbsolutePath()).exists())
+                deleteFile(new File(f.getAbsolutePath()));
+
+            FileWriter fw = new FileWriter("C:\\Game\\scores" + level + ".txt");
+
+
+            for (int i = 0; i < allLines.size(); i++)
+                fw.write(allLines.get(i) + "\r\n");
+
+            fw.write(coins + "\r\n");
+
+            fw.close();
+        } catch (Exception ex) {
+          //  JOptionPane.showMessageDialog(null, "Unable to save score.", "Eror", 0);
+            ex.printStackTrace();
+        }
+
+
+    }
+
+
+    public static void loadScores(int level) {
+
+        try {
+            allLines = Files.readAllLines(Paths.get("C:\\Game\\scores" + level + ".txt"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void deleteFile(File f) {
+
+
+        if (f.isFile()) {
+            try {
+                f.delete();
+
+
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null, "Error happened in deleting process", "Error", 1);
+            }
+        }
+
+        if (f.isDirectory()) {
+            File[] temp = f.listFiles();
+
+            for (int i = 0; i < temp.length; i++)
+                deleteFile(temp[i]);
+
+            try {
+                if (!f.delete())
+                    JOptionPane.showMessageDialog(null, "Unable to delete", "Error", 1);
+
+            } catch (Exception ex) {
+
+            }
+        }
+
+    }
+
+    public static void showScoreScreen() {
+         paused = true;
+        saveScores(currentLevel);
+
+//        long time=System.currentTimeMillis();
+//
+////
+////        frame.remove(game);
+////
+////        while(System.currentTimeMillis()-time<2000)
+////        {
+////
+////        }
+
+        showScoreScreen=true;
+        paused=true;
+        savedCoins=coins;
+        coins=0;
+//
+//        frame.add(game);
+//        frame.repaint();
+//        paused=true;
+
+
+    }
+/////////////////
 }

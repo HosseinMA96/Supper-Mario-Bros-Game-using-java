@@ -18,8 +18,8 @@ public class Player extends Entity {
     private Random random;
 
     private int frame = 0, frameDelay = 0, pixelsTraveled = 0;
-    private boolean animate = false, sit,fireMario=false;
-    public static int status = 2,liveFireBalls, safeClocks = 0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
+    private boolean animate = false, sit, fireMario = false;
+    public static int status = 0, liveFireBalls, safeClocks = 0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
     //frame delay is the amount of the time the game upddates before it changes the animation
     //if face ==0 faced left
 
@@ -128,7 +128,8 @@ public class Player extends Entity {
                 continue;
 
             //next level
-            if (t.getId() == Id.prince || t.getId() == Id.castleDoor && getBounds().intersects(t.getBounds())) {
+            if ((t.getId() == Id.prince || t.getId() == Id.castleDoor) && getBounds().intersects(t.getBounds())) {
+                Game.showScoreScreen();
                 Game.goNextLevel();
                 //   JOptionPane.showMessageDialog(null,"next level");
                 return;
@@ -161,13 +162,12 @@ public class Player extends Entity {
                     //   JOptionPane.showMessageDialog(null,"set actv");
 //                    ((PowerUpBlock) t).setActivated(true);
 
-                    if(safeClocks==0)
-                    {
-                        safeClocks=80;
+                    if (safeClocks == 0) {
+                        safeClocks = 80;
                         ((PowerUpBlock) t).addHit();
                     }
 
-              //      System.out.println("Trig");
+                    //      System.out.println("Trig");
                     //  JOptionPane.showMessageDialog(null,"hit");
                     continue;
                 }
@@ -188,7 +188,7 @@ public class Player extends Entity {
 //                    ((PowerUpBlock) t).setActivated(true);
 
 
-                        ((Brick) t).die();
+                    ((Brick) t).die();
 
 
                     //      System.out.println("Trig");
@@ -239,13 +239,13 @@ public class Player extends Entity {
             if (getBoundsLeft().intersects((t.getBounds()))) {
                 setVelX(0);
                 x = t.getX() + t.getWidth();
-                System.out.println("in Bleft");
+                //   System.out.println("in Bleft");
             }
 
             if (getBoundsRight().intersects((t.getBounds()))) {
                 setVelX(0);
                 x = t.getX() - t.getWidth();
-                System.out.println("in Brightی");
+                //   System.out.println("in Brightی");
             }
 
 
@@ -283,16 +283,13 @@ public class Player extends Entity {
 //
 //                    if (status == 3)
 //                        status = 2;
-                //    growUp();
+                    //    growUp();
 
-                    if(status==1)
-                    {
-                        status=2;
+                    if (status == 1) {
+                        status = 2;
                         Game.fireBalls = 5;
-                    }
-
-                    else
-                        Game.coins+=2;
+                    } else
+                        Game.coins += 2;
 
 
                     e.die();
@@ -305,8 +302,8 @@ public class Player extends Entity {
                 if (getBounds().intersects(e.getBounds())) {
                     Game.lives++;
 
-                    if(Game.lives==4)
-                        Game.lives=3;
+                    if (Game.lives == 4)
+                        Game.lives = 3;
 
                     e.die();
                 }
@@ -499,7 +496,7 @@ public class Player extends Entity {
 
     private void inflict() {
 
-        if(KeyInput.invincible)
+        if (KeyInput.invincible)
             return;
 
         status--;
@@ -515,8 +512,7 @@ public class Player extends Entity {
 
     private void growUp() {
 
-        if(Game.lives<3)
-        {
+        if (Game.lives < 3) {
             Game.lives++;
             return;
         }
