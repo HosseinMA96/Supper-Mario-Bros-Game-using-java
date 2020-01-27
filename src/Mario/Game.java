@@ -48,11 +48,12 @@ public class Game extends Canvas implements Runnable {
     public static Camera cam;
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
-    private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 0;
+    private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 0,endGame;
     public static int coins, lives = 3, fireBalls = 5, savedCoins;
-    public static boolean startNext = false, totallyFinished = false, paused = false,showScoreScreen;
+    public static boolean startNext = false, totallyFinished = false, paused = false, showScoreScreen;
     public static JFrame frame;
     private static List<String> allLines;
+    //private static ArrayList<String> allLines;
     public static Game game;
     // private sboolean totallyFinished=false;
 
@@ -202,8 +203,15 @@ public class Game extends Canvas implements Runnable {
         while (!totallyFinished) {
             //  System.out.println("in mother loop with current map "+currentLevel);
 
-            if (currentLevel == numberOfMaps)
+//            if (currentLevel>=numberOfMaps &&  deathScreenTime == 179)
+//            {
+//                exit(0);
+//             //   break;
+//            }
+
+            if(endGame>=180)
                 break;
+
 
 
             init();
@@ -219,6 +227,11 @@ public class Game extends Canvas implements Runnable {
 
             while (running) {
 
+                if(endGame !=0)
+                    endGame++;
+
+                if(endGame==360)
+                    exit(0);
 
                 //   System.out.println(handler.getTile().size());
 
@@ -277,20 +290,17 @@ public class Game extends Canvas implements Runnable {
         g.setColor(Color.BLACK);
         g.fillRect(0, 0, getWidth(), getHeight());
 
-        if(showScoreScreen)
-        {
+        if (showScoreScreen) {
             g.setFont(new Font("Courier", Font.BOLD, 50));
             g.setColor(Color.WHITE);
-            g.drawString("Scores in level"+(currentLevel), 700, 50);
-            g.drawString("Current score : "+(savedCoins), 700, 100);
+            g.drawString("Scores in level" + (currentLevel), 700, 50);
+            g.drawString("Current score : " + (savedCoins), 700, 100);
             g.drawString("Previous scores : ", 700, 150);
 
             g.setFont(new Font("Courier", Font.BOLD, 20));
 
-            for (int i=allLines.size()-2;i>=0;i--)
-                g.drawString("["+(i+1)+"] : "+allLines.get(i), 700, 170+i*20);
-
-
+            for (int i = allLines.size() - 1; i >= 0; i--)
+                g.drawString("[" + i + "] : " + allLines.get(i), 700, 170 + i * 20);
 
 
             //move camera
@@ -309,8 +319,17 @@ public class Game extends Canvas implements Runnable {
             gameOverTicks++;
 
 
-            if (gameOverTicks == 500)
-                exit(0);
+            if (gameOverTicks == 500) {
+
+                Player.status = 0;
+                currentLevel = 0;
+                gameOver = false;
+                lives = 3;
+
+
+                //   exit(0);
+            }
+
 
         }
 
@@ -341,14 +360,14 @@ public class Game extends Canvas implements Runnable {
 
         }
 
-         if (!gameOver && showDeathScreen && !showScoreScreen) {
+        if (!gameOver && showDeathScreen && !showScoreScreen) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Courier", Font.BOLD, 30));
             g.drawImage(Game.player[0][0].getBufferedImage(), 500, 300, 100, 100, null);
 
             g.drawString("x" + lives, 700, 400);
 
-      //       System.out.println("current lvl is "+currentLevel);
+            //       System.out.println("current lvl is "+currentLevel);
             g.drawString("Level " + (currentLevel + 1), 600, 280);
         }
 
@@ -394,10 +413,12 @@ public class Game extends Canvas implements Runnable {
         if (deathScreenTime == 180) {
             showDeathScreen = false;
             paused = false;
-            showScoreScreen=false;
+            showScoreScreen = false;
 
             deathScreenTime = 0;
             handler.clearLevel();
+
+            if(currentLevel!=numberOfMaps)
             handler.createLevel(levelsImage.get(currentLevel));
         }
 
@@ -492,24 +513,27 @@ public class Game extends Canvas implements Runnable {
     }
 
     public static void goNextLevel() {
-      //  System.out.println("YIPIKAII-MOTHER-FUCKER!");
+        //  System.out.println("YIPIKAII-MOTHER-FUCKER!");
         //  System.out.println("in next level method");
 
         //  System.out.println("current level"+ currentLevel);
         //  System.out.println("number of maps "+numberOfMaps);
 
-        if (currentLevel == numberOfMaps) {
-//            JOptionPane.showMessageDialog(null,"Game has finished !");
-            running = false;
-            totallyFinished = true;
-            //Handle endgame
-            return;
+//        if (currentLevel == numberOfMaps ) {
+////            JOptionPane.showMessageDialog(null,"Game has finished !");
+//            //  running = false;
+//            totallyFinished = true;
+//            //Handle endgame
+//            return;
+//
 
-        } else {
-            currentLevel++;
-            running = false;
+        if(currentLevel==numberOfMaps-1)
+            endGame++;
 
-        }
+        currentLevel++;
+        running = false;
+
+        // }
 
     }
 
@@ -522,7 +546,7 @@ public class Game extends Canvas implements Runnable {
             try {
                 BufferedImage bf;
                 bf = ImageIO.read(new File("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png"));
-    //            System.out.println("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png");
+                //            System.out.println("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png");
                 levelsImage.add(bf);
 
             } catch (Exception ex) {
@@ -537,14 +561,20 @@ public class Game extends Canvas implements Runnable {
         try {
 
             File t = new File("C:\\Game");
-            if (t.isFile() && !t.isDirectory()) {
-                deleteFile(t);
+            //   System.out.println("dir "+t.isDirectory());
 
-                if (!t.isDirectory()) {
-                    t = new File("C:\\Game");
-                    t.mkdir();
-                }
-            }
+            if (!t.isDirectory())
+                t.mkdir();
+
+//            if (t.isFile() && !t.isDirectory()) {
+//                deleteFile(t);
+//
+//                if (!t.isDirectory()) {
+//                    t = new File("C:\\Game");
+//
+//                    System.out.println("mk "+t.mkdirs());
+//                }
+//            }
 
             loadScores(level);
 
@@ -564,7 +594,7 @@ public class Game extends Canvas implements Runnable {
 
             fw.close();
         } catch (Exception ex) {
-          //  JOptionPane.showMessageDialog(null, "Unable to save score.", "Eror", 0);
+            //  JOptionPane.showMessageDialog(null, "Unable to save score.", "Eror", 0);
             ex.printStackTrace();
         }
 
@@ -575,7 +605,13 @@ public class Game extends Canvas implements Runnable {
     public static void loadScores(int level) {
 
         try {
-            allLines = Files.readAllLines(Paths.get("C:\\Game\\scores" + level + ".txt"));
+            if (new File("C:\\Game\\scores" + level + ".txt").isFile())
+                allLines = Files.readAllLines(Paths.get("C:\\Game\\scores" + level + ".txt"));
+            else {
+                File f = new File("C:\\Game\\scores" + level + ".txt");
+                f.createNewFile();
+                allLines = new ArrayList<>();
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -612,7 +648,9 @@ public class Game extends Canvas implements Runnable {
     }
 
     public static void showScoreScreen() {
-         paused = true;
+        paused = true;
+
+
         saveScores(currentLevel);
 
 //        long time=System.currentTimeMillis();
@@ -625,10 +663,10 @@ public class Game extends Canvas implements Runnable {
 ////
 ////        }
 
-        showScoreScreen=true;
-        paused=true;
-        savedCoins=coins;
-        coins=0;
+        showScoreScreen = true;
+        paused = true;
+        savedCoins = coins;
+        coins = 0;
 //
 //        frame.add(game);
 //        frame.repaint();

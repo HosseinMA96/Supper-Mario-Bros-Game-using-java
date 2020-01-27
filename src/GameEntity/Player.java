@@ -503,7 +503,14 @@ public class Player extends Entity {
 
 
         if (status == -1) {
+
+            if(Game.lives!=0)
             die();
+
+            else{
+                Game.gameOver=true;
+                die();
+            }
             status = 0;
         }
 
