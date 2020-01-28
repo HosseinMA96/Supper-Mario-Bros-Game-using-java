@@ -140,6 +140,7 @@ public class SenderClient extends Thread {
         pr.flush();
 
         //Handle fireball
+        //Handle fiswireball
         for(int i=0;i<Handler.fireBallX.size();i++)
         {
             pr.println(Handler.fireBallX.get(i));

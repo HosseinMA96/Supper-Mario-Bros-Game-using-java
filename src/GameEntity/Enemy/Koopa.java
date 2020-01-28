@@ -15,8 +15,8 @@ public class Koopa extends Entity {
     private boolean animate = false;
     private boolean isDying = false;
     private int shellCount;
-    private int frame = 0, frameDelay = 0, helpFrame, diecounter, facing;
-    private KoopaState prevKoopaState;
+    private int frame = 0, frameDelay = 0, helpFrame, facing;
+
 
     @Override
     public void setFacing(int facing) {
@@ -29,7 +29,7 @@ public class Koopa extends Entity {
 
         velX = -2;
         koopaState = KoopaState.WALKING;
-        prevKoopaState=KoopaState.WALKING;
+
     }
 
     @Override
@@ -170,17 +170,17 @@ public class Koopa extends Entity {
                 break;
             }
 
-        if(prevKoopaState!=koopaState)
-        {
-            ChangedKoopa changedKoopa=new ChangedKoopa(tag,velX);
-        }
-
     }
 
     public void die()
     {
        handler.deadThings.add(new DeadObject(tag,id));
        super.die();
+    }
+
+    public void statusChanged()
+    {
+        Handler.changedLiveKoopas.add(new ChangedKoopa(tag,velX));
     }
 
 

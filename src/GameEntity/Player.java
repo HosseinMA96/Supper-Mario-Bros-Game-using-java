@@ -1,5 +1,6 @@
 package GameEntity;
 
+import GameEntity.Enemy.Koopa;
 import GameEntity.Enemy.KoopaState;
 import GameEntity.Enemy.Plant;
 import GameTile.Brick;
@@ -357,6 +358,7 @@ public class Player extends Entity {
                 if (e.koopaState == KoopaState.WALKING) {
                     if (getBoundsBottom().intersects(e.getBoundsTop())) {
                         e.koopaState = KoopaState.SHELL;
+                        ((Koopa)e).statusChanged();
                         jumping = true;
                         falling = false;
                         gravity = 10;
@@ -389,6 +391,7 @@ public class Player extends Entity {
 
                         e.velX = -6;
                         e.koopaState = KoopaState.SPINNING;
+                        ((Koopa)e).statusChanged();
                         //   System.out.println("go left t");
                         gravity = 2;
                         safeClocks = 1;

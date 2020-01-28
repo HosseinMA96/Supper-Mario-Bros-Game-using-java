@@ -15,7 +15,6 @@ import java.util.ArrayList;
 public class ReaderClient extends Thread {
     private int port;
     private String host, command = ".";
-    private Handler handler;
     private InputStream input;
     private OutputStream output;
     private PrintWriter pr;
@@ -23,14 +22,14 @@ public class ReaderClient extends Thread {
     private Socket socket;
     public static int otherPlayerX, otherPlayerY, otherPlayerStatus, otherPlayerFrame;
     public static ArrayList<ChangedKoopa> changedKoopas = new ArrayList<>();
-    public static ArrayList<DeadObject>deadObjects=new ArrayList<>();
-    public static ArrayList<Integer>fireBallX=new ArrayList<>(),fireBallY=new ArrayList<>(),mushroomX=new ArrayList<>(),mushroomY=new ArrayList<>();
+    public static ArrayList<DeadObject> deadObjects = new ArrayList<>();
+    public static ArrayList<Integer> fireBallX = new ArrayList<>(), fireBallY = new ArrayList<>(), mushroomX = new ArrayList<>(), mushroomY = new ArrayList<>();
 
 
-    public ReaderClient(int port, String host, Handler handler) {
+    public ReaderClient(int port, String host) {
         this.port = port;
         this.host = host;
-        this.handler = handler;
+
     }
 
     private void receivePlayer() throws Exception {
@@ -63,93 +62,80 @@ public class ReaderClient extends Thread {
                 return;
 
             int tg = Integer.parseInt(command);
-            int vel=Integer.parseInt(br.readLine());
+            int vel = Integer.parseInt(br.readLine());
 
-            changedKoopas.add(new ChangedKoopa(tg,vel));
+            changedKoopas.add(new ChangedKoopa(tg, vel));
         }
     }
 
-    private void receiveDeadThings() throws Exception
-    {
-        while (true)
-        {
-            command=br.readLine();
+    private void receiveDeadThings() throws Exception {
+        while (true) {
+            command = br.readLine();
 
-            if(command.equals("OK"))
+            if (command.equals("OK"))
                 return;
 
-            int tg=Integer.parseInt(br.readLine());
-            int x,y;
+            int tg = Integer.parseInt(br.readLine());
+            int x, y;
 
-            switch (command)
-            {
+            switch (command) {
 
                 case "goomba":
                     deadObjects.add(new DeadObject(tg, Id.goomba));
                     break;
 
                 case "hedgehog":
-                    deadObjects.add(new DeadObject(tg,Id.hedgehog));
+                    deadObjects.add(new DeadObject(tg, Id.hedgehog));
                     break;
 
                 case "koopa":
-                    deadObjects.add(new DeadObject(tg,Id.koopa));
+                    deadObjects.add(new DeadObject(tg, Id.koopa));
                     break;
 
                 case "plant":
-                    deadObjects.add(new DeadObject(tg,Id.plant));
+                    deadObjects.add(new DeadObject(tg, Id.plant));
                     break;
 
 
                 case "brick":
-                    x=Integer.parseInt(br.readLine());
-                    y=Integer.parseInt(br.readLine());
-                    deadObjects.add(new DeadObject(x,y,Id.brick));
+                    x = Integer.parseInt(br.readLine());
+                    y = Integer.parseInt(br.readLine());
+                    deadObjects.add(new DeadObject(x, y, Id.brick));
                     break;
 
                 case "coin":
-                    x=Integer.parseInt(br.readLine());
-                    y=Integer.parseInt(br.readLine());
-                    deadObjects.add(new DeadObject(x,y,Id.coin));
+                    x = Integer.parseInt(br.readLine());
+                    y = Integer.parseInt(br.readLine());
+                    deadObjects.add(new DeadObject(x, y, Id.coin));
                     break;
 
 
                 case "fireFlower":
-                    x=Integer.parseInt(br.readLine());
-                    y=Integer.parseInt(br.readLine());
-                    deadObjects.add(new DeadObject(x,y,Id.fireFlower));
+                    x = Integer.parseInt(br.readLine());
+                    y = Integer.parseInt(br.readLine());
+                    deadObjects.add(new DeadObject(x, y, Id.fireFlower));
                     break;
 
                 case "powerUp":
-                    x=Integer.parseInt(br.readLine());
-                    y=Integer.parseInt(br.readLine());
-                    int hits=Integer.parseInt(br.readLine());
-                    deadObjects.add(new DeadObject(x,y,Id.powerUp,hits));
+                    x = Integer.parseInt(br.readLine());
+                    y = Integer.parseInt(br.readLine());
+                    int hits = Integer.parseInt(br.readLine());
+                    deadObjects.add(new DeadObject(x, y, Id.powerUp, hits));
                     break;
-
-
-
-
-
-
-
-
 
 
             }
         }
     }
 
-    private void receiveFireBalls() throws Exception
-    {
-        while(true)
-        {
-            command=br.readLine();
-            if(command.equals("OK"))
+    private void receiveFireBalls() throws Exception {
+        while (true) {
+            command = br.readLine();
+            if (command.equals("OK"))
                 break;
 
-            int x=Integer.parseInt(br.readLine());
-            int y=Integer.parseInt(br.readLine());
+            int x = Integer.parseInt(br.readLine());
+            int y = Integer.parseInt(br.readLine());
 
             fireBallX.add(x);
             fireBallY.add(y);
@@ -157,16 +143,14 @@ public class ReaderClient extends Thread {
         }
     }
 
-    private void receiveMushroom() throws Exception
-    {
-        while(true)
-        {
-            command=br.readLine();
-            if(command.equals("OK"))
+    private void receiveMushroom() throws Exception {
+        while (true) {
+            command = br.readLine();
+            if (command.equals("OK"))
                 break;
 
-            int x=Integer.parseInt(br.readLine());
-            int y=Integer.parseInt(br.readLine());
+            int x = Integer.parseInt(br.readLine());
+            int y = Integer.parseInt(br.readLine());
 
             mushroomX.add(x);
             mushroomY.add(y);
@@ -174,9 +158,18 @@ public class ReaderClient extends Thread {
         }
     }
 
+    private void initialize() {
+
+        ArrayList<ChangedKoopa> changedKoopas = new ArrayList<>();
+        ArrayList<DeadObject> deadObjects = new ArrayList<>();
+        ArrayList<Integer> fireBallX = new ArrayList<>(), fireBallY = new ArrayList<>(), mushroomX = new ArrayList<>(), mushroomY = new ArrayList<>();
+    }
+
     @Override
     public void run() {
         try {
+
+            initialize();
             socket = new Socket(host, port);
             input = socket.getInputStream();
             output = socket.getOutputStream();
@@ -214,10 +207,9 @@ public class ReaderClient extends Thread {
                         receiveMushroom();
                         break;
 
-                        default:
-                            System.out.println(command);
-                            break;
-
+                    default:
+                        System.out.println(command);
+                        break;
 
 
                 }

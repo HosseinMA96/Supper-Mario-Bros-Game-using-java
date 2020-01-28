@@ -10,10 +10,15 @@ package Mario;
 //38 Background levelsImage
 //39 Fire balls
 
+import Broadcast.ReaderClient;
+import Broadcast.SenderClient;
+import GameEntity.Enemy.KoopaState;
 import GameEntity.Entity;
 import GameEntity.Player;
+import GameEntity.RedMushroom;
 import GameGFX.Sprite;
 import GameGFX.SpriteSheet;
+import GameTile.PowerUpBlock;
 import Mario.Input.KeyInput;
 
 import javax.imageio.ImageIO;
@@ -48,10 +53,11 @@ public class Game extends Canvas implements Runnable {
     public static Sprite grass, greenMushroom, redMushroom, dummy, powerUp, specialBrick, destroyedSpecialBreak, destroyedBrick, ordinaryBrick, destroyedOrdinaryBrick, stair, usedPowerUp, pipeBody, coin, castleBrick, star, castleDoor, prince, fireBall, fireFlower;
     public static Sprite player[][][] = new Sprite[2][3][12];//first index is status, second is frame
     public static Camera cam;
+    public static String host = "127.0.0.1";
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
     private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 4, currentLevel = 0, endGame;
-    public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 1;
+    public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 1, port = 32000;
     public static boolean startNext = false, totallyFinished = false, paused = false, showScoreScreen;
     public static JFrame frame;
     private static List<String> allLines;
@@ -96,7 +102,6 @@ public class Game extends Canvas implements Runnable {
 
         player[1][1][8] = new Sprite(sheet, 12, 12);
         player[1][2][8] = new Sprite(sheet, 12, 12);
-
 
 
         //sitting faced left 10. small mario cannot sit
@@ -240,7 +245,7 @@ public class Game extends Canvas implements Runnable {
             long lastTime = System.nanoTime();
             long timer = System.currentTimeMillis();
             double delta = 0.0;
-            double ns = 1000000000.0 / 50;
+            double ns = 1000000000.0 / 45;
             int frames = 0;
             int ticks = 0;
             running = true;
@@ -264,6 +269,9 @@ public class Game extends Canvas implements Runnable {
                 delta += (now - lastTime) / ns;
                 lastTime = now;
 
+                SenderClient senderClient = new SenderClient(handler, host, port);
+                senderClient.start();
+
                 while (delta > -1) {
 
                     tick();
@@ -272,6 +280,16 @@ public class Game extends Canvas implements Runnable {
 
 
                 }
+
+                try {
+                    senderClient.join();
+                    ReaderClient readerClient = new ReaderClient(port, host);
+                    readerClient.start();
+                    readerClient.join();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
 
                 render();
                 frames++;
@@ -372,6 +390,9 @@ public class Game extends Canvas implements Runnable {
             g.setFont(new Font("Courier", Font.BOLD, 20));
             g.drawString("x" + coins, 46, 46);
 
+            drawOtherPlayer(g);
+            drawOtherPlayerFireBalls(g);
+
             for (int i = 0; i < lives; i++)
                 g.drawImage(star.getBufferedImage(), 1150 + 60 * i, 40, 60, 60, null);
 
@@ -411,6 +432,27 @@ public class Game extends Canvas implements Runnable {
 
         g.dispose();
         bs.show();
+
+    }
+
+    private void drawOtherPlayer(Graphics g) {
+        int otherPlayer;
+
+        if (playerIndex == 0)
+            otherPlayer = 1;
+
+        else
+            otherPlayer = 0;
+
+        if (ReaderClient.otherPlayerStatus != -1)
+            g.drawImage(player[otherPlayer][ReaderClient.otherPlayerStatus][ReaderClient.otherPlayerFrame].getBufferedImage(), ReaderClient.otherPlayerX, ReaderClient.otherPlayerY, 64, 64, null);
+
+
+    }
+
+    private void drawOtherPlayerFireBalls(Graphics g) {
+        for (int i = 0; i < ReaderClient.fireBallX.size(); i++)
+            g.drawImage(fireBall.getBufferedImage(), ReaderClient.fireBallX.get(i), ReaderClient.fireBallY.get(i), 64, 64, null);
 
     }
 
@@ -696,6 +738,119 @@ public class Game extends Canvas implements Runnable {
 
             }
         }
+
+    }
+
+    private void updateLiveKoopas() {
+        for (int i = 0; i < ReaderClient.changedKoopas.size(); i++) {
+            for (int j = 0; j < handler.getEntity().size(); j++)
+                if (handler.getEntity().get(j).getId() == Id.koopa && handler.getEntity().get(j).getTag() == ReaderClient.changedKoopas.get(i).getTag()) {
+                    if (handler.getEntity().get(j).getKoopaState() == KoopaState.WALKING) {
+                        handler.getEntity().get(j).setKoopaState(KoopaState.SHELL);
+                        handler.getEntity().get(j).setVelX(0);
+                        break;
+                    }
+
+                    if (handler.getEntity().get(j).getKoopaState() == KoopaState.SHELL) {
+                        handler.getEntity().get(j).setKoopaState(KoopaState.SPINNING);
+                        handler.getEntity().get(j).setVelX(ReaderClient.changedKoopas.get(i).getVelX());
+                        break;
+                    }
+                }
+
+        }
+    }
+
+    private void updateDeadObjects() {
+        for (int i = 0; i < ReaderClient.deadObjects.size(); i++) {
+            DeadObject deadObject = ReaderClient.deadObjects.get(i);
+
+            switch (deadObject.getId()) {
+                case goomba:
+                    for (int j = 0; j < handler.getEntity().size(); j++)
+                        if (handler.getEntity().get(j).getId() == Id.goomba && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
+                            handler.getEntity().remove(j);
+                            break;
+                        }
+                    break;
+
+                case hedgehog:
+                    for (int j = 0; j < handler.getEntity().size(); j++)
+                        if (handler.getEntity().get(j).getId() == Id.hedgehog && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
+                            handler.getEntity().remove(j);
+                            break;
+                        }
+                    break;
+
+
+                case plant:
+                    for (int j = 0; j < handler.getEntity().size(); j++)
+                        if (handler.getEntity().get(j).getId() == Id.plant && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
+                            handler.getEntity().remove(j);
+                            break;
+                        }
+                    break;
+
+                case koopa:
+                    for (int j = 0; j < handler.getEntity().size(); j++)
+                        if (handler.getEntity().get(j).getId() == Id.koopa && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
+                            handler.getEntity().remove(j);
+                            break;
+                        }
+                    break;
+
+
+                case brick:
+                    for (int j = 0; j < handler.getTile().size(); j++)
+                        if (handler.getTile().get(j).getId() == Id.brick && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
+                            handler.getTile().remove(j);
+                            break;
+                        }
+                    break;
+
+
+                case coin:
+                    for (int j = 0; j < handler.getTile().size(); j++)
+                        if (handler.getTile().get(j).getId() == Id.coin && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
+                            handler.getTile().remove(j);
+                            break;
+                        }
+                    break;
+
+
+                case fireFlower:
+                    for (int j = 0; j < handler.getTile().size(); j++)
+                        if (handler.getTile().get(j).getId() == Id.fireFlower && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
+                            handler.getTile().remove(j);
+                            break;
+                        }
+                    break;
+
+                case powerUp:
+                    for (int j = 0; j < handler.getTile().size(); j++)
+                        if (handler.getTile().get(j).getId() == Id.powerUp && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
+                            ((PowerUpBlock)handler.getTile().get(j)).setHitsTaken(deadObject.getHits());
+                            break;
+                        }
+                    break;
+
+
+
+            }
+        }
+    }
+
+    private void updateMushrooms()
+    {
+        for (int i=0;i<ReaderClient.mushroomX.size();i++)
+            handler.getEntity().add(new RedMushroom(ReaderClient.mushroomX.get(i),ReaderClient.mushroomY.get(i),64,64,Id.redMushroom,handler,Handler.mushroomTags++));
+    }
+
+    private void applyRemoteUpdate() {
+        updateLiveKoopas();
+        updateDeadObjects();
+        updateMushrooms();
+
 
     }
 

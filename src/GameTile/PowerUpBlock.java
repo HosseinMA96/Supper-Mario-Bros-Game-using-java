@@ -48,6 +48,7 @@ public class PowerUpBlock extends Tile {
         {
             change = true;
             DeadObject deadObject=new DeadObject(x,y,Id.powerUp,hitsTaken);
+            Handler.deadThings.add(deadObject);
         }
 
     }
@@ -161,6 +162,10 @@ public class PowerUpBlock extends Tile {
 
     public int getHitsTaken() {
         return hitsTaken;
+    }
+
+    public void setHitsTaken(int hitsTaken) {
+        this.hitsTaken = hitsTaken;
     }
 
     public boolean isHasCoin() {

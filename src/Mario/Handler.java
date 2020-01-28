@@ -17,7 +17,7 @@ public class Handler {
     public static ArrayList<Integer> changedKoopaTags,fireBallX,fireBallY,addedRedMushroomX,addedRedMushroomY;
     public static ArrayList<DeadObject> deadThings;
     public static ArrayList<ChangedKoopa> changedLiveKoopas;
-    static int koopaTags=0,goombaTags=0,plantTags=0;
+    static int koopaTags=0,goombaTags=0,plantTags=0,mushroomTags=0;
     //Dead tiles: Only x,y
 
     public Handler() {
