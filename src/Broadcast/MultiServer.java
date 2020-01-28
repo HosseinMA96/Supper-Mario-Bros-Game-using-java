@@ -3,19 +3,19 @@
  */
 
 package Broadcast;
-import javafx.scene.control.ProgressBar;
-
-import javax.swing.*;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
 
 public class MultiServer {
+    private static int port;
+    public static ArrayList<String>[]data=new ArrayList[2];
+
+    public MultiServer (int p)
+    {
+        port=p;
+    }
 
     /**
      * Main method, always runs the server
@@ -25,21 +25,34 @@ public class MultiServer {
      */
     public static void main(String[] args) throws Exception {
 
-        ServerSocket serverSocket = new ServerSocket(30000);
-        initializeServer();
+        ServerSocket serverSocket=new ServerSocket(port);
+
+//        ServerSocket serverSocket = new ServerSocket(port);
+//        //initiallize data
+//        Socket socketReader1 = serverSocket.accept();
+//        ServerReader serverReader1 = new ServerReader(socketReader1,0);
+//        System.out.println("first reader accepted");
+//
+//        Socket socketReader2 = serverSocket.accept();
+//        ServerReader serverReader2 = new ServerReader(socketReader2, 1);
+//        System.out.println("second reader accepted");
+
+//        long currentTime=System.currentTimeMillis();
+//        int num=0;
+
 
 
         while (true) {
 
 
             Socket socketReader1 = serverSocket.accept();
-            ServerReader serverReader1 = new ServerReader(socketReader1, true, base);
+            ServerReader serverReader1 = new ServerReader(socketReader1);
 
             System.out.println("first reader accepted");
 
             Socket socketReader2 = serverSocket.accept();
             System.out.println("second reader accepted");
-            ServerReader serverReader2 = new ServerReader(socketReader2, false, base);
+            ServerReader serverReader2 = new ServerReader(socketReader2);
 
 
             serverReader1.start();
@@ -52,15 +65,12 @@ public class MultiServer {
             serverReader2.join();
 
 
-            mergeFile(serverReader1, serverReader2);
-
-
             Socket socketWriter1 = serverSocket.accept();
-            ServerWriter serverWriter1 = new ServerWriter(socketWriter1, base, toBeDeletedInFirst, firstDeleted);
+            ServerWriter serverWriter1 = new ServerWriter(socketWriter1);
 
 
             Socket socketWriter2 = serverSocket.accept();
-            ServerWriter serverWriter2 = new ServerWriter(socketWriter2, base, toBeDeletedInFirst, firstDeleted);
+            ServerWriter serverWriter2 = new ServerWriter(socketWriter2);
 
 
             System.out.println("Both readers joined");
@@ -74,13 +84,16 @@ public class MultiServer {
             serverWriter1.join();
             serverWriter2.join();
 
-            initializeServer();
+
 
 
             System.out.println("Both writers joined");
 
 
+
         }
+
+
 
 
     }

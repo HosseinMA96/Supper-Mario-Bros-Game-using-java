@@ -13,22 +13,14 @@ import java.util.HashSet;
 public class ServerReader extends Thread {
 
 
-
     private Socket socket;
     private InputStream input;
     private BufferedReader br;
-    private String command=".";
+    private String command = ".",tag;
+    private int num;
 
 
-
-    /**
-     * Constructor for this class
-     *
-     * @param socket
-     * @param first
-     * @param location
-     */
-    public ServerReader(Socket socket, boolean first, File location) {
+    public ServerReader(Socket socket) {
         try {
             this.socket = socket;
             input = socket.getInputStream();
@@ -44,10 +36,33 @@ public class ServerReader extends Thread {
      */
     @Override
     public void run() {
-        while(!command.equals("FINISHED"))
-        {
+        try {
 
+            identify();
+            MultiServer.data[num] = new ArrayList<>();
+
+            while (!command.equals("FINISHED")) {
+
+                command = br.readLine();
+                MultiServer.data[num].add(command);
+
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
         }
+    }
+
+    private void identify() throws Exception
+    {
+        tag = br.readLine();
+
+        if(tag.equals("0"))
+            num=0;
+
+        else
+            num=1;
     }
 
 }

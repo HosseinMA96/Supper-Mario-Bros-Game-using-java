@@ -54,7 +54,17 @@ public class SenderClient extends Thread {
         }
     }
 
+    private void identify()
+    {
+        pr.println(Game.playerIndex);
+        pr.flush();
+
+    }
+
     private void send() {
+
+
+        identify();
 
         //PLAYER
         sendPlayer();
