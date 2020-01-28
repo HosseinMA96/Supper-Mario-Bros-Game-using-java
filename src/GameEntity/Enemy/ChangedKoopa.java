@@ -1,24 +1,22 @@
 package GameEntity.Enemy;
 
 public class ChangedKoopa {
-    private KoopaState prev,next;
-    private int velX;
 
-    public ChangedKoopa(KoopaState prev, KoopaState next, int velX) {
-        this.prev = prev;
-        this.next = next;
+    private int velX,tag;
+
+    public ChangedKoopa( int tag,int velX) {
         this.velX = velX;
+        this.tag=tag;
     }
 
-    public KoopaState getPrev() {
-        return prev;
-    }
 
-    public KoopaState getNext() {
-        return next;
-    }
+
 
     public int getVelX() {
         return velX;
+    }
+
+    public int getTag() {
+        return tag;
     }
 }

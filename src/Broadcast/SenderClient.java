@@ -73,17 +73,23 @@ public class SenderClient extends Thread {
 
 
         //HANDLE LIVE KOOPA :|
+        pr.println("LIVEKOOPA");
+        pr.flush();
+
         for (int i = 0; i < Handler.changedLiveKoopas.size(); i++)
             sendChangedKoopa(Handler.changedLiveKoopas.get(i));
 
-        pr.println("OK");
+
+        pr.println("DEADTHINGS");
         pr.flush();
 
         //Handle dead things
         for (int i = 0; i < Handler.deadThings.size(); i++) {
             Id dummy = Handler.deadThings.get(i).getId();
             DeadObject deadObject = Handler.deadThings.get(i);
-            pr.println(deadObject.getId());
+
+            pr.println(deadObject.getId()+"");
+            pr.flush();
 
             switch (dummy) {
                 ////////DEAD ENTITY
@@ -122,10 +128,15 @@ public class SenderClient extends Thread {
                     sendChangedPowerUp(deadObject);
                     break;
 
+
+
             }
         }
 
         pr.println("OK");
+        pr.flush();
+
+        pr.println("FIRE");
         pr.flush();
 
         //Handle fireball
@@ -141,6 +152,9 @@ public class SenderClient extends Thread {
         pr.println("OK");
         pr.flush();
 
+        pr.println("MUSHROOM");
+        pr.flush();
+
         //HANDLE ADDED MUSHROOM
         for (int i=0;i<Handler.addedRedMushroomX.size();i++)
         {
@@ -151,14 +165,11 @@ public class SenderClient extends Thread {
             pr.flush();
         }
 
-        pr.println("FINISH");
+        pr.println("DONE");
     }
 
     private void sendChangedKoopa(ChangedKoopa changedKoopa) {
-        pr.println(changedKoopa.getPrev() + "");
-        pr.flush();
-
-        pr.println(changedKoopa.getNext() + "");
+        pr.println(changedKoopa.getTag()+"");
         pr.flush();
 
         pr.println(changedKoopa.getVelX() + "");

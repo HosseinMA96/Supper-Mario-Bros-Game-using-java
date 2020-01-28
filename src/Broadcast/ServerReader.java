@@ -41,7 +41,7 @@ public class ServerReader extends Thread {
             identify();
             MultiServer.data[num] = new ArrayList<>();
 
-            while (!command.equals("FINISHED")) {
+            while (!command.equals("DONE")) {
 
                 command = br.readLine();
                 MultiServer.data[num].add(command);

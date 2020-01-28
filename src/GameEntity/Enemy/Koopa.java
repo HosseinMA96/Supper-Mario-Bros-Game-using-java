@@ -172,7 +172,7 @@ public class Koopa extends Entity {
 
         if(prevKoopaState!=koopaState)
         {
-            ChangedKoopa changedKoopa=new ChangedKoopa(prevKoopaState,koopaState,velX);
+            ChangedKoopa changedKoopa=new ChangedKoopa(tag,velX);
         }
 
     }
