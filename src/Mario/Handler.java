@@ -1,15 +1,11 @@
 package Mario;
 
 import GameEntity.Enemy.ChangedKoopa;
-import GameEntity.Enemy.Goomba;
-import GameEntity.Enemy.Hedgehog;
 import GameEntity.Enemy.Koopa;
 import GameEntity.Entity;
-import GameEntity.RedMushroom;
 import GameEntity.Player;
 import GameTile.*;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -20,7 +16,7 @@ public class Handler {
     public static Player player;
     public static ArrayList<Integer> changedKoopaTags,fireBallX,fireBallY,addedRedMushroomX,addedRedMushroomY;
     public static ArrayList<DeadObject> deadThings;
-    public static ArrayList<ChangedKoopa>changedKoopas;
+    public static ArrayList<ChangedKoopa> changedLiveKoopas;
     static int koopaTags=0,goombaTags=0,plantTags=0;
     //Dead tiles: Only x,y
 
@@ -194,6 +190,8 @@ public class Handler {
         fireBallX= new ArrayList<>();
         fireBallY= new ArrayList<>();
         deadThings=new ArrayList<>();
-        changedKoopas=new ArrayList<>();
+        changedLiveKoopas =new ArrayList<>();
+        addedRedMushroomY=new ArrayList<>();
+        addedRedMushroomX=new ArrayList<>();
     }
 }

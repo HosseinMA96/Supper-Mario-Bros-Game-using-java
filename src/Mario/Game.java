@@ -50,7 +50,7 @@ public class Game extends Canvas implements Runnable {
     public static Camera cam;
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
-    private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 0, endGame;
+    private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 4, currentLevel = 0, endGame;
     public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 1;
     public static boolean startNext = false, totallyFinished = false, paused = false, showScoreScreen;
     public static JFrame frame;

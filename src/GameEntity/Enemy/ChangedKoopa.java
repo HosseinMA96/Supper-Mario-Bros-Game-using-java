@@ -9,4 +9,16 @@ public class ChangedKoopa {
         this.next = next;
         this.velX = velX;
     }
+
+    public KoopaState getPrev() {
+        return prev;
+    }
+
+    public KoopaState getNext() {
+        return next;
+    }
+
+    public int getVelX() {
+        return velX;
+    }
 }

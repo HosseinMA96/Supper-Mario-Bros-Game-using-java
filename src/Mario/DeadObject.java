@@ -27,6 +27,18 @@ public class DeadObject {
 
     }
 
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getHits() {
+        return hits;
+    }
+
     public int getTag() {
         return tag;
     }
