@@ -16,6 +16,7 @@ import java.util.Random;
 
 public class Player extends Entity {
     private Random random;
+    private int tag=Game.playerIndex;
 
     private int frame = 0, frameDelay = 0, pixelsTraveled = 0;
     private static int currentFrame;
@@ -36,28 +37,28 @@ public class Player extends Entity {
     public void render(Graphics g) {
 
         if (jumping || velY < 2) {
-            g.drawImage(Game.player[status][11 - facing].getBufferedImage(), x, y, width, height, null);
+            g.drawImage(Game.player[tag][status][11 - facing].getBufferedImage(), x, y, width, height, null);
             currentFrame=11-facing;
             return;
         }
 
         if (sit && status > 0) {
             //  System.out.println("in sitting wtf");
-            g.drawImage(Game.player[status][9 - facing].getBufferedImage(), x, y, width, height, null);
+            g.drawImage(Game.player[tag][status][9 - facing].getBufferedImage(), x, y, width, height, null);
             currentFrame=9-facing;
             return;
         }
 
         if (facing == 0)
         {
-            g.drawImage(Game.player[status][frame + 4].getBufferedImage(), x, y, width, height, null);
+            g.drawImage(Game.player[tag][status][frame + 4].getBufferedImage(), x, y, width, height, null);
             currentFrame=frame+4;
         }
 
 
         else if (facing == 1)
         {
-            g.drawImage(Game.player[status][frame].getBufferedImage(), x, y, width, height, null);
+            g.drawImage(Game.player[tag][status][frame].getBufferedImage(), x, y, width, height, null);
             currentFrame=frame;
         }
 

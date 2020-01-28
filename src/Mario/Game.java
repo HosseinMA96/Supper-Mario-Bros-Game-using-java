@@ -46,12 +46,12 @@ public class Game extends Canvas implements Runnable {
     public static SpriteSheet sheet;
     public static Handler handler;
     public static Sprite grass, greenMushroom, redMushroom, dummy, powerUp, specialBrick, destroyedSpecialBreak, destroyedBrick, ordinaryBrick, destroyedOrdinaryBrick, stair, usedPowerUp, pipeBody, coin, castleBrick, star, castleDoor, prince, fireBall, fireFlower;
-    public static Sprite player[][] = new Sprite[3][12];//first index is status, second is frame
+    public static Sprite player[][][] = new Sprite[2][3][12];//first index is status, second is frame
     public static Camera cam;
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
     private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 0, endGame;
-    public static int coins, lives = 3, fireBalls = 5, savedCoins;
+    public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 1;
     public static boolean startNext = false, totallyFinished = false, paused = false, showScoreScreen;
     public static JFrame frame;
     private static List<String> allLines;
@@ -80,29 +80,49 @@ public class Game extends Canvas implements Runnable {
         //   player=new Sprite(sheet,1,1);
 
         for (int i = 0; i < 8; i++) {
-            player[1][i] = new Sprite(sheet, i + 1, 16);
-            player[0][i] = new Sprite(sheet, i + 9, 16);
-            player[2][i] = new Sprite(sheet, i + 1, 15);
+            player[0][1][i] = new Sprite(sheet, i + 1, 16);
+            player[0][0][i] = new Sprite(sheet, i + 9, 16);
+            player[0][2][i] = new Sprite(sheet, i + 1, 15);
+
+            player[1][1][i] = new Sprite(sheet, i + 9, 14);
+            player[1][0][i] = new Sprite(sheet, i + 3, 13);
+            player[1][2][i] = new Sprite(sheet, i + 9, 14);
 
         }
 
         //sitting faced right 9. small mario cannot sit
-        player[1][8] = new Sprite(sheet, 6, 14);
-        player[2][8] = new Sprite(sheet, 15, 15);
+        player[0][1][8] = new Sprite(sheet, 6, 14);//sit faced right
+        player[0][2][8] = new Sprite(sheet, 15, 15);//sit faced left
+
+        player[1][1][8] = new Sprite(sheet, 12, 12);
+        player[1][2][8] = new Sprite(sheet, 12, 12);
+
+
 
         //sitting faced left 10. small mario cannot sit
-        player[1][9] = new Sprite(sheet, 7, 14);
-        player[2][9] = new Sprite(sheet, 16, 15);
+        player[0][1][9] = new Sprite(sheet, 7, 14);
+        player[0][2][9] = new Sprite(sheet, 16, 15);
+
+        player[1][1][9] = new Sprite(sheet, 13, 12);
+        player[1][2][9] = new Sprite(sheet, 13, 12);
 
         //Jumping to right 10
-        player[0][10] = new Sprite(sheet, 9, 15);
-        player[1][10] = new Sprite(sheet, 10, 15);
-        player[2][10] = new Sprite(sheet, 11, 15);
+        player[0][0][10] = new Sprite(sheet, 9, 15);
+        player[0][1][10] = new Sprite(sheet, 10, 15);
+        player[0][2][10] = new Sprite(sheet, 11, 15);
+
+        player[1][0][10] = new Sprite(sheet, 11, 13);
+        player[1][1][10] = new Sprite(sheet, 15, 13);
+        player[1][2][10] = new Sprite(sheet, 15, 13);
 
         //Jumping to left 11
-        player[0][11] = new Sprite(sheet, 12, 15);
-        player[1][11] = new Sprite(sheet, 13, 15);
-        player[2][11] = new Sprite(sheet, 14, 15);
+        player[0][0][11] = new Sprite(sheet, 12, 15);
+        player[0][1][11] = new Sprite(sheet, 13, 15);
+        player[0][2][11] = new Sprite(sheet, 14, 15);
+
+        player[1][0][11] = new Sprite(sheet, 12, 13);
+        player[1][1][11] = new Sprite(sheet, 16, 13);
+        player[1][2][11] = new Sprite(sheet, 16, 13);
 
 
         coin = new Sprite(sheet, 8, 14);
@@ -227,7 +247,7 @@ public class Game extends Canvas implements Runnable {
             showDeathScreen = true;
 
             while (running) {
-                
+
                 if (endGame != 0)
                     endGame++;
 
@@ -246,9 +266,9 @@ public class Game extends Canvas implements Runnable {
 
                 while (delta > -1) {
 
-                        tick();
-                        ticks++;
-                        delta--;
+                    tick();
+                    ticks++;
+                    delta--;
 
 
                 }
@@ -367,7 +387,7 @@ public class Game extends Canvas implements Runnable {
         if (!gameOver && showDeathScreen && !showScoreScreen) {
             g.setColor(Color.WHITE);
             g.setFont(new Font("Courier", Font.BOLD, 30));
-            g.drawImage(Game.player[0][0].getBufferedImage(), 500, 300, 100, 100, null);
+            g.drawImage(Game.player[playerIndex][0][0].getBufferedImage(), 500, 300, 100, 100, null);
 
             g.drawString("x" + lives, 700, 400);
 
@@ -444,7 +464,7 @@ public class Game extends Canvas implements Runnable {
 
     public static void main(String[] args) {
         game = new Game();
-        JPanel panel=new JPanel();
+        JPanel panel = new JPanel();
 
         panel.addKeyListener(new KeyListener() {
             @Override
@@ -454,13 +474,12 @@ public class Game extends Canvas implements Runnable {
 
             @Override
             public void keyPressed(KeyEvent e) {
-                if(e.getKeyCode()==KeyEvent.VK_P)
-                {
-                    if(paused)
-                        paused=false;
+                if (e.getKeyCode() == KeyEvent.VK_P) {
+                    if (paused)
+                        paused = false;
 
                     else
-                        paused=true;
+                        paused = true;
                 }
             }
 
