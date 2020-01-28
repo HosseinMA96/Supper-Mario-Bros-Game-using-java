@@ -1,6 +1,6 @@
 package Mario;
 
-import GameEntity.Enemy.DeadEnemy;
+import GameEntity.Enemy.ChangedKoopa;
 import GameEntity.Enemy.Goomba;
 import GameEntity.Enemy.Hedgehog;
 import GameEntity.Enemy.Koopa;
@@ -18,8 +18,11 @@ public class Handler {
     private ArrayList<Entity> entity = new ArrayList<>();
     private ArrayList<Tile> tile = new ArrayList<>();
     public static Player player;
-    public static ArrayList<Integer> changedKoopaTags,fireBallX,fireBallY;
-    public static ArrayList<DeadEnemy> deadEnemies;
+    public static ArrayList<Integer> changedKoopaTags,fireBallX,fireBallY,addedRedMushroomX,addedRedMushroomY;
+    public static ArrayList<DeadObject> deadThings;
+    public static ArrayList<ChangedKoopa>changedKoopas;
+    static int koopaTags=0,goombaTags=0,plantTags=0;
+    //Dead tiles: Only x,y
 
     public Handler() {
 //        createLevel();
@@ -83,41 +86,44 @@ public class Handler {
 
                 if (red == 0 && green == 0 && blue == 255) {
                     //    JOptionPane.showMessageDialog(null,"player");
-                    player = new Player(x * 64, y * 64, 64, 64, false, Id.player1, this)
+                    player = new Player(x * 64, y * 64, 64, 64, false, Id.player1, this);
                     addEntity(player);
                 }
 
-                if (red == 255 && green == 0 && blue == 0) {
-                    //   JOptionPane.showMessageDialog(null,"RedMushroom");
-                    addEntity(new RedMushroom(x * 64, y * 64, 64, 64, Id.redMushroom, this));
-                }
+
+                    //no naked redMushroom
+//                if (red == 255 && green == 0 && blue == 0) {
+//                    //   JOptionPane.showMessageDialog(null,"RedMushroom");
+//                    addEntity(new RedMushroom(x * 64, y * 64, 64, 64, Id.redMushroom, this));
+//                }
 
                 if (red == 50 && green == 50 && blue == 50) {
                     //   JOptionPane.showMessageDialog(null,"Goomba");
                     //   JOptionPane.showMessageDialog(null,"RedMushroom");
                     //addEntity(new Goomba(x * 64, y * 64, 64, 64, true, Id.goomba, this));
-                    addEntity(new Koopa(x * 64, y * 64, 64, 64, Id.koopa, this));
+                    addEntity(new Koopa(x * 64, y * 64, 64, 64, Id.koopa, this,koopaTags++));
                 }
 
                 if (red == 255 && green == 255 && blue == 0) {
-                    addTile(new PowerUpBlock(x * 64, y * 64, 64, 64, true, Id.powerUp, this, Game.greenMushroom, "GREEN"));
+                    addTile(new PowerUpBlock(x * 64, y * 64, 64, 64, true, Id.powerUp, this, Game.greenMushroom, "GREEN",0));
                 }
 
+                //There's a doubt that if only x and y suffice
                 if (red == 0 && (green > 123 && green < 129) && blue == 0) {
-                    addTile(new Pipe(x * 64, y * 64, 64, 64, true, Id.pipe, this, 128 - green, true));
+                    addTile(new Pipe(x * 64, y * 64, 64, 64, true, Id.pipe, this, 128 - green, true,plantTags++));
                 }
 
                 if (red == 100 && green == 250 && blue == 100) {
-                    addTile(new Pipe(x * 64, y * 64, 64, 64, true, Id.pipe, this, 0, false));
+                    addTile(new Pipe(x * 64, y * 64, 64, 64, true, Id.pipe, this, 0, false,0));
                 }
 
                 if (red == 255 && green == 250 && blue == 0) {
-                    addTile(new Coin(x * 64, y * 64, 64, 64, true, Id.coin, this));
+                    addTile(new Coin(x * 64, y * 64, 64, 64, true, Id.coin, this,0));
                 }
 
                 if (red == 0 && green == 100 && blue == 0) {
                     // addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.greenMushroom,"GREEN"));
-                    addTile(new PowerUpBlock(x * 64, y * 64, 64, 64, true, Id.powerUp, this, Game.fireFlower, "FLOWER"));
+                    addTile(new PowerUpBlock(x * 64, y * 64, 64, 64, true, Id.powerUp, this, Game.fireFlower, "FLOWER",0));
                 }
 
                 if (red == 150 && green == 80 && blue == 0) {
@@ -135,7 +141,7 @@ public class Handler {
                 }
 
                 if (red == 220 && green == 220 && blue == 220) {
-                    addTile(new Hole(x * 64, y * 64, 64, 64, false, Id.hole, this));
+                    addTile(new Hole(x * 64, y * 64, 64, 64, false, Id.hole, this,0));
                     //       JOptionPane.showMessageDialog(null,"tichi");
                 }
 
@@ -145,7 +151,7 @@ public class Handler {
                 }
 
                 if (red == 100 && green == 80 && blue == 20) {
-                    addTile(new Brick(x * 64, y * 64, 64, 64, true, Id.brick, this));
+                    addTile(new Brick(x * 64, y * 64, 64, 64, true, Id.brick, this,0));
                     //       JOptionPane.showMessageDialog(null,"tichi");
                 }
 
@@ -185,17 +191,9 @@ public class Handler {
 
     private void clearAll() {
         changedKoopaTags = new ArrayList<>();
-//        deadKoopaTags = new ArrayList<>();
-//        deadGoombaTags = new ArrayList<>();
-//        deadHedgehogTags = new ArrayList<>();
-//        deadPlantTags = new ArrayList<>();
-//        changedPowerUpBlockTags = new ArrayList<>();
-//        destroyedBrickTags = new ArrayList<>();
-//        usedFlowerTags = new ArrayList<>();
-//        usedCoinsTags = new ArrayList<>();
-//        usedCoinTags = new ArrayList<>();
         fireBallX= new ArrayList<>();
-        getFireBallY= new ArrayList<>();
-        deadEnemies=new ArrayList<>();
+        fireBallY= new ArrayList<>();
+        deadThings=new ArrayList<>();
+        changedKoopas=new ArrayList<>();
     }
 }

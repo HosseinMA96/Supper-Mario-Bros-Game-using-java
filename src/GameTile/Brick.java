@@ -1,10 +1,11 @@
 package GameTile;
 
+import Mario.DeadObject;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
 
-import java.awt.*;imlement sender protocel for the tile classes
+import java.awt.*;
 
 public class Brick extends  Tile {
     private int deathCounter=0;
@@ -31,6 +32,8 @@ public class Brick extends  Tile {
 
     public void die()
     {
+        handler.deadThings.add(new DeadObject(x,y,id));
+        super.die();
         deathCounter++;
     }
 

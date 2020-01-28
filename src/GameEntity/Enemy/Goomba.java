@@ -3,6 +3,7 @@ package GameEntity.Enemy;
 import GameEntity.Entity;
 import GameGFX.Sprite;
 import GameTile.Tile;
+import Mario.DeadObject;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
@@ -182,7 +183,7 @@ public class Goomba extends Entity {
 
     public void die()
     {
-        handler.deadEnemies.add(new DeadEnemy(tag,id));
+        handler.deadThings.add(new DeadObject(tag,id));
         super.die();
     }
 

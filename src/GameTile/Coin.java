@@ -1,5 +1,6 @@
 package GameTile;
 
+import Mario.DeadObject;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
@@ -19,6 +20,12 @@ public class Coin extends Tile {
     @Override
     public void tick() {
 
+    }
+
+    public void die()
+    {
+        handler.deadThings.add(new DeadObject(x,y,id));
+        super.die();
     }
 
 }

@@ -1,6 +1,7 @@
 package GameTile;
 
 import GameEntity.Entity;
+import Mario.DeadObject;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
@@ -28,7 +29,8 @@ public class FireFlower extends Entity {
 
     public void die()
     {
-
+        handler.deadThings.add(new DeadObject(x,y,id));
+        super.die();
     }
     public boolean isPopped() {
         return popped;

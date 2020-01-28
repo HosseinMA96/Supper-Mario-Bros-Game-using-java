@@ -2,6 +2,7 @@ package GameEntity.Enemy;
 
 import GameEntity.Entity;
 import GameTile.Tile;
+import Mario.DeadObject;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
@@ -136,7 +137,7 @@ public class Hedgehog extends Entity {
 
     public void die()
     {
-        handler.deadEnemies.add(new DeadEnemy(tag,id));
+        handler.deadThings.add(new DeadObject(tag,id));
         super.die();
     }
 }

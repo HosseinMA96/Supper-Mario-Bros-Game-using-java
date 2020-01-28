@@ -2,6 +2,7 @@ package GameTile;
 
 import GameEntity.RedMushroom;
 import GameGFX.Sprite;
+import Mario.DeadObject;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
@@ -44,7 +45,11 @@ public class PowerUpBlock extends Tile {
         System.out.println("hit = " + hitsTaken);
 
         if (hitsTaken < 4)
+        {
             change = true;
+            DeadObject deadObject=new DeadObject(x,y,Id.powerUp,hitsTaken);
+        }
+
     }
 
     @Override
@@ -136,7 +141,10 @@ public class PowerUpBlock extends Tile {
                     activated = true;
                     powerUp = Game.redMushroom;
                     mushroomGiven=true;
-                    handler.addEntity(new RedMushroom(x, spriteY, width, height, Id.redMushroom, handler));
+                    handler.addEntity(new RedMushroom(x, spriteY, width, height, Id.redMushroom, handler,0));
+                    handler.addedRedMushroomX.add(x);
+                    handler.addedRedMushroomY.add(spriteY);
+
                 } else if (hitsTaken == 3) {
                     activated = true;
                 }

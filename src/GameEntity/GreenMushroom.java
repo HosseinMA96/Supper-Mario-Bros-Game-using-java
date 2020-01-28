@@ -7,8 +7,8 @@ import Mario.Id;
 import java.awt.*;
 
 public class GreenMushroom extends RedMushroom {
-    public GreenMushroom(int x, int y, int width, int height, Id id, Handler handler) {
-        super(x, y, width, height, id, handler);
+    public GreenMushroom(int x, int y, int width, int height, Id id, Handler handler,int tg) {
+        super(x, y, width, height, id, handler,tg);
     }
 
     public  void render(Graphics g){

@@ -2,6 +2,7 @@ package GameEntity.Enemy;
 
 import GameEntity.Entity;
 import GameTile.Tile;
+import Mario.DeadObject;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
@@ -15,6 +16,7 @@ public class Koopa extends Entity {
     private boolean isDying = false;
     private int shellCount;
     private int frame = 0, frameDelay = 0, helpFrame, diecounter, facing;
+    private KoopaState prevKoopaState;
 
     @Override
     public void setFacing(int facing) {
@@ -27,6 +29,7 @@ public class Koopa extends Entity {
 
         velX = -2;
         koopaState = KoopaState.WALKING;
+        prevKoopaState=KoopaState.WALKING;
     }
 
     @Override
@@ -71,6 +74,7 @@ public class Koopa extends Entity {
     public void tick() {
         if(Game.paused)
             return;
+
 
         if (koopaState == KoopaState.SHELL) {
             velX = 0;
@@ -159,20 +163,27 @@ public class Koopa extends Entity {
             gravity += .01;
             setVelY((int) gravity);
         }
-;
+
         for (int i = 0; i < handler.getEntity().size(); i++)
             if (handler.getEntity().get(i).getId() == Id.koopa && !(handler.getEntity().get(i).equals(this)) && (handler.getEntity().get(i).getBounds().intersects(this.getBounds())) && (handler.getEntity().get(i).getKoopaState() == KoopaState.SPINNING)) {
                 die();
                 break;
             }
 
+        if(prevKoopaState!=koopaState)
+        {
+            ChangedKoopa changedKoopa=new ChangedKoopa(prevKoopaState,koopaState,velX);
+        }
+
     }
 
     public void die()
     {
-       handler.deadEnemies.add(new DeadEnemy(tag,id));
+       handler.deadThings.add(new DeadObject(tag,id));
        super.die();
     }
+
+
 
 
 

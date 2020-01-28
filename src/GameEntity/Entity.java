@@ -27,7 +27,11 @@ public abstract class Entity {
         return koopaState;
     }
 
-    public Entity(int x, int y, int width, int height, Id id, Handler handler,int tg) {
+    public void setKoopaState(KoopaState koopaState) {
+        this.koopaState = koopaState;
+    }
+
+    public Entity(int x, int y, int width, int height, Id id, Handler handler, int tg) {
         this.x = x;
         this.y = y;
         this.width = width;

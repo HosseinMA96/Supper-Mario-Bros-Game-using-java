@@ -1,7 +1,8 @@
 package GameEntity;
 
-import GameEntity.Enemy.DeadEnemy;
+
 import GameTile.Tile;
+import Mario.DeadObject;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
@@ -15,13 +16,13 @@ public class RedMushroom extends Entity {
 
     public RedMushroom(int x, int y, int width, int height, Id id, Handler handler,int tg) {
         super(x, y, width, height, id, handler,tg);
-        dir=random.nextInt(2);
-
-        if(dir==0)
-            velX=-1;
-
-        else
-            velX=1;
+//        dir=random.nextInt(2);
+//
+//        if(dir==0)
+//            velX=-1;
+//
+//        else
+//            velX=1;
     }
 
 
@@ -92,7 +93,7 @@ public class RedMushroom extends Entity {
 
     public void die()
     {
-        Handler.deadEnemies.add(new DeadEnemy(tag,id));
+        Handler.deadThings.add(new DeadObject(tag,id));
         super.die();
     }
 }

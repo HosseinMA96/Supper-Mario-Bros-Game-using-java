@@ -1,6 +1,7 @@
 package GameEntity.Enemy;
 
 import GameEntity.Entity;
+import Mario.DeadObject;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
@@ -118,7 +119,7 @@ public class Plant extends Entity {
 
     public void die()
     {
-        handler.deadEnemies.add(new DeadEnemy(tag,id));
+        handler.deadThings.add(new DeadObject(tag,id));
         super.die();
     }
 }
