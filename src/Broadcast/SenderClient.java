@@ -34,7 +34,7 @@ public class SenderClient extends Thread {
     public SenderClient(Handler handler, String host, int port) {
         this.handler = handler;
         this.host = host;
-        this.port=port;
+        this.port = port;
 
 
     }
@@ -61,9 +61,8 @@ public class SenderClient extends Thread {
         }
     }
 
-    private void identify()
-    {
-        pr.println(Game.playerIndex+"");
+    private void identify() {
+        pr.println(Game.playerIndex + "");
         pr.flush();
         //   System.out.println("in sender client identified");
 
@@ -97,7 +96,7 @@ public class SenderClient extends Thread {
             Id dummy = Handler.deadThings.get(i).getId();
             DeadObject deadObject = Handler.deadThings.get(i);
 
-            pr.println(deadObject.getId()+"");
+            pr.println(deadObject.getId() + "");
             pr.flush();
 
             switch (dummy) {
@@ -142,6 +141,9 @@ public class SenderClient extends Thread {
                     break;
 
 
+                case fireFlowerSpot:
+                    sendUsedFireFlowerSpot(deadObject);
+                    break;
 
             }
         }
@@ -152,10 +154,8 @@ public class SenderClient extends Thread {
         pr.println("FIRE");
         pr.flush();
 
-        //Handle fireball
-        //Handle fiswireball
-        for(int i=0;i<Handler.fireBallX.size();i++)
-        {
+
+        for (int i = 0; i < Handler.fireBallX.size(); i++) {
             pr.println(Handler.fireBallX.get(i));
             pr.flush();
 
@@ -166,28 +166,13 @@ public class SenderClient extends Thread {
         pr.println("OK");
         pr.flush();
 
-//        pr.println("MUSHROOM");
-//        pr.flush();
-//
-//        //HANDLE ADDED MUSHROOM
-//        for (int i=0;i<Handler.addedRedMushroomX.size();i++)
-//        {
-//            pr.println(Handler.addedRedMushroomX.get(i));
-//            pr.flush();
-//
-//            pr.println(Handler.addedRedMushroomY.get(i));
-//            pr.flush();
-//        }
-//
-//        pr.println("OK");
-//        pr.flush();
 
         pr.println("DONE");
         pr.flush();
     }
 
     private void sendChangedKoopa(ChangedKoopa changedKoopa) {
-        pr.println(changedKoopa.getTag()+"");
+        pr.println(changedKoopa.getTag() + "");
         pr.flush();
 
         pr.println(changedKoopa.getVelX() + "");
@@ -268,6 +253,14 @@ public class SenderClient extends Thread {
         pr.flush();
 
         pr.println(brick.getY());
+        pr.flush();
+    }
+
+    private void sendUsedFireFlowerSpot(DeadObject fireFlowerSpot) {
+        pr.println(fireFlowerSpot.getX());
+        pr.flush();
+
+        pr.println(fireFlowerSpot.getY());
         pr.flush();
     }
 

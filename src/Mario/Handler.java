@@ -19,7 +19,7 @@ public class Handler {
     public static ArrayList<Integer> changedKoopaTags, fireBallX, fireBallY, addedRedMushroomX, addedRedMushroomY;
     public static ArrayList<DeadObject> deadThings;
     public static ArrayList<ChangedKoopa> changedLiveKoopas;
-    public static int koopaTags = 0, goombaTags = 0, plantTags = 0, mushroomTags = 0,hedgeHogTags=0;
+    public static int koopaTags = 0, goombaTags = 0, plantTags = 0, mushroomTags = 0,hedgeHogTags=0,fireFlowerTags=0;
     //Dead tiles: Only x,y
 
     public Handler() {
@@ -138,9 +138,9 @@ public class Handler {
                     addTile(new Coin(x * 64, y * 64, 64, 64, true, Id.coin, this, 0));
                 }
 
-                if (red == 10 && green == 100 && blue == 10) {
+                if (red == 220 && green == 60 && blue == 0) {
                     // addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.greenMushroom,"GREEN"));
-                    addTile(new PowerUpBlock(x * 64, y * 64, 64, 64, true, Id.powerUp, this, Game.fireFlower, "FLOWER", 0));
+                    addTile(new FireFlowerSpot(x * 64, y * 64, 64, 64, Id.fireFlowerSpot, this, 0));
                 }
 
                 if (red == 150 && green == 80 && blue == 0) {

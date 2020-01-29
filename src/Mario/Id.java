@@ -7,6 +7,7 @@ public enum Id {
     greenMushroom,
     goomba,
     powerUp,
+   fireFlowerSpot,
     pipe,
     coin,
     koopa,

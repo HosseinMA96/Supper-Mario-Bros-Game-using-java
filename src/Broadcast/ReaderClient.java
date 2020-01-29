@@ -5,6 +5,7 @@ import GameEntity.Enemy.Koopa;
 import GameEntity.Enemy.KoopaState;
 import GameEntity.RedMushroom;
 import GameTile.Brick;
+import GameTile.FireFlowerSpot;
 import GameTile.PowerUpBlock;
 import Mario.DeadObject;
 import Mario.Game;
@@ -150,6 +151,13 @@ public class ReaderClient extends Thread {
                 case "redMushroom":
                     tg = Integer.parseInt(br.readLine());
                     deadObjects.add(new DeadObject(tg, Id.redMushroom));
+                    break;
+
+
+                case "fireFlowerSpot":
+                    x = Integer.parseInt(br.readLine());
+                    y = Integer.parseInt(br.readLine());
+                    deadObjects.add(new DeadObject(x, y, Id.fireFlowerSpot));
                     break;
 
 
@@ -338,7 +346,7 @@ public class ReaderClient extends Thread {
                     System.out.println("We got a brick !");
                     for (int j = 0; j < handler.getTile().size(); j++)
                         if (handler.getTile().get(j).getId() == Id.brick && handler.getTile().get(j).getX() == deadObject.getX() && handler.getTile().get(j).getY() == deadObject.getY()) {
-                            Brick brick=(Brick)handler.getTile().get(j);
+                            Brick brick = (Brick) handler.getTile().get(j);
                             brick.die();
                             break;
                         }
@@ -357,7 +365,7 @@ public class ReaderClient extends Thread {
 
                 case fireFlower:
                     for (int j = 0; j < handler.getTile().size(); j++)
-                        if (handler.getTile().get(j).getId() == Id.fireFlower && handler.getTile().get(j).getX() == deadObject.getX() && handler.getTile().get(j).getY() == deadObject.getY()) {
+                        if (handler.getTile().get(j).getId() == Id.fireFlower && handler.getTile().get(j).getTag() == deadObject.getTag()) {
                             handler.getTile().remove(j);
                             break;
                         }
@@ -374,10 +382,17 @@ public class ReaderClient extends Thread {
 
 
                 case redMushroom:
-                    for (int j=0;j<handler.getEntity().size();j++)
-                        if(handler.getEntity().get(j).getId()==Id.redMushroom && handler.getEntity().get(j).getTag()==deadObject.getTag())
-                        {
+                    for (int j = 0; j < handler.getEntity().size(); j++)
+                        if (handler.getEntity().get(j).getId() == Id.redMushroom && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
                             handler.getEntity().remove(j);
+                            break;
+                        }
+
+
+                case fireFlowerSpot:
+                    for (int j = 0; j < handler.getTile().size(); j++)
+                        if (handler.getTile().get(j).getId() == Id.fireFlowerSpot) {
+                            ((FireFlowerSpot) handler.getTile().get(j)).addHit();
                             break;
                         }
 
@@ -395,7 +410,7 @@ public class ReaderClient extends Thread {
     private void applyRemoteUpdate() {
         updateLiveKoopas();
         updateDeadObjects();
-       // updateMushrooms();
+        // updateMushrooms();
 
 
     }

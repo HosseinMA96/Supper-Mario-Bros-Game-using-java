@@ -4,9 +4,7 @@ import Broadcast.ReaderClient;
 import GameEntity.Enemy.Koopa;
 import GameEntity.Enemy.KoopaState;
 import GameEntity.Enemy.Plant;
-import GameTile.Brick;
-import GameTile.PowerUpBlock;
-import GameTile.Tile;
+import GameTile.*;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
@@ -23,7 +21,7 @@ public class Player extends Entity {
     private int frame = 0, frameDelay = 0, pixelsTraveled = 0;
     private static int currentFrame;
     private boolean animate = false, sit, fireMario = false;
-    public static int status = 0, liveFireBalls, safeClocks = 0,powerUpClock=0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
+    public static int status = 0, liveFireBalls, safeClocks = 0, powerUpClock = 0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
     //frame delay is the amount of the time the game upddates before it changes the animation
     //if face ==0 faced left
 
@@ -38,10 +36,10 @@ public class Player extends Entity {
     @Override
     public void render(Graphics g) {
 
-        int otherPlayer=1;
+        int otherPlayer = 1;
 
-        if(Game.playerIndex==1)
-            otherPlayer=0;
+        if (Game.playerIndex == 1)
+            otherPlayer = 0;
 
         if (ReaderClient.otherPlayerStatus != -1)
             g.drawImage(Game.player[otherPlayer][ReaderClient.otherPlayerStatus][ReaderClient.otherPlayerFrame].getBufferedImage(), ReaderClient.otherPlayerX, ReaderClient.otherPlayerY, 64, 64, null);
@@ -87,18 +85,16 @@ public class Player extends Entity {
                 safeClocks = 0;
         }
 
-        if(powerUpClock !=0)
+        if (powerUpClock != 0)
             powerUpClock++;
 
 
-        if(powerUpClock==10)
-            powerUpClock=0;
+        if (powerUpClock == 10)
+            powerUpClock = 0;
 
 
         if (Game.isRunning() == false)
             return;
-
-
 
 
         x += velX;
@@ -225,6 +221,26 @@ public class Player extends Entity {
 
 
             }
+
+            if (t.getId() == Id.fireFlowerSpot) {
+                    if (getBoundsTop().intersects(t.getBounds())) {
+                        if (jumping) {
+                            jumping = false;
+                            //  gravity = 0.8;
+                            gravity = 2;
+                            falling = true;
+                        }
+
+
+                        FireFlowerSpot fireFlowerSpot=(FireFlowerSpot)t;
+                        fireFlowerSpot.addHit();
+
+                        continue;
+                    }
+
+
+                }
+
 
 
             if (getBoundsTop().intersects((t.getBounds()))) {
@@ -377,7 +393,6 @@ public class Player extends Entity {
 
                         System.out.println("status Changed from walking to SHELL");
                         k.statusChanged();
-
 
 
                         jumping = true;
@@ -549,17 +564,13 @@ public class Player extends Entity {
 
         if (status == -1) {
 
-            if (Game.lives != 0)
-            {
+            if (Game.lives != 0) {
 
 
                 die();
                 setY(0);
                 setX(0);
-            }
-
-
-            else {
+            } else {
                 Game.gameOver = true;
                 die();
             }
@@ -596,8 +607,7 @@ public class Player extends Entity {
     }
 
 
-    private void coppy()
-    {
+    private void coppy() {
 
     }
 }
