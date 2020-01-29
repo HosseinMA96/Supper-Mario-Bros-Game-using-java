@@ -57,7 +57,7 @@ public class Game extends Canvas implements Runnable {
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
     private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 4, currentLevel = 2, endGame;
-    public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 0, port = 50000,FPS=30;
+    public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 0, port = 50000, FPS = 30, TICKS = 1, COUNTER,MAXCOUNTER=2;
     public static boolean startNext = false, totallyFinished = false, paused = false, showScoreScreen;
     public static JFrame frame;
     private static List<String> allLines;
@@ -270,25 +270,47 @@ public class Game extends Canvas implements Runnable {
                 delta += (now - lastTime) / ns;
                 lastTime = now;
 
+                int help = 0;
+
                 Handler.clearAll();
 
                 SenderClient senderClient = new SenderClient(handler, host, port);
                 senderClient.start();
                 //   System.out.println("sender start");
 
-                while (delta > -1) {
+//                while (delta > -1) {
+//
+//                    help++;
+//                    tick();
+//                    ticks++;
+//                    delta--;
+//
+//
+//                }
+//
+//                System.out.println("Help is "+help);
+//                ticks+=2;
+//                tick();
+//                tick();
+//                delta-=2;
+                COUNTER++;
 
-                    tick();
-                    ticks++;
-                    delta--;
 
 
+                if(COUNTER==MAXCOUNTER) {
+                    for (int i = 0; i < TICKS; i++)
+                        tick();
+
+                    ticks += TICKS;
+                    delta -= ticks;
+                    COUNTER=0;
                 }
+
 
                 try {
                     senderClient.join();
                     //     System.out.println("Sender joined");
-                    ReaderClient readerClient = new ReaderClient(port, host,handler);
+                    ReaderClient readerClient = new ReaderClient(port, host, handler);
                     readerClient.start();
                     //     System.out.println("reader start");
                     readerClient.join();
@@ -400,7 +422,7 @@ public class Game extends Canvas implements Runnable {
             g.drawString("x" + coins, 46, 46);
 
             //  drawOtherPlayer(g);
-     //       drawOtherPlayerFireBalls(g);
+            //       drawOtherPlayerFireBalls(g);
 
             for (int i = 0; i < lives; i++)
                 g.drawImage(star.getBufferedImage(), 1150 + 60 * i, 40, 60, 60, null);
@@ -491,18 +513,16 @@ public class Game extends Canvas implements Runnable {
             showScoreScreen = false;
 
 
-
             deathScreenTime = 0;
-         //   handler.clearLevel();
+            //   handler.clearLevel();
 
-          //  if (currentLevel != numberOfMaps)
-              //  handler.createLevel(levelsImage.get(currentLevel));
-            for (int i=0;i<handler.getEntity().size();i++)
-                if(handler.getEntity().get(i).getId()==Id.player1)
-                {
-                    Player player=(Player)handler.getEntity().get(i);
+            //  if (currentLevel != numberOfMaps)
+            //  handler.createLevel(levelsImage.get(currentLevel));
+            for (int i = 0; i < handler.getEntity().size(); i++)
+                if (handler.getEntity().get(i).getId() == Id.player1) {
+                    Player player = (Player) handler.getEntity().get(i);
                     player.setX(Game.cam.getLastX());
-                    player.setY(Entity.lastDeathY-50);
+                    player.setY(Entity.lastDeathY - 50);
                     handler.getEntity().add(player);
                     break;
                 }
