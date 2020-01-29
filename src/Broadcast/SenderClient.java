@@ -65,7 +65,7 @@ public class SenderClient extends Thread {
     {
         pr.println(Game.playerIndex+"");
         pr.flush();
-      //  System.out.println("in sender client identified");
+        //   System.out.println("in sender client identified");
 
     }
 
@@ -73,7 +73,6 @@ public class SenderClient extends Thread {
         //PLAYER
         pr.println("PLAYER");
         pr.flush();
-
         sendPlayer();
         //  pr.println("OK");
         // pr.flush();
