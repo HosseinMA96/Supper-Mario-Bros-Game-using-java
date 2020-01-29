@@ -41,10 +41,13 @@ public class ServerWriter extends Thread {
     public void run() {
 
         try {
+
+
             identify();
             for (int i = 0; i < MultiServer.data[num].size(); i++) {
                 pr.println(MultiServer.data[num].get(i));
                 pr.flush();
+                System.out.println("in Server Writer num : "+num +" "+MultiServer.data[num].get(i));
 
             }
         } catch (Exception e) {

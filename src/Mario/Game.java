@@ -57,7 +57,7 @@ public class Game extends Canvas implements Runnable {
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
     private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 4, currentLevel = 0, endGame;
-    public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 1, port = 32000;
+    public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 0, port = 50000,FPS=40;
     public static boolean startNext = false, totallyFinished = false, paused = false, showScoreScreen;
     public static JFrame frame;
     private static List<String> allLines;
@@ -73,7 +73,8 @@ public class Game extends Canvas implements Runnable {
 
     private void init() {
         handler = new Handler();
-        sheet = new SpriteSheet("C:\\Users\\erfan\\Desktop\\dummy\\res\\spritesheet.png");
+     //   sheet = new SpriteSheet("C:\\Users\\erfan\\Desktop\\dummy\\res\\spritesheet.png");
+        sheet = new SpriteSheet("C:\\res\\spritesheet.png");
 
 
         cam = new Camera();
@@ -245,7 +246,7 @@ public class Game extends Canvas implements Runnable {
             long lastTime = System.nanoTime();
             long timer = System.currentTimeMillis();
             double delta = 0.0;
-            double ns = 1000000000.0 / 45;
+            double ns = 1000000000.0 / FPS;
             int frames = 0;
             int ticks = 0;
             running = true;
@@ -269,8 +270,10 @@ public class Game extends Canvas implements Runnable {
                 delta += (now - lastTime) / ns;
                 lastTime = now;
 
+
                 SenderClient senderClient = new SenderClient(handler, host, port);
                 senderClient.start();
+                System.out.println("sender start");
 
                 while (delta > -1) {
 
@@ -283,9 +286,12 @@ public class Game extends Canvas implements Runnable {
 
                 try {
                     senderClient.join();
+                    System.out.println("Sender joined");
                     ReaderClient readerClient = new ReaderClient(port, host);
                     readerClient.start();
+                    System.out.println("reader start");
                     readerClient.join();
+                    System.out.println("reader join");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -639,8 +645,9 @@ public class Game extends Canvas implements Runnable {
         for (int i = 0; i < numberOfMaps; i++) {
             try {
                 BufferedImage bf;
-                bf = ImageIO.read(new File("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png"));
+              //  bf = ImageIO.read(new File("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png"));
                 //            System.out.println("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png");
+                bf = ImageIO.read(new File("C:\\res\\level" + (i + 1) + ".png"));
                 levelsImage.add(bf);
 
             } catch (Exception ex) {

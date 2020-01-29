@@ -15,14 +15,18 @@ public class ServerReader extends Thread {
 
     private Socket socket;
     private InputStream input;
+    private OutputStream out;
     private BufferedReader br;
     private String command = ".",tag;
+    private PrintWriter pr;
     private int num;
 
 
     public ServerReader(Socket socket) {
         try {
             this.socket = socket;
+            out=socket.getOutputStream();
+            pr = new PrintWriter(new OutputStreamWriter(out));
             input = socket.getInputStream();
             br = new BufferedReader(new InputStreamReader(input));
 
@@ -37,7 +41,8 @@ public class ServerReader extends Thread {
     @Override
     public void run() {
         try {
-
+            pr.println("ROLL");
+            System.out.println("in server reader");
             identify();
             MultiServer.data[num] = new ArrayList<>();
 
@@ -45,8 +50,11 @@ public class ServerReader extends Thread {
 
                 command = br.readLine();
                 MultiServer.data[num].add(command);
+                System.out.println("command : "+command);
 
             }
+
+            System.out.println("out pf while");
 
 
         } catch (Exception e) {
@@ -56,6 +64,7 @@ public class ServerReader extends Thread {
 
     private void identify() throws Exception
     {
+        System.out.println("in identify");
         tag = br.readLine();
 
         if(tag.equals("0"))

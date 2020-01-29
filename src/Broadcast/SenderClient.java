@@ -34,6 +34,7 @@ public class SenderClient extends Thread {
     public SenderClient(Handler handler, String host, int port) {
         this.handler = handler;
         this.host = host;
+        this.port=port;
 
 
     }
@@ -46,6 +47,12 @@ public class SenderClient extends Thread {
             output = socket.getOutputStream();
             input = socket.getInputStream();
             pr = new PrintWriter(new OutputStreamWriter(output));
+            input = socket.getInputStream();
+            br = new BufferedReader(new InputStreamReader(input));
+
+            br.readLine();
+            identify();
+            send();
             //   br = new BufferedReader(new InputStreamReader(input));
 
 
@@ -56,16 +63,13 @@ public class SenderClient extends Thread {
 
     private void identify()
     {
-        pr.println(Game.playerIndex);
+        pr.println(Game.playerIndex+"");
         pr.flush();
+        System.out.println("in sender client identified");
 
     }
 
     private void send() {
-
-
-        identify();
-
         //PLAYER
         sendPlayer();
         //  pr.println("OK");
@@ -78,6 +82,9 @@ public class SenderClient extends Thread {
 
         for (int i = 0; i < Handler.changedLiveKoopas.size(); i++)
             sendChangedKoopa(Handler.changedLiveKoopas.get(i));
+
+        pr.println("OK");
+        pr.flush();
 
 
         pr.println("DEADTHINGS");
@@ -166,7 +173,11 @@ public class SenderClient extends Thread {
             pr.flush();
         }
 
+        pr.println("OK");
+        pr.flush();
+
         pr.println("DONE");
+        pr.flush();
     }
 
     private void sendChangedKoopa(ChangedKoopa changedKoopa) {

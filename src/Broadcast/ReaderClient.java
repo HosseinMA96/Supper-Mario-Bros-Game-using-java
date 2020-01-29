@@ -160,6 +160,7 @@ public class ReaderClient extends Thread {
 
     private void initialize() {
 
+        otherPlayerStatus=-1;
         ArrayList<ChangedKoopa> changedKoopas = new ArrayList<>();
         ArrayList<DeadObject> deadObjects = new ArrayList<>();
         ArrayList<Integer> fireBallX = new ArrayList<>(), fireBallY = new ArrayList<>(), mushroomX = new ArrayList<>(), mushroomY = new ArrayList<>();
@@ -180,7 +181,9 @@ public class ReaderClient extends Thread {
             identify();
 
             while (!command.equals("DONE")) {
+
                 command = br.readLine();
+                System.out.println("in reader client command = "+command);
 
                 switch (command) {
                     case "OK":

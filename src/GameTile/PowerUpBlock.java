@@ -38,6 +38,8 @@ public class PowerUpBlock extends Tile {
 
     }
 
+
+
     public void addHit() {
 
 

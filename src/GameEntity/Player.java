@@ -17,7 +17,7 @@ import java.util.Random;
 
 public class Player extends Entity {
     private Random random;
-    private int tag=Game.playerIndex;
+    private int tag = Game.playerIndex;
 
     private int frame = 0, frameDelay = 0, pixelsTraveled = 0;
     private static int currentFrame;
@@ -27,7 +27,7 @@ public class Player extends Entity {
     //if face ==0 faced left
 
     public Player(int x, int y, int width, int height, boolean solid, Id id, Handler handler) {
-        super(x, y, width, height, id, handler,0);
+        super(x, y, width, height, id, handler, 0);
 //        velX = 1;
         random = new Random();
 //        velY = -1;
@@ -39,28 +39,23 @@ public class Player extends Entity {
 
         if (jumping || velY < 2) {
             g.drawImage(Game.player[tag][status][11 - facing].getBufferedImage(), x, y, width, height, null);
-            currentFrame=11-facing;
+            currentFrame = 11 - facing;
             return;
         }
 
         if (sit && status > 0) {
             //  System.out.println("in sitting wtf");
             g.drawImage(Game.player[tag][status][9 - facing].getBufferedImage(), x, y, width, height, null);
-            currentFrame=9-facing;
+            currentFrame = 9 - facing;
             return;
         }
 
-        if (facing == 0)
-        {
+        if (facing == 0) {
             g.drawImage(Game.player[tag][status][frame + 4].getBufferedImage(), x, y, width, height, null);
-            currentFrame=frame+4;
-        }
-
-
-        else if (facing == 1)
-        {
+            currentFrame = frame + 4;
+        } else if (facing == 1) {
             g.drawImage(Game.player[tag][status][frame].getBufferedImage(), x, y, width, height, null);
-            currentFrame=frame;
+            currentFrame = frame;
         }
 
     }
@@ -358,7 +353,8 @@ public class Player extends Entity {
                 if (e.koopaState == KoopaState.WALKING) {
                     if (getBoundsBottom().intersects(e.getBoundsTop())) {
                         e.koopaState = KoopaState.SHELL;
-                        ((Koopa)e).statusChanged();
+                        Koopa k = (Koopa) e;
+                        k.statusChanged();
                         jumping = true;
                         falling = false;
                         gravity = 10;
@@ -391,7 +387,8 @@ public class Player extends Entity {
 
                         e.velX = -6;
                         e.koopaState = KoopaState.SPINNING;
-                        ((Koopa)e).statusChanged();
+                        Koopa k = (Koopa) e;
+                        k.statusChanged();
                         //   System.out.println("go left t");
                         gravity = 2;
                         safeClocks = 1;
@@ -519,11 +516,11 @@ public class Player extends Entity {
 
         if (status == -1) {
 
-            if(Game.lives!=0)
-            die();
+            if (Game.lives != 0)
+                die();
 
-            else{
-                Game.gameOver=true;
+            else {
+                Game.gameOver = true;
                 die();
             }
             status = 0;
@@ -554,8 +551,7 @@ public class Player extends Entity {
         facing = f;
     }
 
-    public  static int  getFrame()
-    {
+    public static int getFrame() {
         return currentFrame;
     }
 }
