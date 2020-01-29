@@ -391,6 +391,7 @@ public class Game extends Canvas implements Runnable {
                 fireBalls = 5;
                 Player.status = 2;
             }
+//  showOtherPlayerFireBalls(g);
 
 
             g.drawImage(coin.getBufferedImage(), 20, 20, 30, 30, null);
@@ -904,4 +905,10 @@ public class Game extends Canvas implements Runnable {
 
     }
 /////////////////
+//    private void showOtherPlayerFireBalls(Graphics g)
+//    {
+//      //  System.out.println("RECEIVED FB SIZE : "+ReaderClient.fireBallX.size());
+//        for (int i = 0; i < ReaderClient.fireBallX.size(); i++)
+//            g.drawImage(Game.fireBall.getBufferedImage(), ReaderClient.fireBallX.get(i), ReaderClient.fireBallY.get(i), 24, 24, null);
+//    }
 }

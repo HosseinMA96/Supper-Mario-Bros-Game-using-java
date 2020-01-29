@@ -1,11 +1,8 @@
 package Broadcast;
 //Aproach one. First we do not seprate destroyable tile and non-destroyable tile. deleting takes longer time of course. for ticking and drawing both
 
+import GameEntity.*;
 import GameEntity.Enemy.*;
-import GameEntity.Entity;
-import GameEntity.FireBall;
-import GameEntity.Player;
-import GameEntity.RedMushroom;
 import GameTile.Brick;
 import GameTile.Coin;
 import GameTile.FireFlower;
@@ -155,11 +152,24 @@ public class SenderClient extends Thread {
         pr.flush();
 
 
-        for (int i = 0; i < Handler.fireBallX.size(); i++) {
-            pr.println(Handler.fireBallX.get(i));
+    //    System.out.println("Sent FB SIZE "+Handler.fireBalls.size());
+
+        for (int i = 0; i < Handler.otherPlayerFireBalls.size(); i++) {
+            OtherPlayerFireBall f = Handler.otherPlayerFireBalls.get(i);
+
+            pr.println(f.getX());
             pr.flush();
 
-            pr.println(Handler.fireBallY.get(i));
+            pr.println(f.getY());
+            pr.flush();
+
+            pr.println(f.getVelX());
+            pr.flush();
+
+            pr.println(f.getLastX());
+            pr.flush();
+
+            pr.println(f.getPlayerY());
             pr.flush();
         }
 

@@ -5,6 +5,7 @@ import GameEntity.FireBall;
 import GameEntity.Player;
 import GameTile.Tile;
 import Mario.Game;
+import Mario.Handler;
 import Mario.Id;
 
 import java.awt.event.KeyEvent;
@@ -59,7 +60,7 @@ public class KeyInput implements KeyListener {
 
                     fire = true;
                     Game.fireBalls--;
-                    Player.liveFireBalls++;
+
 
                     if (en.getFacing() == 0)
                         Game.handler.addEntity((new FireBall(en.getX() + 24, en.getY() + 12, 24, 24, Id.fireBall, Game.handler, en.getFacing())));

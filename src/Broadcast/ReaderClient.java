@@ -3,6 +3,8 @@ package Broadcast;
 import GameEntity.Enemy.ChangedKoopa;
 import GameEntity.Enemy.Koopa;
 import GameEntity.Enemy.KoopaState;
+import GameEntity.FireBall;
+import GameEntity.OtherPlayerFireBall;
 import GameEntity.RedMushroom;
 import GameTile.Brick;
 import GameTile.FireFlowerSpot;
@@ -29,7 +31,7 @@ public class ReaderClient extends Thread {
     public static int otherPlayerX, otherPlayerY, otherPlayerStatus, otherPlayerFrame;
     private ArrayList<ChangedKoopa> changedKoopas = new ArrayList<>();
     private ArrayList<DeadObject> deadObjects = new ArrayList<>();
-    private ArrayList<Integer> fireBallX = new ArrayList<>(), fireBallY = new ArrayList<>(), mushroomX = new ArrayList<>(), mushroomY = new ArrayList<>();
+    private  ArrayList<OtherPlayerFireBall>otherPlayerFireBalls=new ArrayList<>();
 
 
     public ReaderClient(int port, String host, Handler h) {
@@ -39,14 +41,6 @@ public class ReaderClient extends Thread {
 
     }
 
-    private void init() {
-        changedKoopas = new ArrayList<>();
-        deadObjects = new ArrayList<>();
-        fireBallX = new ArrayList<>();
-        fireBallY = new ArrayList<>();
-        mushroomX = new ArrayList<>();
-        mushroomY = new ArrayList<>();
-    }
 
     private void receivePlayer() throws Exception {
         command = br.readLine();
@@ -171,44 +165,44 @@ public class ReaderClient extends Thread {
             if (command.equals("OK"))
                 break;
 
-            int x = Integer.parseInt(br.readLine());
-            int y = Integer.parseInt(br.readLine());
-
-            fireBallX.add(x);
-            fireBallY.add(y);
-
-        }
-    }
-
-    private void receiveMushroom() throws Exception {
-        while (true) {
-            command = br.readLine();
-            if (command.equals("OK"))
-                break;
-
             int x = Integer.parseInt(command);
             int y = Integer.parseInt(br.readLine());
+            int velX=Integer.parseInt(br.readLine());
+            int lastX=Integer.parseInt(br.readLine());
+            int playerY=Integer.parseInt(br.readLine());
 
-            mushroomX.add(x);
-            mushroomY.add(y);
+            otherPlayerFireBalls.add(new OtherPlayerFireBall(x,y,velX,lastX,playerY));
+            /*
+                     pr.println(f.getX());
+            pr.flush();
+
+            pr.println(f.getY());
+            pr.flush();
+
+            pr.println(f.getVelX());
+            pr.flush();
+
+            pr.println(f.getLastX());
+            pr.flush();
+
+            pr.println(f.getPlayerY());
+            pr.flush();
+        }
+             */
 
         }
     }
 
-    private void initialize() {
 
-        otherPlayerStatus = -1;
-        ArrayList<ChangedKoopa> changedKoopas = new ArrayList<>();
-        ArrayList<DeadObject> deadObjects = new ArrayList<>();
-        ArrayList<Integer> fireBallX = new ArrayList<>(), fireBallY = new ArrayList<>(), mushroomX = new ArrayList<>(), mushroomY = new ArrayList<>();
-    }
+
 
     @Override
     public void run() {
         try {
 
 
-            initialize();
+           otherPlayerStatus=-1;
+
             socket = new Socket(host, port);
             input = socket.getInputStream();
             output = socket.getOutputStream();
@@ -285,14 +279,14 @@ public class ReaderClient extends Thread {
                     if (handler.getEntity().get(j).getKoopaState() == KoopaState.WALKING) {
                         handler.getEntity().get(j).setKoopaState(KoopaState.SHELL);
                         handler.getEntity().get(j).setVelX(0);
-                        System.out.println("WALKING TO SHELL");
+                      //  System.out.println("WALKING TO SHELL");
                         break;
                     }
 
                     if (handler.getEntity().get(j).getKoopaState() == KoopaState.SHELL) {
                         handler.getEntity().get(j).setKoopaState(KoopaState.SPINNING);
                         handler.getEntity().get(j).setVelX(changedKoopas.get(i).getVelX());
-                        System.out.println("SHELL TO SPIN");
+                    //    System.out.println("SHELL TO SPIN");
                         break;
                     }
                 }
@@ -343,7 +337,7 @@ public class ReaderClient extends Thread {
 
 
                 case brick:
-                    System.out.println("We got a brick !");
+              //      System.out.println("We got a brick !");
                     for (int j = 0; j < handler.getTile().size(); j++)
                         if (handler.getTile().get(j).getId() == Id.brick && handler.getTile().get(j).getX() == deadObject.getX() && handler.getTile().get(j).getY() == deadObject.getY()) {
                             Brick brick = (Brick) handler.getTile().get(j);
@@ -372,7 +366,7 @@ public class ReaderClient extends Thread {
                     break;
 
                 case powerUp:
-                    System.out.println("OH DEAR ! WE RECEIVED A POWERUP CHANGE");
+                //    System.out.println("OH DEAR ! WE RECEIVED A POWERUP CHANGE");
                     for (int j = 0; j < handler.getTile().size(); j++)
                         if (handler.getTile().get(j).getId() == Id.powerUp && handler.getTile().get(j).getX() == deadObject.getX() && handler.getTile().get(j).getY() == deadObject.getY()) {
                             ((PowerUpBlock) handler.getTile().get(j)).addHit(false);
@@ -401,16 +395,23 @@ public class ReaderClient extends Thread {
         }
     }
 
-    private void updateMushrooms() {
-        for (int i = 0; i < mushroomX.size(); i++)
-            handler.getEntity().add(new RedMushroom(mushroomX.get(i), mushroomY.get(i), 64, 64, Id.redMushroom, handler, Handler.mushroomTags++));
+    private void updateFireBalls()
+    {
+        for (int i=0;i<otherPlayerFireBalls.size();i++)
+        {
+            OtherPlayerFireBall opf=otherPlayerFireBalls.get(i);
+
+            handler.getEntity().add(new FireBall(opf.getX(),opf.getY(),opf.getVelX(),opf.getLastX(),opf.getPlayerY(),handler));
+
+        }
+
     }
 
 
     private void applyRemoteUpdate() {
         updateLiveKoopas();
         updateDeadObjects();
-        // updateMushrooms();
+        updateFireBalls();
 
 
     }

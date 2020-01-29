@@ -5,6 +5,8 @@ import GameEntity.Enemy.Goomba;
 import GameEntity.Enemy.Hedgehog;
 import GameEntity.Enemy.Koopa;
 import GameEntity.Entity;
+import GameEntity.FireBall;
+import GameEntity.OtherPlayerFireBall;
 import GameEntity.Player;
 import GameTile.*;
 
@@ -16,10 +18,11 @@ public class Handler {
     private ArrayList<Entity> entity = new ArrayList<>();
     private ArrayList<Tile> tile = new ArrayList<>();
     public static Player player;
-    public static ArrayList<Integer> changedKoopaTags, fireBallX, fireBallY, addedRedMushroomX, addedRedMushroomY;
+    public static ArrayList<Integer> changedKoopaTags, addedRedMushroomX, addedRedMushroomY;
     public static ArrayList<DeadObject> deadThings;
     public static ArrayList<ChangedKoopa> changedLiveKoopas;
-    public static int koopaTags = 0, goombaTags = 0, plantTags = 0, mushroomTags = 0,hedgeHogTags=0,fireFlowerTags=0;
+    public static ArrayList<OtherPlayerFireBall>otherPlayerFireBalls=new ArrayList<>();
+    public static int koopaTags = 0, goombaTags = 0, plantTags = 0, mushroomTags = 0,hedgeHogTags=0,fireFlowerTags=0,fireBallTags=0;
     //Dead tiles: Only x,y
 
     public Handler() {
@@ -208,8 +211,7 @@ public class Handler {
 
     public static void clearAll() {
         changedKoopaTags = new ArrayList<>();
-        fireBallX = new ArrayList<>();
-        fireBallY = new ArrayList<>();
+        otherPlayerFireBalls = new ArrayList<>();
         deadThings = new ArrayList<>();
         changedLiveKoopas = new ArrayList<>();
         addedRedMushroomY = new ArrayList<>();
