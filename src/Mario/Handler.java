@@ -1,6 +1,8 @@
 package Mario;
 
 import GameEntity.Enemy.ChangedKoopa;
+import GameEntity.Enemy.Goomba;
+import GameEntity.Enemy.Hedgehog;
 import GameEntity.Enemy.Koopa;
 import GameEntity.Entity;
 import GameEntity.Player;
@@ -17,7 +19,7 @@ public class Handler {
     public static ArrayList<Integer> changedKoopaTags, fireBallX, fireBallY, addedRedMushroomX, addedRedMushroomY;
     public static ArrayList<DeadObject> deadThings;
     public static ArrayList<ChangedKoopa> changedLiveKoopas;
-    public static int koopaTags = 0, goombaTags = 0, plantTags = 0, mushroomTags = 0;
+    public static int koopaTags = 0, goombaTags = 0, plantTags = 0, mushroomTags = 0,hedgeHogTags=0;
     //Dead tiles: Only x,y
 
     public Handler() {
@@ -99,6 +101,25 @@ public class Handler {
                     //addEntity(new Goomba(x * 64, y * 64, 64, 64, true, Id.goomba, this));
                     addEntity(new Koopa(x * 64, y * 64, 64, 64, Id.koopa, this, koopaTags++));
                 }
+
+                if (red == 40 && green == 10 && blue == 10) {
+                    //   JOptionPane.showMessageDialog(null,"Goomba");
+                    //   JOptionPane.showMessageDialog(null,"RedMushroom");
+                    //addEntity(new Goomba(x * 64, y * 64, 64, 64, true, Id.goomba, this));
+                    addEntity(new Goomba(x * 64, y * 64, 64, 64,true, Id.goomba, this, goombaTags++));
+                }
+
+
+                if (red == 70 && green == 20 && blue == 20) {
+                    //   JOptionPane.showMessageDialog(null,"Goomba");
+                    //   JOptionPane.showMessageDialog(null,"RedMushroom");
+                    //addEntity(new Goomba(x * 64, y * 64, 64, 64, true, Id.goomba, this));
+                    addEntity(new Hedgehog(x * 64, y * 64, 64, 64, Id.hedgehog, this, hedgeHogTags++));
+                }
+
+
+
+
 
                 if (red == 255 && green == 255 && blue == 0) {
                     addTile(new PowerUpBlock(x * 64, y * 64, 64, 64, true, Id.powerUp, this, Game.greenMushroom, "GREEN", 0));

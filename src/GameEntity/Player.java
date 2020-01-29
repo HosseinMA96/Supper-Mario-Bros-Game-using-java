@@ -545,7 +545,10 @@ public class Player extends Entity {
             if (Game.lives != 0)
             {
 
+
                 die();
+                setY(0);
+                setX(0);
             }
 
 
