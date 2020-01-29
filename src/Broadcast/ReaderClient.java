@@ -25,16 +25,25 @@ public class ReaderClient extends Thread {
     private Socket socket;
     private Handler handler;
     public static int otherPlayerX, otherPlayerY, otherPlayerStatus, otherPlayerFrame;
-    public static ArrayList<ChangedKoopa> changedKoopas = new ArrayList<>();
-    public static ArrayList<DeadObject> deadObjects = new ArrayList<>();
-    public static ArrayList<Integer> fireBallX = new ArrayList<>(), fireBallY = new ArrayList<>(), mushroomX = new ArrayList<>(), mushroomY = new ArrayList<>();
+    private ArrayList<ChangedKoopa> changedKoopas = new ArrayList<>();
+    private ArrayList<DeadObject> deadObjects = new ArrayList<>();
+    private ArrayList<Integer> fireBallX = new ArrayList<>(), fireBallY = new ArrayList<>(), mushroomX = new ArrayList<>(), mushroomY = new ArrayList<>();
 
 
-    public ReaderClient(int port, String host,Handler h) {
+    public ReaderClient(int port, String host, Handler h) {
         this.port = port;
         this.host = host;
-        handler=h;
+        handler = h;
 
+    }
+
+    private void init() {
+        changedKoopas = new ArrayList<>();
+        deadObjects = new ArrayList<>();
+        fireBallX = new ArrayList<>();
+        fireBallY = new ArrayList<>();
+        mushroomX = new ArrayList<>();
+        mushroomY = new ArrayList<>();
     }
 
     private void receivePlayer() throws Exception {
@@ -115,11 +124,11 @@ public class ReaderClient extends Thread {
                     break;
 
                 case "coin":
-                  //  JOptionPane.showMessageDialog(null, "A DEAD COIN !");
+                    //  JOptionPane.showMessageDialog(null, "A DEAD COIN !");
                     x = Integer.parseInt(br.readLine());
                     y = Integer.parseInt(br.readLine());
-                    System.out.println("DEAD COINT X: "+x);
-                    System.out.println("DEAD COINT Y: "+y);
+                    System.out.println("DEAD COINT X: " + x);
+                    System.out.println("DEAD COINT Y: " + y);
                     deadObjects.add(new DeadObject(x, y, Id.coin));
                     break;
 
@@ -236,11 +245,10 @@ public class ReaderClient extends Thread {
 
                 }
 
-                applyRemoteUpdate();
-
 
             }
 
+            applyRemoteUpdate();
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -255,29 +263,34 @@ public class ReaderClient extends Thread {
     }
 
     private void updateLiveKoopas() {
-        for (int i = 0; i < ReaderClient.changedKoopas.size(); i++) {
-            for (int j = 0; j < handler.getEntity().size(); j++)
-                if (handler.getEntity().get(j).getId() == Id.koopa && handler.getEntity().get(j).getTag() == ReaderClient.changedKoopas.get(i).getTag()) {
+      //  System.out.println(changedKoopas.size());
+
+        for (int i = 0; i < changedKoopas.size(); i++) {
+            for (int j = 0; j < handler.getEntity().size(); j++) {
+                if (handler.getEntity().get(j).getId() == Id.koopa && handler.getEntity().get(j).getTag() == changedKoopas.get(i).getTag()) {
                     if (handler.getEntity().get(j).getKoopaState() == KoopaState.WALKING) {
                         handler.getEntity().get(j).setKoopaState(KoopaState.SHELL);
                         handler.getEntity().get(j).setVelX(0);
+                        System.out.println("WALKING TO SHELL");
                         break;
                     }
 
                     if (handler.getEntity().get(j).getKoopaState() == KoopaState.SHELL) {
                         handler.getEntity().get(j).setKoopaState(KoopaState.SPINNING);
-                        handler.getEntity().get(j).setVelX(ReaderClient.changedKoopas.get(i).getVelX());
+                        handler.getEntity().get(j).setVelX(changedKoopas.get(i).getVelX());
+                        System.out.println("SHELL TO SPIN");
                         break;
                     }
                 }
+            }
 
         }
     }
 
     private void updateDeadObjects() {
-        for (int i = 0; i < ReaderClient.deadObjects.size(); i++) {
-            DeadObject deadObject = ReaderClient.deadObjects.get(i);
-            System.out.println("DEAD OBJECT ID : "+deadObject.getId());
+        for (int i = 0; i < deadObjects.size(); i++) {
+            DeadObject deadObject = deadObjects.get(i);
+            //   System.out.println("DEAD OBJECT ID : "+deadObject.getId());
 
             switch (deadObject.getId()) {
                 case goomba:
@@ -316,7 +329,7 @@ public class ReaderClient extends Thread {
 
                 case brick:
                     for (int j = 0; j < handler.getTile().size(); j++)
-                        if (handler.getTile().get(j).getId() == Id.brick && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
+                        if (handler.getTile().get(j).getId() == Id.brick && handler.getTile().get(j).getX() == deadObject.getX() && handler.getTile().get(j).getY() == deadObject.getY()) {
                             handler.getTile().remove(j);
                             break;
                         }
@@ -324,9 +337,9 @@ public class ReaderClient extends Thread {
 
 
                 case coin:
-                    System.out.println("REMOVING COIN");
+                    //       System.out.println("REMOVING COIN");
                     for (int j = 0; j < handler.getTile().size(); j++)
-                        if (handler.getTile().get(j).getId() == Id.coin && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
+                        if (handler.getTile().get(j).getId() == Id.coin && handler.getTile().get(j).getX() == deadObject.getX() && handler.getTile().get(j).getY() == deadObject.getY()) {
                             handler.getTile().remove(j);
                             break;
                         }
@@ -335,7 +348,7 @@ public class ReaderClient extends Thread {
 
                 case fireFlower:
                     for (int j = 0; j < handler.getTile().size(); j++)
-                        if (handler.getTile().get(j).getId() == Id.fireFlower && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
+                        if (handler.getTile().get(j).getId() == Id.fireFlower && handler.getTile().get(j).getX() == deadObject.getX() && handler.getTile().get(j).getY() == deadObject.getY()) {
                             handler.getTile().remove(j);
                             break;
                         }
@@ -343,22 +356,20 @@ public class ReaderClient extends Thread {
 
                 case powerUp:
                     for (int j = 0; j < handler.getTile().size(); j++)
-                        if (handler.getTile().get(j).getId() == Id.powerUp && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
-                            ((PowerUpBlock)handler.getTile().get(j)).setHitsTaken(deadObject.getHits());
+                        if (handler.getTile().get(j).getId() == Id.powerUp && handler.getTile().get(j).getX() == deadObject.getX() && handler.getTile().get(j).getY() == deadObject.getY()) {
+                            ((PowerUpBlock) handler.getTile().get(j)).setHitsTaken(deadObject.getHits());
                             break;
                         }
                     break;
-
 
 
             }
         }
     }
 
-    private void updateMushrooms()
-    {
-        for (int i=0;i<ReaderClient.mushroomX.size();i++)
-            handler.getEntity().add(new RedMushroom(ReaderClient.mushroomX.get(i),ReaderClient.mushroomY.get(i),64,64,Id.redMushroom,handler,Handler.mushroomTags++));
+    private void updateMushrooms() {
+        for (int i = 0; i < mushroomX.size(); i++)
+            handler.getEntity().add(new RedMushroom(mushroomX.get(i), mushroomY.get(i), 64, 64, Id.redMushroom, handler, Handler.mushroomTags++));
     }
 
 

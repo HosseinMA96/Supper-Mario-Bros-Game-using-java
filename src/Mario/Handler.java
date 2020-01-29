@@ -43,8 +43,8 @@ public class Handler {
 //        for (Entity en : entity)
 //            en.tick();
 
-        clearAll();
-//
+
+
 //        for (Tile tl : tile)
 //            tl.tick();
 
@@ -185,7 +185,7 @@ public class Handler {
         tile.clear();
     }
 
-    private void clearAll() {
+    public static void clearAll() {
         changedKoopaTags = new ArrayList<>();
         fireBallX = new ArrayList<>();
         fireBallY = new ArrayList<>();

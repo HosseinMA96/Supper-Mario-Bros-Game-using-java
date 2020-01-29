@@ -72,6 +72,8 @@ public class Koopa extends Entity {
     }
 
     public void tick() {
+
+
         if(Game.paused)
             return;
 

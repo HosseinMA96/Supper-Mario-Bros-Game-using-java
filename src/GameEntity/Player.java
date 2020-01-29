@@ -91,6 +91,9 @@ public class Player extends Entity {
         if (Game.isRunning() == false)
             return;
 
+
+
+
         x += velX;
 
         if (x < -Game.cam.getLastX())
@@ -363,7 +366,13 @@ public class Player extends Entity {
                     if (getBoundsBottom().intersects(e.getBoundsTop())) {
                         e.koopaState = KoopaState.SHELL;
                         Koopa k = (Koopa) e;
+
+
+                        System.out.println("status Changed from walking to SHELL");
                         k.statusChanged();
+
+
+
                         jumping = true;
                         falling = false;
                         gravity = 10;
@@ -397,7 +406,12 @@ public class Player extends Entity {
                         e.velX = -6;
                         e.koopaState = KoopaState.SPINNING;
                         Koopa k = (Koopa) e;
+
+
+                        // System.out.println("status Changed from SHELL to SPIN");
                         k.statusChanged();
+
+
                         //   System.out.println("go left t");
                         gravity = 2;
                         safeClocks = 1;
@@ -406,6 +420,9 @@ public class Player extends Entity {
                     } else if (getBoundsRight().intersects(e.getBoundsLeft())) {
                         e.velX = 6;
                         e.koopaState = KoopaState.SPINNING;
+
+                        Koopa k = (Koopa) e;
+                        k.statusChanged();
                         //  System.out.println("go right t");
                         gravity = 2;
                         safeClocks = 1;
