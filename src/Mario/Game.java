@@ -273,7 +273,7 @@ public class Game extends Canvas implements Runnable {
 
                 SenderClient senderClient = new SenderClient(handler, host, port);
                 senderClient.start();
-                System.out.println("sender start");
+            //    System.out.println("sender start");
 
                 while (delta > -1) {
 
@@ -286,12 +286,12 @@ public class Game extends Canvas implements Runnable {
 
                 try {
                     senderClient.join();
-                    System.out.println("Sender joined");
+             //       System.out.println("Sender joined");
                     ReaderClient readerClient = new ReaderClient(port, host);
                     readerClient.start();
-                    System.out.println("reader start");
+              //      System.out.println("reader start");
                     readerClient.join();
-                    System.out.println("reader join");
+                //    System.out.println("reader join");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

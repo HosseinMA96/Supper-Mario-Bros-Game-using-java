@@ -39,7 +39,7 @@ public class ReaderClient extends Thread {
             otherPlayerStatus = -1;
             return;
         } else {
-            command = br.readLine();
+          //  command = br.readLine();
             otherPlayerStatus = Integer.parseInt(command);
 
             command = br.readLine();
@@ -70,6 +70,10 @@ public class ReaderClient extends Thread {
 
     private void receiveDeadThings() throws Exception {
         while (true) {
+
+            System.out.println("stats : "+otherPlayerStatus);
+            System.out.println("x : "+otherPlayerX);
+            System.out.println("y : "+otherPlayerY);
             command = br.readLine();
 
             if (command.equals("OK"))
@@ -183,7 +187,7 @@ public class ReaderClient extends Thread {
             while (!command.equals("DONE")) {
 
                 command = br.readLine();
-                System.out.println("in reader client command = "+command);
+              //  System.out.println("in reader client command = "+command);
 
                 switch (command) {
                     case "OK":
@@ -211,7 +215,7 @@ public class ReaderClient extends Thread {
                         break;
 
                     default:
-                        System.out.println(command);
+                 //       System.out.println(command);
                         break;
 
 
