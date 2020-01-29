@@ -127,8 +127,8 @@ public class ReaderClient extends Thread {
                     //  JOptionPane.showMessageDialog(null, "A DEAD COIN !");
                     x = Integer.parseInt(br.readLine());
                     y = Integer.parseInt(br.readLine());
-                    System.out.println("DEAD COINT X: " + x);
-                    System.out.println("DEAD COINT Y: " + y);
+              //      System.out.println("DEAD COINT X: " + x);
+                //    System.out.println("DEAD COINT Y: " + y);
                     deadObjects.add(new DeadObject(x, y, Id.coin));
                     break;
 
@@ -311,6 +311,7 @@ public class ReaderClient extends Thread {
 
 
                 case plant:
+                //    System.out.println("DEAD PLANT");
                     for (int j = 0; j < handler.getEntity().size(); j++)
                         if (handler.getEntity().get(j).getId() == Id.plant && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
                             handler.getEntity().remove(j);

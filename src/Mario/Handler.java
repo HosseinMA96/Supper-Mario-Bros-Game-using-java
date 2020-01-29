@@ -126,11 +126,11 @@ public class Handler {
                 }
 
                 //There's a doubt that if only x and y suffice
-                if (red == 0 && (green > 123 && green < 129) && blue == 0) {
-                    addTile(new Pipe(x * 64, y * 64, 64, 64, true, Id.pipe, this, 128 - green, true, plantTags++));
+                if (red == 0 && green==100 && blue == 0) {
+                    addTile(new Pipe(x * 64, y * 64, 64, 64, true, Id.pipe, this, 0, true, plantTags++));
                 }
 
-                if (red == 100 && green == 250 && blue == 100) {
+                if (red == 0 && green == 50&& blue == 0) {
                     addTile(new Pipe(x * 64, y * 64, 64, 64, true, Id.pipe, this, 0, false, 0));
                 }
 
@@ -138,7 +138,7 @@ public class Handler {
                     addTile(new Coin(x * 64, y * 64, 64, 64, true, Id.coin, this, 0));
                 }
 
-                if (red == 0 && green == 100 && blue == 0) {
+                if (red == 10 && green == 100 && blue == 10) {
                     // addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.greenMushroom,"GREEN"));
                     addTile(new PowerUpBlock(x * 64, y * 64, 64, 64, true, Id.powerUp, this, Game.fireFlower, "FLOWER", 0));
                 }

@@ -20,10 +20,6 @@ public class Plant extends Entity {
         moving = false;
         changeState = false;
         velX = 0;
-
-
-
-
     }
 
     public boolean isChangeState() {
