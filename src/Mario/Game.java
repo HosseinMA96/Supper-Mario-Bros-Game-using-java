@@ -57,7 +57,7 @@ public class Game extends Canvas implements Runnable {
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
     private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 4, currentLevel = 2, endGame;
-    public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 0, port = 50000,FPS=40;
+    public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 0, port = 50000,FPS=30;
     public static boolean startNext = false, totallyFinished = false, paused = false, showScoreScreen;
     public static JFrame frame;
     private static List<String> allLines;
@@ -489,11 +489,22 @@ public class Game extends Canvas implements Runnable {
             paused = false;
             showScoreScreen = false;
 
-            deathScreenTime = 0;
-            handler.clearLevel();
 
-            if (currentLevel != numberOfMaps)
-                handler.createLevel(levelsImage.get(currentLevel));
+
+            deathScreenTime = 0;
+         //   handler.clearLevel();
+
+          //  if (currentLevel != numberOfMaps)
+              //  handler.createLevel(levelsImage.get(currentLevel));
+            for (int i=0;i<handler.getEntity().size();i++)
+                if(handler.getEntity().get(i).getId()==Id.player1)
+                {
+                    Player player=(Player)handler.getEntity().get(i);
+                    player.setX(Game.cam.getLastX());
+                    player.setY(Game.cam.getPlayerY()-40);
+                    handler.getEntity().add(player);
+                    break;
+                }
         }
 
 

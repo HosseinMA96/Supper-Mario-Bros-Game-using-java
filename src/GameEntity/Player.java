@@ -543,7 +543,11 @@ public class Player extends Entity {
         if (status == -1) {
 
             if (Game.lives != 0)
+            {
+
                 die();
+            }
+
 
             else {
                 Game.gameOver = true;
@@ -579,5 +583,11 @@ public class Player extends Entity {
 
     public static int getFrame() {
         return currentFrame;
+    }
+
+
+    private void coppy()
+    {
+
     }
 }
