@@ -501,7 +501,7 @@ public class Game extends Canvas implements Runnable {
                 {
                     Player player=(Player)handler.getEntity().get(i);
                     player.setX(Game.cam.getLastX());
-                    player.setY(Game.cam.getPlayerY()-40);
+                    player.setY(Entity.lastDeathY-50);
                     handler.getEntity().add(player);
                     break;
                 }

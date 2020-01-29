@@ -21,6 +21,7 @@ public abstract class Entity {
     protected int facing = 0,tag; // facing left =0 , facing right =1
     private int temp, scoreToBeAddedIfKilled;
     private Random random = new Random();
+    public static int lastDeathY=0;
 
 
     public KoopaState getKoopaState() {
@@ -89,6 +90,8 @@ public abstract class Entity {
 
         if (id == Id.player1) {
             if (Player.safeClocks == 0) {
+
+                lastDeathY=getY();
                 Game.lives--;
                 Game.showDeathScreen = true;
                 Player.safeClocks++;
