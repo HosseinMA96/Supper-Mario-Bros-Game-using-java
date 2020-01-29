@@ -1,5 +1,6 @@
 package GameEntity;
 
+import Broadcast.ReaderClient;
 import GameEntity.Enemy.Koopa;
 import GameEntity.Enemy.KoopaState;
 import GameEntity.Enemy.Plant;
@@ -36,6 +37,14 @@ public class Player extends Entity {
 
     @Override
     public void render(Graphics g) {
+
+        int otherPlayer=1;
+
+        if(Game.playerIndex==1)
+            otherPlayer=0;
+
+        if (ReaderClient.otherPlayerStatus != -1)
+            g.drawImage(Game.player[otherPlayer][ReaderClient.otherPlayerStatus][ReaderClient.otherPlayerFrame].getBufferedImage(), ReaderClient.otherPlayerX, ReaderClient.otherPlayerY, 64, 64, null);
 
         if (jumping || velY < 2) {
             g.drawImage(Game.player[tag][status][11 - facing].getBufferedImage(), x, y, width, height, null);
