@@ -14,10 +14,10 @@ public class Handler {
     private ArrayList<Entity> entity = new ArrayList<>();
     private ArrayList<Tile> tile = new ArrayList<>();
     public static Player player;
-    public static ArrayList<Integer> changedKoopaTags,fireBallX,fireBallY,addedRedMushroomX,addedRedMushroomY;
+    public static ArrayList<Integer> changedKoopaTags, fireBallX, fireBallY, addedRedMushroomX, addedRedMushroomY;
     public static ArrayList<DeadObject> deadThings;
     public static ArrayList<ChangedKoopa> changedLiveKoopas;
-    static int koopaTags=0,goombaTags=0,plantTags=0,mushroomTags=0;
+    public static int koopaTags = 0, goombaTags = 0, plantTags = 0, mushroomTags = 0;
     //Dead tiles: Only x,y
 
     public Handler() {
@@ -87,7 +87,7 @@ public class Handler {
                 }
 
 
-                    //no naked redMushroom
+                //no naked redMushroom
 //                if (red == 255 && green == 0 && blue == 0) {
 //                    //   JOptionPane.showMessageDialog(null,"RedMushroom");
 //                    addEntity(new RedMushroom(x * 64, y * 64, 64, 64, Id.redMushroom, this));
@@ -97,29 +97,29 @@ public class Handler {
                     //   JOptionPane.showMessageDialog(null,"Goomba");
                     //   JOptionPane.showMessageDialog(null,"RedMushroom");
                     //addEntity(new Goomba(x * 64, y * 64, 64, 64, true, Id.goomba, this));
-                    addEntity(new Koopa(x * 64, y * 64, 64, 64, Id.koopa, this,koopaTags++));
+                    addEntity(new Koopa(x * 64, y * 64, 64, 64, Id.koopa, this, koopaTags++));
                 }
 
                 if (red == 255 && green == 255 && blue == 0) {
-                    addTile(new PowerUpBlock(x * 64, y * 64, 64, 64, true, Id.powerUp, this, Game.greenMushroom, "GREEN",0));
+                    addTile(new PowerUpBlock(x * 64, y * 64, 64, 64, true, Id.powerUp, this, Game.greenMushroom, "GREEN", 0));
                 }
 
                 //There's a doubt that if only x and y suffice
                 if (red == 0 && (green > 123 && green < 129) && blue == 0) {
-                    addTile(new Pipe(x * 64, y * 64, 64, 64, true, Id.pipe, this, 128 - green, true,plantTags++));
+                    addTile(new Pipe(x * 64, y * 64, 64, 64, true, Id.pipe, this, 128 - green, true, plantTags++));
                 }
 
                 if (red == 100 && green == 250 && blue == 100) {
-                    addTile(new Pipe(x * 64, y * 64, 64, 64, true, Id.pipe, this, 0, false,0));
+                    addTile(new Pipe(x * 64, y * 64, 64, 64, true, Id.pipe, this, 0, false, 0));
                 }
 
                 if (red == 255 && green == 250 && blue == 0) {
-                    addTile(new Coin(x * 64, y * 64, 64, 64, true, Id.coin, this,0));
+                    addTile(new Coin(x * 64, y * 64, 64, 64, true, Id.coin, this, 0));
                 }
 
                 if (red == 0 && green == 100 && blue == 0) {
                     // addTile(new PowerUpBlock(x*64,y*64,64,64,true,Id.powerUp,this,Game.greenMushroom,"GREEN"));
-                    addTile(new PowerUpBlock(x * 64, y * 64, 64, 64, true, Id.powerUp, this, Game.fireFlower, "FLOWER",0));
+                    addTile(new PowerUpBlock(x * 64, y * 64, 64, 64, true, Id.powerUp, this, Game.fireFlower, "FLOWER", 0));
                 }
 
                 if (red == 150 && green == 80 && blue == 0) {
@@ -137,7 +137,7 @@ public class Handler {
                 }
 
                 if (red == 220 && green == 220 && blue == 220) {
-                    addTile(new Hole(x * 64, y * 64, 64, 64, false, Id.hole, this,0));
+                    addTile(new Hole(x * 64, y * 64, 64, 64, false, Id.hole, this, 0));
                     //       JOptionPane.showMessageDialog(null,"tichi");
                 }
 
@@ -147,7 +147,7 @@ public class Handler {
                 }
 
                 if (red == 100 && green == 80 && blue == 20) {
-                    addTile(new Brick(x * 64, y * 64, 64, 64, true, Id.brick, this,0));
+                    addTile(new Brick(x * 64, y * 64, 64, 64, true, Id.brick, this, 0));
                     //       JOptionPane.showMessageDialog(null,"tichi");
                 }
 
@@ -187,11 +187,11 @@ public class Handler {
 
     private void clearAll() {
         changedKoopaTags = new ArrayList<>();
-        fireBallX= new ArrayList<>();
-        fireBallY= new ArrayList<>();
-        deadThings=new ArrayList<>();
-        changedLiveKoopas =new ArrayList<>();
-        addedRedMushroomY=new ArrayList<>();
-        addedRedMushroomX=new ArrayList<>();
+        fireBallX = new ArrayList<>();
+        fireBallY = new ArrayList<>();
+        deadThings = new ArrayList<>();
+        changedLiveKoopas = new ArrayList<>();
+        addedRedMushroomY = new ArrayList<>();
+        addedRedMushroomX = new ArrayList<>();
     }
 }

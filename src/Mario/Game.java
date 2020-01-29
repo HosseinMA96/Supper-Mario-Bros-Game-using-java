@@ -47,7 +47,7 @@ public class Game extends Canvas implements Runnable {
     //Height is y
     public static final int HEIGHT = WITDH / 16 * 10;
     public static final int SCALE = 4;
-    public static final String TITLE = "Super Mario Bros (Hossein & Mammad)";
+    public static final String TITLE = "Super Mario Bros (HOSSEIN)";
     public static SpriteSheet sheet;
     public static Handler handler;
     public static Sprite grass, greenMushroom, redMushroom, dummy, powerUp, specialBrick, destroyedSpecialBreak, destroyedBrick, ordinaryBrick, destroyedOrdinaryBrick, stair, usedPowerUp, pipeBody, coin, castleBrick, star, castleDoor, prince, fireBall, fireFlower;
@@ -56,7 +56,7 @@ public class Game extends Canvas implements Runnable {
     public static String host = "127.0.0.1";
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
-    private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 4, currentLevel = 2, endGame;
+    private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 4, currentLevel = 0, endGame;
     public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 0, port = 50000,FPS=40;
     public static boolean startNext = false, totallyFinished = false, paused = false, showScoreScreen;
     public static JFrame frame;
@@ -73,7 +73,7 @@ public class Game extends Canvas implements Runnable {
 
     private void init() {
         handler = new Handler();
-     //   sheet = new SpriteSheet("C:\\Users\\erfan\\Desktop\\dummy\\res\\spritesheet.png");
+        //   sheet = new SpriteSheet("C:\\Users\\erfan\\Desktop\\dummy\\res\\spritesheet.png");
         sheet = new SpriteSheet("C:\\res\\spritesheet.png");
 
 
@@ -273,7 +273,7 @@ public class Game extends Canvas implements Runnable {
 
                 SenderClient senderClient = new SenderClient(handler, host, port);
                 senderClient.start();
-            //    System.out.println("sender start");
+                //   System.out.println("sender start");
 
                 while (delta > -1) {
 
@@ -286,12 +286,12 @@ public class Game extends Canvas implements Runnable {
 
                 try {
                     senderClient.join();
-             //       System.out.println("Sender joined");
-                    ReaderClient readerClient = new ReaderClient(port, host);
+                    //     System.out.println("Sender joined");
+                    ReaderClient readerClient = new ReaderClient(port, host,handler);
                     readerClient.start();
-              //      System.out.println("reader start");
+                    //     System.out.println("reader start");
                     readerClient.join();
-                //    System.out.println("reader join");
+                    //     System.out.println("reader join");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -396,7 +396,7 @@ public class Game extends Canvas implements Runnable {
             g.setFont(new Font("Courier", Font.BOLD, 20));
             g.drawString("x" + coins, 46, 46);
 
-            drawOtherPlayer(g);
+            //  drawOtherPlayer(g);
             drawOtherPlayerFireBalls(g);
 
             for (int i = 0; i < lives; i++)
@@ -442,17 +442,17 @@ public class Game extends Canvas implements Runnable {
     }
 
     private void drawOtherPlayer(Graphics g) {
-//        int otherPlayer;
-//
-//        if (playerIndex == 0)
-//            otherPlayer = 1;
-//
-//        else
-//            otherPlayer = 0;
-//
-//        if (ReaderClient.otherPlayerStatus != -1)
-//            g.drawImage(player[otherPlayer][ReaderClient.otherPlayerStatus][ReaderClient.otherPlayerFrame].getBufferedImage(), ReaderClient.otherPlayerX, ReaderClient.otherPlayerY, 64, 64, null);
-//
+        int otherPlayer;
+
+        if (playerIndex == 0)
+            otherPlayer = 1;
+
+        else
+            otherPlayer = 0;
+
+        if (ReaderClient.otherPlayerStatus != -1)
+            g.drawImage(player[otherPlayer][ReaderClient.otherPlayerStatus][ReaderClient.otherPlayerFrame].getBufferedImage(), ReaderClient.otherPlayerX, ReaderClient.otherPlayerY, 64, 64, null);
+
 
     }
 
@@ -645,7 +645,7 @@ public class Game extends Canvas implements Runnable {
         for (int i = 0; i < numberOfMaps; i++) {
             try {
                 BufferedImage bf;
-              //  bf = ImageIO.read(new File("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png"));
+                //  bf = ImageIO.read(new File("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png"));
                 //            System.out.println("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png");
                 bf = ImageIO.read(new File("C:\\res\\level" + (i + 1) + ".png"));
                 levelsImage.add(bf);
@@ -748,118 +748,120 @@ public class Game extends Canvas implements Runnable {
 
     }
 
-    private void updateLiveKoopas() {
-        for (int i = 0; i < ReaderClient.changedKoopas.size(); i++) {
-            for (int j = 0; j < handler.getEntity().size(); j++)
-                if (handler.getEntity().get(j).getId() == Id.koopa && handler.getEntity().get(j).getTag() == ReaderClient.changedKoopas.get(i).getTag()) {
-                    if (handler.getEntity().get(j).getKoopaState() == KoopaState.WALKING) {
-                        handler.getEntity().get(j).setKoopaState(KoopaState.SHELL);
-                        handler.getEntity().get(j).setVelX(0);
-                        break;
-                    }
-
-                    if (handler.getEntity().get(j).getKoopaState() == KoopaState.SHELL) {
-                        handler.getEntity().get(j).setKoopaState(KoopaState.SPINNING);
-                        handler.getEntity().get(j).setVelX(ReaderClient.changedKoopas.get(i).getVelX());
-                        break;
-                    }
-                }
-
-        }
-    }
-
-    private void updateDeadObjects() {
-        for (int i = 0; i < ReaderClient.deadObjects.size(); i++) {
-            DeadObject deadObject = ReaderClient.deadObjects.get(i);
-
-            switch (deadObject.getId()) {
-                case goomba:
-                    for (int j = 0; j < handler.getEntity().size(); j++)
-                        if (handler.getEntity().get(j).getId() == Id.goomba && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
-                            handler.getEntity().remove(j);
-                            break;
-                        }
-                    break;
-
-                case hedgehog:
-                    for (int j = 0; j < handler.getEntity().size(); j++)
-                        if (handler.getEntity().get(j).getId() == Id.hedgehog && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
-                            handler.getEntity().remove(j);
-                            break;
-                        }
-                    break;
-
-
-                case plant:
-                    for (int j = 0; j < handler.getEntity().size(); j++)
-                        if (handler.getEntity().get(j).getId() == Id.plant && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
-                            handler.getEntity().remove(j);
-                            break;
-                        }
-                    break;
-
-                case koopa:
-                    for (int j = 0; j < handler.getEntity().size(); j++)
-                        if (handler.getEntity().get(j).getId() == Id.koopa && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
-                            handler.getEntity().remove(j);
-                            break;
-                        }
-                    break;
-
-
-                case brick:
-                    for (int j = 0; j < handler.getTile().size(); j++)
-                        if (handler.getTile().get(j).getId() == Id.brick && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
-                            handler.getTile().remove(j);
-                            break;
-                        }
-                    break;
-
-
-                case coin:
-                    for (int j = 0; j < handler.getTile().size(); j++)
-                        if (handler.getTile().get(j).getId() == Id.coin && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
-                            handler.getTile().remove(j);
-                            break;
-                        }
-                    break;
-
-
-                case fireFlower:
-                    for (int j = 0; j < handler.getTile().size(); j++)
-                        if (handler.getTile().get(j).getId() == Id.fireFlower && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
-                            handler.getTile().remove(j);
-                            break;
-                        }
-                    break;
-
-                case powerUp:
-                    for (int j = 0; j < handler.getTile().size(); j++)
-                        if (handler.getTile().get(j).getId() == Id.powerUp && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
-                            ((PowerUpBlock)handler.getTile().get(j)).setHitsTaken(deadObject.getHits());
-                            break;
-                        }
-                    break;
-
-
-
-            }
-        }
-    }
-
-    private void updateMushrooms()
-    {
-        for (int i=0;i<ReaderClient.mushroomX.size();i++)
-            handler.getEntity().add(new RedMushroom(ReaderClient.mushroomX.get(i),ReaderClient.mushroomY.get(i),64,64,Id.redMushroom,handler,Handler.mushroomTags++));
-    }
-
-    private void applyRemoteUpdate() {
-        updateLiveKoopas();
-        updateDeadObjects();
-        updateMushrooms();
-
-
-    }
+//    private void updateLiveKoopas() {
+//        for (int i = 0; i < ReaderClient.changedKoopas.size(); i++) {
+//            for (int j = 0; j < handler.getEntity().size(); j++)
+//                if (handler.getEntity().get(j).getId() == Id.koopa && handler.getEntity().get(j).getTag() == ReaderClient.changedKoopas.get(i).getTag()) {
+//                    if (handler.getEntity().get(j).getKoopaState() == KoopaState.WALKING) {
+//                        handler.getEntity().get(j).setKoopaState(KoopaState.SHELL);
+//                        handler.getEntity().get(j).setVelX(0);
+//                        break;
+//                    }
+//
+//                    if (handler.getEntity().get(j).getKoopaState() == KoopaState.SHELL) {
+//                        handler.getEntity().get(j).setKoopaState(KoopaState.SPINNING);
+//                        handler.getEntity().get(j).setVelX(ReaderClient.changedKoopas.get(i).getVelX());
+//                        break;
+//                    }
+//                }
+//
+//        }
+//    }
+//
+//    private void updateDeadObjects() {
+//        for (int i = 0; i < ReaderClient.deadObjects.size(); i++) {
+//            DeadObject deadObject = ReaderClient.deadObjects.get(i);
+//            System.out.println("DEAD OBJECT ID : "+deadObject.getId());
+//
+//            switch (deadObject.getId()) {
+//                case goomba:
+//                    for (int j = 0; j < handler.getEntity().size(); j++)
+//                        if (handler.getEntity().get(j).getId() == Id.goomba && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
+//                            handler.getEntity().remove(j);
+//                            break;
+//                        }
+//                    break;
+//
+//                case hedgehog:
+//                    for (int j = 0; j < handler.getEntity().size(); j++)
+//                        if (handler.getEntity().get(j).getId() == Id.hedgehog && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
+//                            handler.getEntity().remove(j);
+//                            break;
+//                        }
+//                    break;
+//
+//
+//                case plant:
+//                    for (int j = 0; j < handler.getEntity().size(); j++)
+//                        if (handler.getEntity().get(j).getId() == Id.plant && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
+//                            handler.getEntity().remove(j);
+//                            break;
+//                        }
+//                    break;
+//
+//                case koopa:
+//                    for (int j = 0; j < handler.getEntity().size(); j++)
+//                        if (handler.getEntity().get(j).getId() == Id.koopa && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
+//                            handler.getEntity().remove(j);
+//                            break;
+//                        }
+//                    break;
+//
+//
+//                case brick:
+//                    for (int j = 0; j < handler.getTile().size(); j++)
+//                        if (handler.getTile().get(j).getId() == Id.brick && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
+//                            handler.getTile().remove(j);
+//                            break;
+//                        }
+//                    break;
+//
+//
+//                case coin:
+//                    System.out.println("REMOVING COIN");
+//                    for (int j = 0; j < handler.getTile().size(); j++)
+//                        if (handler.getTile().get(j).getId() == Id.coin && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
+//                            handler.getTile().remove(j);
+//                            break;
+//                        }
+//                    break;
+//
+//
+//                case fireFlower:
+//                    for (int j = 0; j < handler.getTile().size(); j++)
+//                        if (handler.getTile().get(j).getId() == Id.fireFlower && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
+//                            handler.getTile().remove(j);
+//                            break;
+//                        }
+//                    break;
+//
+//                case powerUp:
+//                    for (int j = 0; j < handler.getTile().size(); j++)
+//                        if (handler.getTile().get(j).getId() == Id.powerUp && handler.getTile().get(j).getX()==deadObject.getX() &&  handler.getTile().get(j).getY()==deadObject.getY()) {
+//                            ((PowerUpBlock)handler.getTile().get(j)).setHitsTaken(deadObject.getHits());
+//                            break;
+//                        }
+//                    break;
+//
+//
+//
+//            }
+//        }
+//    }
+//
+//    private void updateMushrooms()
+//    {
+//        for (int i=0;i<ReaderClient.mushroomX.size();i++)
+//            handler.getEntity().add(new RedMushroom(ReaderClient.mushroomX.get(i),ReaderClient.mushroomY.get(i),64,64,Id.redMushroom,handler,Handler.mushroomTags++));
+//    }
+//
+//    private void applyRemoteUpdate() {
+//        updateLiveKoopas();
+//        updateDeadObjects();
+//        updateMushrooms();
+//
+//
+//    }
 
     public static void showScoreScreen() {
         paused = true;
