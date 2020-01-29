@@ -137,6 +137,10 @@ public class SenderClient extends Thread {
                     sendChangedPowerUp(deadObject);
                     break;
 
+                case redMushroom:
+                    sendDeadMushroom(deadObject);
+                    break;
+
 
 
             }
@@ -162,21 +166,21 @@ public class SenderClient extends Thread {
         pr.println("OK");
         pr.flush();
 
-        pr.println("MUSHROOM");
-        pr.flush();
-
-        //HANDLE ADDED MUSHROOM
-        for (int i=0;i<Handler.addedRedMushroomX.size();i++)
-        {
-            pr.println(Handler.addedRedMushroomX.get(i));
-            pr.flush();
-
-            pr.println(Handler.addedRedMushroomY.get(i));
-            pr.flush();
-        }
-
-        pr.println("OK");
-        pr.flush();
+//        pr.println("MUSHROOM");
+//        pr.flush();
+//
+//        //HANDLE ADDED MUSHROOM
+//        for (int i=0;i<Handler.addedRedMushroomX.size();i++)
+//        {
+//            pr.println(Handler.addedRedMushroomX.get(i));
+//            pr.flush();
+//
+//            pr.println(Handler.addedRedMushroomY.get(i));
+//            pr.flush();
+//        }
+//
+//        pr.println("OK");
+//        pr.flush();
 
         pr.println("DONE");
         pr.flush();

@@ -4,6 +4,7 @@ import GameEntity.Enemy.ChangedKoopa;
 import GameEntity.Enemy.Koopa;
 import GameEntity.Enemy.KoopaState;
 import GameEntity.RedMushroom;
+import GameTile.Brick;
 import GameTile.PowerUpBlock;
 import Mario.DeadObject;
 import Mario.Game;
@@ -127,8 +128,8 @@ public class ReaderClient extends Thread {
                     //  JOptionPane.showMessageDialog(null, "A DEAD COIN !");
                     x = Integer.parseInt(br.readLine());
                     y = Integer.parseInt(br.readLine());
-              //      System.out.println("DEAD COINT X: " + x);
-                //    System.out.println("DEAD COINT Y: " + y);
+                    //      System.out.println("DEAD COINT X: " + x);
+                    //    System.out.println("DEAD COINT Y: " + y);
                     deadObjects.add(new DeadObject(x, y, Id.coin));
                     break;
 
@@ -144,6 +145,11 @@ public class ReaderClient extends Thread {
                     y = Integer.parseInt(br.readLine());
                     int hits = Integer.parseInt(br.readLine());
                     deadObjects.add(new DeadObject(x, y, Id.powerUp, hits));
+                    break;
+
+                case "redMushroom":
+                    tg = Integer.parseInt(br.readLine());
+                    deadObjects.add(new DeadObject(tg, Id.redMushroom));
                     break;
 
 
@@ -172,7 +178,7 @@ public class ReaderClient extends Thread {
             if (command.equals("OK"))
                 break;
 
-            int x = Integer.parseInt(br.readLine());
+            int x = Integer.parseInt(command);
             int y = Integer.parseInt(br.readLine());
 
             mushroomX.add(x);
@@ -234,9 +240,9 @@ public class ReaderClient extends Thread {
                         break;
 
 
-                    case "MUSHROOM":
-                        receiveMushroom();
-                        break;
+//                    case "MUSHROOM":
+//                        receiveMushroom();
+//                        break;
 
                     default:
                         //       System.out.println(command);
@@ -263,7 +269,7 @@ public class ReaderClient extends Thread {
     }
 
     private void updateLiveKoopas() {
-      //  System.out.println(changedKoopas.size());
+        //  System.out.println(changedKoopas.size());
 
         for (int i = 0; i < changedKoopas.size(); i++) {
             for (int j = 0; j < handler.getEntity().size(); j++) {
@@ -311,7 +317,7 @@ public class ReaderClient extends Thread {
 
 
                 case plant:
-                //    System.out.println("DEAD PLANT");
+                    //    System.out.println("DEAD PLANT");
                     for (int j = 0; j < handler.getEntity().size(); j++)
                         if (handler.getEntity().get(j).getId() == Id.plant && handler.getEntity().get(j).getTag() == deadObject.getTag()) {
                             handler.getEntity().remove(j);
@@ -329,9 +335,11 @@ public class ReaderClient extends Thread {
 
 
                 case brick:
+                    System.out.println("We got a brick !");
                     for (int j = 0; j < handler.getTile().size(); j++)
                         if (handler.getTile().get(j).getId() == Id.brick && handler.getTile().get(j).getX() == deadObject.getX() && handler.getTile().get(j).getY() == deadObject.getY()) {
-                            handler.getTile().remove(j);
+                            Brick brick=(Brick)handler.getTile().get(j);
+                            brick.die();
                             break;
                         }
                     break;
@@ -356,12 +364,22 @@ public class ReaderClient extends Thread {
                     break;
 
                 case powerUp:
+                    System.out.println("OH DEAR ! WE RECEIVED A POWERUP CHANGE");
                     for (int j = 0; j < handler.getTile().size(); j++)
                         if (handler.getTile().get(j).getId() == Id.powerUp && handler.getTile().get(j).getX() == deadObject.getX() && handler.getTile().get(j).getY() == deadObject.getY()) {
-                            ((PowerUpBlock) handler.getTile().get(j)).setHitsTaken(deadObject.getHits());
+                            ((PowerUpBlock) handler.getTile().get(j)).addHit(false);
                             break;
                         }
                     break;
+
+
+                case redMushroom:
+                    for (int j=0;j<handler.getEntity().size();j++)
+                        if(handler.getEntity().get(j).getId()==Id.redMushroom && handler.getEntity().get(j).getTag()==deadObject.getTag())
+                        {
+                            handler.getEntity().remove(j);
+                            break;
+                        }
 
 
             }
@@ -377,7 +395,7 @@ public class ReaderClient extends Thread {
     private void applyRemoteUpdate() {
         updateLiveKoopas();
         updateDeadObjects();
-        updateMushrooms();
+       // updateMushrooms();
 
 
     }

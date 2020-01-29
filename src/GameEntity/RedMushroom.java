@@ -16,6 +16,7 @@ public class RedMushroom extends Entity {
 
     public RedMushroom(int x, int y, int width, int height, Id id, Handler handler,int tg) {
         super(x, y, width, height, id, handler,tg);
+        setVelX(1);
 //        dir=random.nextInt(2);
 //
 //        if(dir==0)

@@ -23,7 +23,7 @@ public class Player extends Entity {
     private int frame = 0, frameDelay = 0, pixelsTraveled = 0;
     private static int currentFrame;
     private boolean animate = false, sit, fireMario = false;
-    public static int status = 0, liveFireBalls, safeClocks = 0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
+    public static int status = 0, liveFireBalls, safeClocks = 0,powerUpClock=0;//status is mario size, 0 for small, 1 for medium and 2 for fire mario
     //frame delay is the amount of the time the game upddates before it changes the animation
     //if face ==0 faced left
 
@@ -86,6 +86,13 @@ public class Player extends Entity {
             if (safeClocks == 100)
                 safeClocks = 0;
         }
+
+        if(powerUpClock !=0)
+            powerUpClock++;
+
+
+        if(powerUpClock==10)
+            powerUpClock=0;
 
 
         if (Game.isRunning() == false)
@@ -182,9 +189,9 @@ public class Player extends Entity {
                     //   JOptionPane.showMessageDialog(null,"set actv");
 //                    ((PowerUpBlock) t).setActivated(true);
 
-                    if (safeClocks == 0) {
-                        safeClocks = 80;
-                        ((PowerUpBlock) t).addHit();
+                    if (powerUpClock == 0) {
+                        powerUpClock++;
+                        ((PowerUpBlock) t).addHit(true);
                     }
 
                     //      System.out.println("Trig");
