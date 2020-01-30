@@ -58,7 +58,7 @@ public class Game extends Canvas implements Runnable {
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>(), backGrounds = new ArrayList<>();
     private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 0, endGame;
     public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 0, port = 50000, FPS = 30, TICKS = 1, COUNTER, MAXCOUNTER = 2, DIFFICULTY,lastJumpX,lastJumpY;
-    public static boolean startNext = false, totallyFinished = false, myPaues = false, paused = false, showScoreScreen, multiplayer;
+    public static boolean startNext = false, totallyFinished = false, myPaues = false, paused = false, showScoreScreen, multiplayer,stopTheShit=false;
     public static JFrame frame;
     private static List<String> allLines;
 
@@ -73,13 +73,18 @@ public class Game extends Canvas implements Runnable {
     public static boolean showDeathScreen = true, gameOver = false;
 
     private void init() {
+
+
         handler = new Handler();
         //   sheet = new SpriteSheet("C:\\Users\\erfan\\Desktop\\dummy\\res\\spritesheet.png");
         sheet = new SpriteSheet("C:\\res\\spritesheet.png");
 
 
-        cam = new Camera();
-        addKeyListener(new KeyInput());
+            cam = new Camera();
+
+
+            addKeyListener(new KeyInput());
+
 
         grass = new Sprite(sheet, 1, 1);
         redMushroom = new Sprite(sheet, 2, 1);
@@ -253,6 +258,7 @@ public class Game extends Canvas implements Runnable {
             running = true;
             showDeathScreen = true;
 
+
             while (running) {
 
                 if (myPaues) {
@@ -382,7 +388,7 @@ public class Game extends Canvas implements Runnable {
         if (showScoreScreen) {
             g.setFont(new Font("Courier", Font.BOLD, 50));
             g.setColor(Color.WHITE);
-            g.drawString("Scores in level" + (currentLevel), 700, 50);
+            g.drawString("Scores in level" + (currentLevel+1), 700, 50);
             g.drawString("Current score : " + (savedCoins), 700, 100);
             g.drawString("Previous scores : ", 700, 150);
 
@@ -410,13 +416,13 @@ public class Game extends Canvas implements Runnable {
 
             if (gameOverTicks == 500) {
 
-                Player.status = 0;
+                Player.status = -1;
                 currentLevel = 0;
                 gameOver = false;
                 lives = 3;
 
 
-                //   exit(0);
+                   exit(0);
             }
 
 
@@ -535,6 +541,8 @@ public class Game extends Canvas implements Runnable {
 
             //  if (currentLevel != numberOfMaps)
             //  handler.createLevel(levelsImage.get(currentLevel));
+
+            if(!stopTheShit)
             for (int i = 0; i < handler.getEntity().size(); i++)
                 if (handler.getEntity().get(i).getId() == Id.player1) {
                     Player player = (Player) handler.getEntity().get(i);
@@ -545,6 +553,8 @@ public class Game extends Canvas implements Runnable {
                     handler.getEntity().add(player);
                     break;
                 }
+
+            stopTheShit=false;
         }
 
 
@@ -594,11 +604,11 @@ public class Game extends Canvas implements Runnable {
 
         frame = new JFrame(TITLE);
         frame.add(panel);
-
+        ImageIcon img = new ImageIcon("C:\\res\\icon.jpj");
         frame.add(game);
         frame.pack();
         frame.setSize(new Dimension(1400, 800));
-        frame.setResizable(true);
+        frame.setResizable(false);
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
@@ -703,22 +713,13 @@ public class Game extends Canvas implements Runnable {
     }
 
     public static void goNextLevel() {
-        //  System.out.println("YIPIKAII-MOTHER-FUCKER!");
-        //  System.out.println("in next level method");
 
-        //  System.out.println("current level"+ currentLevel);
-        //  System.out.println("number of maps "+numberOfMaps);
-
-//        if (currentLevel == numberOfMaps ) {
-////            JOptionPane.showMessageDialog(null,"Game has finished !");
-//            //  running = false;
-//            totallyFinished = true;
-//            //Handle endgame
-//            return;
-//
-
-        if (currentLevel == numberOfMaps - 1)
+        if (currentLevel == 2)
             endGame++;
+
+
+
+        stopTheShit=true;
 
         currentLevel++;
         running = false;

@@ -70,6 +70,7 @@ public class Handler {
 //            if(i!=0 && i!=1 && i!=16 && i!=17 && i!=15)
 //                addTile(new Wall(i * 64, 300, 64, 64, true, Id.wall, this));
 //        }
+        clearLevel();
         int width = level.getWidth();
         int height = level.getHeight();
 
@@ -89,6 +90,8 @@ public class Handler {
                     //    JOptionPane.showMessageDialog(null,"player");
                     player = new Player(x * 64, y * 64, 64, 64, false, Id.player1, this);
                     addEntity(player);
+                    System.out.println(x*64);
+                    System.out.println(y*64);
                 }
 
 
@@ -205,8 +208,8 @@ public class Handler {
     }
 
     public void clearLevel() {
-        entity.clear();
-        tile.clear();
+        entity=new ArrayList<>();
+        tile=new ArrayList<>();
     }
 
     public static void clearAll() {

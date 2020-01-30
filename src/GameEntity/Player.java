@@ -5,6 +5,7 @@ import GameEntity.Enemy.Koopa;
 import GameEntity.Enemy.KoopaState;
 import GameEntity.Enemy.Plant;
 import GameTile.*;
+import Mario.Camera;
 import Mario.Game;
 import Mario.Handler;
 import Mario.Id;
@@ -152,8 +153,16 @@ public class Player extends Entity {
 
             //next level
             if ((t.getId() == Id.prince || t.getId() == Id.castleDoor) && getBounds().intersects(t.getBounds())) {
+
+
                 Game.showScoreScreen();
-                Game.goNextLevel();
+
+
+                if(t.getId()==Id.castleDoor)
+                {
+                    Game.goNextLevel();
+                }
+
                 //   JOptionPane.showMessageDialog(null,"next level");
                 return;
             }

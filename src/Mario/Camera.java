@@ -4,7 +4,7 @@ import GameEntity.Entity;
 import GameEntity.Player;
 
 public class Camera {
-    private int x,y,lastX=0;
+    private int x=0,y=0,lastX=0;
     private Player temp;
 
     public void tick(Entity player)
