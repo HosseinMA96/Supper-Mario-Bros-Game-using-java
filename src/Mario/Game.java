@@ -53,12 +53,12 @@ public class Game extends Canvas implements Runnable {
     public static Sprite grass, greenMushroom, redMushroom, dummy, powerUp, specialBrick, destroyedSpecialBreak, destroyedBrick, ordinaryBrick, destroyedOrdinaryBrick, stair, usedPowerUp, pipeBody, coin, castleBrick, star, castleDoor, prince, fireBall, fireFlower;
     public static Sprite player[][][] = new Sprite[2][3][12];//first index is status, second is frame
     public static Camera cam;
-    public static String host = "127.0.0.1";
+    public static String host = "127.0.0.1", temp;
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
-    private ArrayList<BufferedImage> levelsImage = new ArrayList<>(),backGrounds=new ArrayList<>();
+    private ArrayList<BufferedImage> levelsImage = new ArrayList<>(), backGrounds = new ArrayList<>();
     private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 1, endGame;
-    public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 0, port = 50000, FPS = 30, TICKS = 1, COUNTER,MAXCOUNTER=2;
-    public static boolean startNext = false, totallyFinished = false, paused = false, showScoreScreen;
+    public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 0, port = 50000, FPS = 30, TICKS = 1, COUNTER, MAXCOUNTER = 2, DIFFICULTY;
+    public static boolean startNext = false, totallyFinished = false, myPaues = false, paused = false, showScoreScreen, multiplayer;
     public static JFrame frame;
     private static List<String> allLines;
 
@@ -255,6 +255,16 @@ public class Game extends Canvas implements Runnable {
 
             while (running) {
 
+                if (myPaues) {
+//                    String name = JOptionPane.showInputDialog(null,
+//                            "Press ok to resume ");
+
+                    JOptionPane.showMessageDialog(null,"Press ok to continue","Game paused",2);
+                    myPaues=false;
+
+                }
+
+
                 if (endGame != 0)
                     endGame++;
 
@@ -271,12 +281,16 @@ public class Game extends Canvas implements Runnable {
                 delta += (now - lastTime) / ns;
                 lastTime = now;
 
-                int help = 0;
 
+                SenderClient senderClient = null;
                 Handler.clearAll();
 
-                SenderClient senderClient = new SenderClient(handler, host, port);
-                senderClient.start();
+                if (multiplayer) {
+
+
+                    senderClient = new SenderClient(handler, host, port);
+                    senderClient.start();
+                }
                 //   System.out.println("sender start");
 
 //                while (delta > -1) {
@@ -297,28 +311,29 @@ public class Game extends Canvas implements Runnable {
                 COUNTER++;
 
 
-
-                if(COUNTER==MAXCOUNTER) {
+                if (COUNTER == MAXCOUNTER) {
                     for (int i = 0; i < TICKS; i++)
                         tick();
 
                     ticks += TICKS;
                     delta -= ticks;
-                    COUNTER=0;
+                    COUNTER = 0;
                 }
 
 
-                try {
-                    senderClient.join();
-                    //     System.out.println("Sender joined");
-                    ReaderClient readerClient = new ReaderClient(port, host, handler);
-                    readerClient.start();
-                    //     System.out.println("reader start");
-                    readerClient.join();
+                if (multiplayer) {
+                    try {
+                        senderClient.join();
+                        //     System.out.println("Sender joined");
+                        ReaderClient readerClient = new ReaderClient(port, host, handler);
+                        readerClient.start();
+                        //     System.out.println("reader start");
+                        readerClient.join();
 
-                    //     System.out.println("reader join");
-                } catch (Exception e) {
-                    e.printStackTrace();
+                        //     System.out.println("reader join");
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
 
@@ -362,7 +377,7 @@ public class Game extends Canvas implements Runnable {
         Graphics g = bs.getDrawGraphics();
 //        g.setColor(Color.BLACK);
 //        g.fillRect(0, 0, getWidth(), getHeight());
-        g.drawImage(backGrounds.get(currentLevel),0,0,1400,800,null);
+        g.drawImage(backGrounds.get(currentLevel), 0, 0, 1400, 800, null);
 
         if (showScoreScreen) {
             g.setFont(new Font("Courier", Font.BOLD, 50));
@@ -548,6 +563,7 @@ public class Game extends Canvas implements Runnable {
 
     public static void main(String[] args) {
         game = new Game();
+        initialize();
         JPanel panel = new JPanel();
 
         panel.addKeyListener(new KeyListener() {
@@ -586,42 +602,78 @@ public class Game extends Canvas implements Runnable {
         frame.setVisible(true);
         game.start();
 
-        //System.out.println("After start");
+    }
+
+    public static void initialize() {
+        while (true) {
+            String name = JOptionPane.showInputDialog(null,
+                    "Insert 1 for single player and 2 for multi player ");
+
+            if (name.equals("1")) {
+                multiplayer = false;
+                break;
+            }
+
+            if (name.equals("2")) {
+                multiplayer = true;
+                break;
+            }
+
+        }
+
+        if (multiplayer) {
+            host = JOptionPane.showInputDialog(null,
+                    "Enter Host address ");
 
 
-//        while (true) {
-//           JOptionPane.showMessageDialog(null,"in while true");
-//
-//            while(!startNext){
-//             //   System.out.println(startNext);
-//
-//            }
+            try {
+                port = Integer.parseInt(JOptionPane.showInputDialog(null,
+                        "Enter port"));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-//            System.out.println(startNext);
-//
-//
-//
-//            JOptionPane.showMessageDialog(null,"passed first");
-//
-//            if (Game.currentLevel == Game.numberOfMaps) {
-//                JOptionPane.showMessageDialog(null, "Game has finished !");
-//                break;
-//            }
-//            JOptionPane.showMessageDialog(null,"passed second");
-//            frame.remove(game);
-//             game = new Game();frame = new JFrame(TITLE);
-//            frame.add(game);
-//            frame.pack();
-//            frame.setResizable(true);
-//            frame.setLocationRelativeTo(null);
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            frame.setVisible(true);
-//            game.start();
-//
-//
-//            startNext=false;
-//        }
 
+            while (true) {
+                String name = JOptionPane.showInputDialog(null,
+                        "Choose your player. 1 or 2");
+
+                if (name.equals("1")) {
+                    playerIndex = 0;
+                    break;
+                }
+
+                if (name.equals("2")) {
+                    playerIndex = 1;
+                    break;
+                }
+
+            }
+
+
+        }
+
+        while (true) {
+            String name = JOptionPane.showInputDialog(null,
+                    "Choose DIFFICULTY. 0 or 1 or 2. 2 is hardest");
+
+            if (name.equals("0")) {
+                DIFFICULTY = 0;
+                break;
+            }
+
+            if (name.equals("1")) {
+                DIFFICULTY = 1;
+                break;
+            }
+
+            if (name.equals("2")) {
+                DIFFICULTY = 2;
+                break;
+            }
+
+
+        }
     }
 
     public static void setRunning() {
@@ -688,8 +740,6 @@ public class Game extends Canvas implements Runnable {
 
                 bf = ImageIO.read(new File("C:\\res\\background" + (i + 1) + ".png"));
                 backGrounds.add(bf);
-
-
 
 
             } catch (Exception ex) {

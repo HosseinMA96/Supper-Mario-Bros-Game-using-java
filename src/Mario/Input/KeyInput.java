@@ -45,11 +45,7 @@ public class KeyInput implements KeyListener {
                 case KeyEvent.VK_P:
                     setCheatZero();
 
-                    if (Game.paused == true)
-                        Game.paused = false;
-
-                    else
-                        Game.paused = true;
+                    Game.myPaues = true;
                     break;
 
                 case KeyEvent.VK_SPACE:
