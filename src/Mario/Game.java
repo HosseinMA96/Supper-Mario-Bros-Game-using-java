@@ -55,12 +55,13 @@ public class Game extends Canvas implements Runnable {
     public static Camera cam;
     public static String host = "127.0.0.1";
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
-    private ArrayList<BufferedImage> levelsImage = new ArrayList<>();
-    private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 4, currentLevel = 2, endGame;
+    private ArrayList<BufferedImage> levelsImage = new ArrayList<>(),backGrounds=new ArrayList<>();
+    private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 1, endGame;
     public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 0, port = 50000, FPS = 30, TICKS = 1, COUNTER,MAXCOUNTER=2;
     public static boolean startNext = false, totallyFinished = false, paused = false, showScoreScreen;
     public static JFrame frame;
     private static List<String> allLines;
+
     //private static ArrayList<String> allLines;
     public static Game game;
     // private sboolean totallyFinished=false;
@@ -359,8 +360,9 @@ public class Game extends Canvas implements Runnable {
 //        bs.show();
 
         Graphics g = bs.getDrawGraphics();
-        g.setColor(Color.BLACK);
-        g.fillRect(0, 0, getWidth(), getHeight());
+//        g.setColor(Color.BLACK);
+//        g.fillRect(0, 0, getWidth(), getHeight());
+        g.drawImage(backGrounds.get(currentLevel),0,0,1400,800,null);
 
         if (showScoreScreen) {
             g.setFont(new Font("Courier", Font.BOLD, 50));
@@ -683,6 +685,12 @@ public class Game extends Canvas implements Runnable {
                 //            System.out.println("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png");
                 bf = ImageIO.read(new File("C:\\res\\level" + (i + 1) + ".png"));
                 levelsImage.add(bf);
+
+                bf = ImageIO.read(new File("C:\\res\\background" + (i + 1) + ".png"));
+                backGrounds.add(bf);
+
+
+
 
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(null, "Unable to find map number" + i + 1);
