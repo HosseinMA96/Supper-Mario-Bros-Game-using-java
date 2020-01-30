@@ -20,8 +20,12 @@ import GameGFX.Sprite;
 import GameGFX.SpriteSheet;
 import GameTile.PowerUpBlock;
 import Mario.Input.KeyInput;
+import sun.applet.Main;
 
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -576,6 +580,7 @@ public class Game extends Canvas implements Runnable {
     public static void main(String[] args) {
         game = new Game();
         initialize();
+
         JPanel panel = new JPanel();
 
         panel.addKeyListener(new KeyListener() {
@@ -985,6 +990,8 @@ public class Game extends Canvas implements Runnable {
 
 
     }
+
+
 /////////////////
 //    private void showOtherPlayerFireBalls(Graphics g)
 //    {
