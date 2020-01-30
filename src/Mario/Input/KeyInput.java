@@ -68,6 +68,9 @@ public class KeyInput implements KeyListener {
 
                 case KeyEvent.VK_W:
                     setCheatZero();
+                    Game.lastJumpX=en.getX();
+                    Game.lastJumpY=en.getY();
+
 //                    en.setVelY(-5);
                     if (!en.getJumping()) {
                         en.setJumping(true);

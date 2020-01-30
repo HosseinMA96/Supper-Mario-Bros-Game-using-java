@@ -56,8 +56,8 @@ public class Game extends Canvas implements Runnable {
     public static String host = "127.0.0.1", temp;
     public static Sprite[] goomba = new Sprite[8], koopa = new Sprite[8], plant = new Sprite[2], hedgehog = new Sprite[4];
     private ArrayList<BufferedImage> levelsImage = new ArrayList<>(), backGrounds = new ArrayList<>();
-    private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 1, endGame;
-    public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 0, port = 50000, FPS = 30, TICKS = 1, COUNTER, MAXCOUNTER = 2, DIFFICULTY;
+    private static int deathScreenTime = 0, gameOverTicks, numberOfMaps = 2, currentLevel = 0, endGame;
+    public static int coins, lives = 3, fireBalls = 5, savedCoins, playerIndex = 0, port = 50000, FPS = 30, TICKS = 1, COUNTER, MAXCOUNTER = 2, DIFFICULTY,lastJumpX,lastJumpY;
     public static boolean startNext = false, totallyFinished = false, myPaues = false, paused = false, showScoreScreen, multiplayer;
     public static JFrame frame;
     private static List<String> allLines;
@@ -538,8 +538,10 @@ public class Game extends Canvas implements Runnable {
             for (int i = 0; i < handler.getEntity().size(); i++)
                 if (handler.getEntity().get(i).getId() == Id.player1) {
                     Player player = (Player) handler.getEntity().get(i);
-                    player.setX(Game.cam.getLastX());
-                    player.setY(Entity.lastDeathY - 50);
+              //      player.setX(Game.cam.getLastX());
+                 //   player.setY(Entity.lastDeathY - 50);
+                    player.setX(Game.lastJumpX);
+                    player.setY(Game.lastJumpY);
                     handler.getEntity().add(player);
                     break;
                 }
@@ -735,7 +737,7 @@ public class Game extends Canvas implements Runnable {
                 BufferedImage bf;
                 //  bf = ImageIO.read(new File("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png"));
                 //            System.out.println("C:\\Users\\erfan\\Desktop\\dummy\\res\\level" + (i + 1) + ".png");
-                bf = ImageIO.read(new File("C:\\res\\level" + (i + 1) + ".png"));
+                bf = ImageIO.read(new File("C:\\res\\level" + (i + 1) + (DIFFICULTY)+".png"));
                 levelsImage.add(bf);
 
                 bf = ImageIO.read(new File("C:\\res\\background" + (i + 1) + ".png"));

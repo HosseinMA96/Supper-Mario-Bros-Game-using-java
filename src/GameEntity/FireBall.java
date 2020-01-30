@@ -18,6 +18,7 @@ public class FireBall extends Entity {
         super(x, y, width, height, id, handler, 0);
         mine=true;
         Player.liveFireBalls++;
+    //    System.out.println("Added a fireball");
 
         if (facing == 0) {
             velX = -8;
@@ -58,6 +59,11 @@ public class FireBall extends Entity {
         x += velX;
         y += velY;
 
+        System.out.println(x);
+        System.out.println(y);
+        System.out.println();
+
+
 //        System.out.println("Game cam lastx "+Game.cam.getLastX());
 //        System.out.println("Game cam getY "+Game.cam.getY());
 //        System.out.println("x "+x);
@@ -72,11 +78,12 @@ public class FireBall extends Entity {
 //            System.out.println(y);
 //            System.out.println();
             //     Player.liveFireBalls--;
+            System.out.println("DIE");
             die();
             return;
         }
 
-        if (mine && (x < Math.abs(lastX) || x > Math.abs(lastX) + 1400 || y > playerY + 400 || y < playerY - 400)) {
+        if (!mine && (x < Math.abs(lastX) || x > Math.abs(lastX) + 1400 || y > playerY + 400 || y < playerY - 400)) {
             die();
             return;
         }

@@ -588,8 +588,12 @@ public class Player extends Entity {
         }
 
         status++;
-        if (status == 3)
-            status = 2;
+
+        if(status==3 || status==2)
+        {
+            status=1;
+            Game.coins+=2;
+        }
 
         //or increase lives?
     }

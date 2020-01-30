@@ -2,6 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="7294ea96-f157-4b7b-bc69-27eb5d07ba1d" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/src/GameEntity/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameEntity/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameEntity/FireBall.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameEntity/FireBall.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GameEntity/Player.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GameEntity/Player.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Mario/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Mario/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Mario/Input/KeyInput.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Mario/Input/KeyInput.java" afterDir="false" />
     </list>
@@ -38,11 +41,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/GameEntity/FireBall.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="146">
-              <caret line="19" column="31" selection-end-line="167" />
+            <state relative-caret-position="272">
+              <caret line="85" column="13" selection-start-line="85" selection-start-column="13" selection-end-line="85" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -83,28 +86,16 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/GameEntity/GreenMushroom.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="10" column="49" selection-start-line="10" selection-start-column="49" selection-end-line="10" selection-end-column="49" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/GameEntity/Player.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-876">
-              <caret line="23" column="137" selection-start-line="23" selection-start-column="137" selection-end-line="23" selection-end-column="137" />
+            <state relative-caret-position="2220">
+              <caret line="594" column="26" selection-start-line="594" selection-start-column="26" selection-end-line="594" selection-end-column="26" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#15490#15491#0" expanded="true" />
-                <element signature="e#16151#16152#0" expanded="true" />
-                <element signature="e#16213#16214#0" expanded="true" />
-                <element signature="e#16284#16285#0" expanded="true" />
+                <element signature="e#16207#16208#0" expanded="true" />
+                <element signature="e#16269#16270#0" expanded="true" />
+                <element signature="e#16340#16341#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -113,8 +104,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Mario/Input/KeyInput.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="212">
-              <caret line="47" column="40" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="40" />
+            <state relative-caret-position="484">
+              <caret line="61" column="56" selection-start-line="61" selection-start-column="56" selection-end-line="61" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -122,18 +113,31 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Mario/Game.java">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/GameEntity/Entity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="229">
-              <caret line="261" column="13" selection-start-line="261" selection-start-column="13" selection-end-line="261" selection-end-column="13" />
+            <state relative-caret-position="372">
+              <caret line="104" column="25" selection-start-line="104" selection-start-column="25" selection-end-line="104" selection-end-column="25" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#16586#16587#0" expanded="true" />
-                <element signature="e#19363#19364#0" expanded="true" />
-                <element signature="e#19440#19441#0" expanded="true" />
-                <element signature="e#19929#19930#0" expanded="true" />
-                <element signature="e#20676#20677#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Mario/Game.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="160">
+              <caret line="371" column="32" lean-forward="true" selection-start-line="371" selection-start-column="32" selection-end-line="371" selection-end-column="32" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#16801#16802#0" expanded="true" />
+                <element signature="e#19578#19579#0" expanded="true" />
+                <element signature="e#19655#19656#0" expanded="true" />
+                <element signature="e#20144#20145#0" expanded="true" />
+                <element signature="e#20891#20892#0" expanded="true" />
+                <marker date="1580347098554" expanded="true" signature="8286:8388" ph="..." />
               </folding>
             </state>
           </provider>
@@ -163,20 +167,10 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>run</find>
-      <find>VK_S</find>
-      <find>red == 10 &amp;&amp; green == 100 &amp;&amp; blue == 10</find>
-      <find>die</find>
-      <find>Syst</find>
-      <find>System.out.println</find>
-      <find>FireBall</find>
-      <find>FireB</find>
-      <find>receiveFireBalls</find>
       <find>sta</find>
       <find>24</find>
       <find>FIRE</find>
       <find>fire</find>
-      <find>Sent</find>
       <find>ticks</find>
       <find>COUNTER</find>
       <find>init</find>
@@ -189,10 +183,20 @@
       <find>paused</find>
       <find>Keyi</find>
       <find>main</find>
-      <find>loop</find>
       <find>paus</find>
       <find>VK_P</find>
       <find>myPau</find>
+      <find>createLevel</find>
+      <find>VK_W</find>
+      <find>die</find>
+      <find>deathSc</find>
+      <find>Flower</find>
+      <find>fireFlower</find>
+      <find>VK_SPA</find>
+      <find>loop</find>
+      <find>grow</find>
+      <find>Sent</find>
+      <find>VK_SP</find>
     </findStrings>
     <dirStrings>
       <dir>C:\Users\erfan\Desktop\dummy\src\GameEntity</dir>
@@ -239,21 +243,21 @@
         <option value="$PROJECT_DIR$/src/GameEntity/Enemy/ChangedKoopa.java" />
         <option value="$PROJECT_DIR$/src/Broadcast/ServerReader.java" />
         <option value="$PROJECT_DIR$/src/GameEntity/Enemy/Koopa.java" />
-        <option value="$PROJECT_DIR$/src/GameEntity/Entity.java" />
         <option value="$PROJECT_DIR$/src/GameEntity/Enemy/Plant.java" />
         <option value="$PROJECT_DIR$/src/GameEntity/RedMushroom.java" />
         <option value="$PROJECT_DIR$/src/GameTile/PowerUpBlock.java" />
         <option value="$PROJECT_DIR$/src/GameTile/Brick.java" />
         <option value="$PROJECT_DIR$/src/Mario/Id.java" />
-        <option value="$PROJECT_DIR$/src/GameEntity/Player.java" />
         <option value="$PROJECT_DIR$/src/GameTile/FireFlowerSpot.java" />
         <option value="$PROJECT_DIR$/src/Mario/Handler.java" />
         <option value="$PROJECT_DIR$/src/GameEntity/OtherPlayerFireBall.java" />
         <option value="$PROJECT_DIR$/src/Broadcast/SenderClient.java" />
         <option value="$PROJECT_DIR$/src/Broadcast/ReaderClient.java" />
-        <option value="$PROJECT_DIR$/src/GameEntity/FireBall.java" />
         <option value="$PROJECT_DIR$/src/Mario/Input/KeyInput.java" />
+        <option value="$PROJECT_DIR$/src/GameEntity/Entity.java" />
+        <option value="$PROJECT_DIR$/src/GameEntity/Player.java" />
         <option value="$PROJECT_DIR$/src/Mario/Game.java" />
+        <option value="$PROJECT_DIR$/src/GameEntity/FireBall.java" />
       </list>
     </option>
   </component>
@@ -263,10 +267,11 @@
       <select />
     </treeState>
   </component>
-  <component name="ProjectFrameBounds" extendedState="7">
-    <option name="x" value="867" />
-    <option name="width" value="506" />
-    <option name="height" value="735" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="676" />
+    <option name="y" value="443" />
+    <option name="width" value="697" />
+    <option name="height" value="292" />
   </component>
   <component name="ProjectLevelVcsManager">
     <ConfirmationsSetting value="2" id="Add" />
@@ -421,12 +426,12 @@
       <workItem from="1580153911503" duration="9708000" />
       <workItem from="1580200161846" duration="25957000" />
       <workItem from="1580289887481" duration="21976000" />
-      <workItem from="1580316444370" duration="24166000" />
+      <workItem from="1580316444370" duration="25812000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="262288000" />
+    <option name="totallyTimeSpent" value="263934000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
@@ -840,16 +845,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameEntity/Entity.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="186">
-          <caret line="20" column="29" selection-start-line="20" selection-start-column="29" selection-end-line="20" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Broadcast/MultiServer.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="158">
@@ -889,20 +884,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameEntity/Player.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-876">
-          <caret line="23" column="137" selection-start-line="23" selection-start-column="137" selection-end-line="23" selection-end-column="137" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#15490#15491#0" expanded="true" />
-            <element signature="e#16151#16152#0" expanded="true" />
-            <element signature="e#16213#16214#0" expanded="true" />
-            <element signature="e#16284#16285#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Broadcast/SenderClient.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="194">
@@ -917,16 +898,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="381">
           <caret line="413" column="8" selection-start-line="413" selection-start-column="8" selection-end-line="413" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/GameEntity/FireBall.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="146">
-          <caret line="19" column="31" selection-end-line="167" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -953,10 +924,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Mario/Input/KeyInput.java">
+    <entry file="file://$PROJECT_DIR$/src/GameEntity/Entity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="212">
-          <caret line="47" column="40" selection-start-line="47" selection-start-column="40" selection-end-line="47" selection-end-column="40" />
+        <state relative-caret-position="372">
+          <caret line="104" column="25" selection-start-line="104" selection-start-column="25" selection-end-line="104" selection-end-column="25" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -965,15 +936,50 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Mario/Game.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="229">
-          <caret line="261" column="13" selection-start-line="261" selection-start-column="13" selection-end-line="261" selection-end-column="13" />
+        <state relative-caret-position="160">
+          <caret line="371" column="32" lean-forward="true" selection-start-line="371" selection-start-column="32" selection-end-line="371" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#16586#16587#0" expanded="true" />
-            <element signature="e#19363#19364#0" expanded="true" />
-            <element signature="e#19440#19441#0" expanded="true" />
-            <element signature="e#19929#19930#0" expanded="true" />
-            <element signature="e#20676#20677#0" expanded="true" />
+            <element signature="e#16801#16802#0" expanded="true" />
+            <element signature="e#19578#19579#0" expanded="true" />
+            <element signature="e#19655#19656#0" expanded="true" />
+            <element signature="e#20144#20145#0" expanded="true" />
+            <element signature="e#20891#20892#0" expanded="true" />
+            <marker date="1580347098554" expanded="true" signature="8286:8388" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GameEntity/Player.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2220">
+          <caret line="594" column="26" selection-start-line="594" selection-start-column="26" selection-end-line="594" selection-end-column="26" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#15490#15491#0" expanded="true" />
+            <element signature="e#16207#16208#0" expanded="true" />
+            <element signature="e#16269#16270#0" expanded="true" />
+            <element signature="e#16340#16341#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Mario/Input/KeyInput.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="61" column="56" selection-start-line="61" selection-start-column="56" selection-end-line="61" selection-end-column="56" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/GameEntity/FireBall.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="85" column="13" selection-start-line="85" selection-start-column="13" selection-end-line="85" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

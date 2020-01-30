@@ -98,6 +98,12 @@ public abstract class Entity {
 
                 if (Game.lives == 0)
                     Game.gameOver = true;
+
+                else if (Game.lastJumpX !=0)
+                {
+                    setX(Game.lastJumpX);
+                    setY(Game.lastJumpY);
+                }
             }
 
 
